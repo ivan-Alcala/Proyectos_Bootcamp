@@ -6,12 +6,14 @@
 
     class Program
     {
-        // Diccionario para almacenar los equipos
+        // Clase para almacenar los detalles del equipo
         class Team
         {
             public int Score { get; set; }
-            public List<string> Players { get; set; }
+            public List<string> Players { get; set; } = new List<string>();
         }
+
+        // Diccionario para almacenar los equipos
         static Dictionary<string, Team> _teams = new Dictionary<string, Team>();
         static string file = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\equipos.txt";
 
@@ -69,6 +71,7 @@ Seleccione una opción: ");
             }
         }
 
+        // Método unificado para agregar o modificar un equipo
         static void AddOrModifyTeam(bool isModifying)
         {
             while (true)
@@ -90,7 +93,21 @@ Seleccione una opción: ");
 
                     if (int.TryParse(Console.ReadLine(), out int score))
                     {
+                        if (!_teams.ContainsKey(name))
+                        {
+                            _teams[name] = new Team(); // Crear nuevo equipo si no existe
+                        }
                         _teams[name].Score = score;
+
+                        if (!isModifying)
+                        {
+                            Console.WriteLine("Ingrese los nombres de los jugadores, separados por comas:");
+                            string playersInput = Console.ReadLine();
+                            List<string> players = new List<string>(playersInput.Split(','));
+
+                            // Agregar jugadores al equipo
+                            _teams[name].Players = players;
+                        }
 
                         if (isModifying)
                             Console.WriteLine("Puntuación modificada exitosamente.");
@@ -132,10 +149,20 @@ Seleccione una opción: ");
             if (_teams.Count > 0)
             {
                 foreach (var team in _teams)
-                    Console.WriteLine($"Equipo: {team.Key}, Puntuación: {team.Value}");
+                {
+                    Console.WriteLine($"Equipo: {team.Key}, Puntuación: {team.Value.Score}");
+                    Console.WriteLine("Jugadores:");
+                    foreach (var player in team.Value.Players)
+                    {
+                        Console.WriteLine($"- {player.Trim()}");
+                    }
+                    Console.WriteLine();
+                }
             }
             else
+            {
                 Console.WriteLine("No hay equipos registrados.");
+            }
         }
 
         static void LoadData()
@@ -151,11 +178,17 @@ Seleccione una opción: ");
 
                     while ((line = sr.ReadLine()) != null)
                     {
-                        string[] data = line.Split(',');
-                        if (data.Length == 2 && int.TryParse(data[1], out int score))
+                        string[] data = line.Split(';'); // Cambiado para manejar jugadores
+                        if (data.Length >= 2 && int.TryParse(data[1], out int score))
                         {
                             string name = data[0];
-                            _teams[name].Score = score;
+                            List<string> players = new List<string>(data[2].Split(',')); // Leer los jugadores
+
+                            _teams[name] = new Team
+                            {
+                                Score = score,
+                                Players = players
+                            };
                         }
                         else
                             Console.WriteLine("Línea con formato incorrecto en el archivo.");
@@ -175,7 +208,10 @@ Seleccione una opción: ");
                 using (StreamWriter sw = new StreamWriter(file))
                 {
                     foreach (var team in _teams)
-                        sw.WriteLine($"{team.Key},{team.Value}");
+                    {
+                        string players = string.Join(",", team.Value.Players); // Guardar los jugadores
+                        sw.WriteLine($"{team.Key};{team.Value.Score};{players}");
+                    }
                 }
             }
             catch (UnauthorizedAccessException)
