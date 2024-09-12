@@ -97,6 +97,7 @@ Seleccione una opción: ");
                         {
                             _teams[name] = new Team(); // Crear nuevo equipo si no existe
                         }
+                        _teams.Add(name,new Team(){Score = score});
                         _teams[name].Score = score;
 
                         if (!isModifying)
