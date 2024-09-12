@@ -7,7 +7,12 @@
     class Program
     {
         // Diccionario para almacenar los equipos
-        static Dictionary<string, int> teams = new Dictionary<string, int>();
+        class Team
+        {
+            public int Puntuacion { get; set; }
+            public List<string> Jugadores { get; set; }
+        }
+        static Dictionary<string, Team> _teams = new Dictionary<string, Team>();
         static string file = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\equipos.txt";
 
         static void Main()
@@ -75,9 +80,9 @@ Seleccione una opción: ");
 
                 string name = Console.ReadLine();
 
-                if (isModifying && !teams.ContainsKey(name))
+                if (isModifying && !_teams.ContainsKey(name))
                     Console.WriteLine("El equipo no existe. Intente con otro nombre.");
-                else if (!isModifying && teams.ContainsKey(name))
+                else if (!isModifying && _teams.ContainsKey(name))
                     Console.WriteLine("El equipo ya existe. Intente con otro nombre.");
                 else
                 {
@@ -85,7 +90,7 @@ Seleccione una opción: ");
 
                     if (int.TryParse(Console.ReadLine(), out int score))
                     {
-                        teams[name] = score;
+                        _teams[name].Puntuacion = score;
 
                         if (isModifying)
                             Console.WriteLine("Puntuación modificada exitosamente.");
@@ -108,9 +113,9 @@ Seleccione una opción: ");
                 Console.Write("Ingrese el nombre del equipo a eliminar: ");
                 string name = Console.ReadLine();
 
-                if (teams.ContainsKey(name))
+                if (_teams.ContainsKey(name))
                 {
-                    teams.Remove(name);
+                    _teams.Remove(name);
                     Console.WriteLine("Equipo eliminado exitosamente.");
                     SaveData();
                     break; // Salir del bucle una vez que se haya eliminado exitosamente
@@ -124,9 +129,9 @@ Seleccione una opción: ");
         {
             Console.WriteLine("--- Lista de Equipos ---");
 
-            if (teams.Count > 0)
+            if (_teams.Count > 0)
             {
-                foreach (var team in teams)
+                foreach (var team in _teams)
                     Console.WriteLine($"Equipo: {team.Key}, Puntuación: {team.Value}");
             }
             else
@@ -150,7 +155,7 @@ Seleccione una opción: ");
                         if (data.Length == 2 && int.TryParse(data[1], out int score))
                         {
                             string name = data[0];
-                            teams[name] = score;
+                            _teams[name]. = score;
                         }
                         else
                             Console.WriteLine("Línea con formato incorrecto en el archivo.");
@@ -169,7 +174,7 @@ Seleccione una opción: ");
             {
                 using (StreamWriter sw = new StreamWriter(file))
                 {
-                    foreach (var team in teams)
+                    foreach (var team in _teams)
                         sw.WriteLine($"{team.Key},{team.Value}");
                 }
             }
