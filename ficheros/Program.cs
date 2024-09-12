@@ -9,8 +9,8 @@
         // Diccionario para almacenar los equipos
         class Team
         {
-            public int Puntuacion { get; set; }
-            public List<string> Jugadores { get; set; }
+            public int Score { get; set; }
+            public List<string> Players { get; set; }
         }
         static Dictionary<string, Team> _teams = new Dictionary<string, Team>();
         static string file = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\equipos.txt";
@@ -90,7 +90,7 @@ Seleccione una opción: ");
 
                     if (int.TryParse(Console.ReadLine(), out int score))
                     {
-                        _teams[name].Puntuacion = score;
+                        _teams[name].Score = score;
 
                         if (isModifying)
                             Console.WriteLine("Puntuación modificada exitosamente.");
@@ -155,7 +155,7 @@ Seleccione una opción: ");
                         if (data.Length == 2 && int.TryParse(data[1], out int score))
                         {
                             string name = data[0];
-                            _teams[name]. = score;
+                            _teams[name].Score = score;
                         }
                         else
                             Console.WriteLine("Línea con formato incorrecto en el archivo.");
