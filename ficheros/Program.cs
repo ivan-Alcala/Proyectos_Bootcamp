@@ -7,6 +7,7 @@
     class Program
     {
         // Diccionario para almacenar los equipos
+
         static Dictionary<string, int> teams = new Dictionary<string, int>();
         static string file = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\equipos.txt";
 
