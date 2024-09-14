@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Xml.Linq;
 
     class Program
     {
@@ -94,21 +95,9 @@ Seleccione una opción: ");
                     if (int.TryParse(Console.ReadLine(), out int score))
                     {
                         if (!_teams.ContainsKey(name))
-                        {
                             _teams[name] = new Team(); // Crear nuevo equipo si no existe
-                        }
-                        _teams.Add(name,new Team(){Score = score});
+                        UpdateTeamMembers(name);
                         _teams[name].Score = score;
-
-                        if (!isModifying)
-                        {
-                            Console.WriteLine("Ingrese los nombres de los jugadores, separados por comas:");
-                            string playersInput = Console.ReadLine();
-                            List<string> players = new List<string>(playersInput.Split(','));
-
-                            // Agregar jugadores al equipo
-                            _teams[name].Players = players;
-                        }
 
                         if (isModifying)
                             Console.WriteLine("Puntuación modificada exitosamente.");
@@ -121,6 +110,20 @@ Seleccione una opción: ");
                     else
                         Console.WriteLine("Puntuación no válida.");
                 }
+            }
+        }
+
+        private static void UpdateTeamMembers(string nameTeam)
+        {
+            string playersInput = ReadConsoleWord("Ingrese los nombres de los jugadores, separados por comas (si el jugador ya existe sera eliminado del equipo):");
+            List<string> players = new List<string>(playersInput.Split(','));
+
+            foreach (string player in players)
+            {
+                if (_teams[nameTeam].Players.Contains(player))
+                    _teams[nameTeam].Players.Remove(player);
+                else
+                    _teams[nameTeam].Players.Add(player);
             }
         }
 
@@ -154,9 +157,7 @@ Seleccione una opción: ");
                     Console.WriteLine($"Equipo: {team.Key}, Puntuación: {team.Value.Score}");
                     Console.WriteLine("Jugadores:");
                     foreach (var player in team.Value.Players)
-                    {
                         Console.WriteLine($"- {player.Trim()}");
-                    }
                     Console.WriteLine();
                 }
             }
@@ -224,5 +225,11 @@ Seleccione una opción: ");
                 Console.WriteLine($"Error al escribir en el archivo: {ex.Message}");
             }
         }
+        private static string ReadConsoleWord(string text)
+        {
+            Console.WriteLine(text);
+            return Console.ReadLine();
+        }
+
     }
 }
