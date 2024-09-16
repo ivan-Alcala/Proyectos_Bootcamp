@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Xml.Linq;
 
     class Program
     {
@@ -95,38 +94,40 @@ Seleccione una opción: ");
                     if (int.TryParse(Console.ReadLine(), out int score))
                     {
                         if (!_teams.ContainsKey(name))
+                        {
                             _teams[name] = new Team(); // Crear nuevo equipo si no existe
-                            UpdateTeamMembers(name);
                         }
-                  
-                        _teams.Add(name, new Team() { Score = score });
+
                         _teams[name].Score = score;
+                        UpdateTeamMembers(name); // Actualiza los jugadores
 
-                        if (isModifying)
-                            Console.WriteLine("Puntuación modificada exitosamente.");
-                        else
-                            Console.WriteLine("Equipo agregado exitosamente.");
-
+                        Console.WriteLine(isModifying ? "Puntuación modificada exitosamente." : "Equipo agregado exitosamente.");
                         SaveData();
                         break; // Salir del bucle una vez que se haya agregado/modificado exitosamente
                     }
                     else
+                    {
                         Console.WriteLine("Puntuación no válida.");
+                    }
                 }
             }
         }
 
         private static void UpdateTeamMembers(string nameTeam)
         {
-            string playersInput = ReadConsoleWord("Ingrese los nombres de los jugadores, separados por comas (si el jugador ya existe sera eliminado del equipo):");
+            string playersInput = ReadConsoleWord("Ingrese los nombres de los jugadores, separados por comas (si el jugador ya existe será eliminado del equipo):");
             List<string> players = new List<string>(playersInput.Split(','));
 
             foreach (string player in players)
             {
                 if (_teams[nameTeam].Players.Contains(player))
-                    _teams[nameTeam].Players.Remove(player);
+                {
+                    _teams[nameTeam].Players.Remove(player); // Si el jugador ya está, lo eliminamos
+                }
                 else
-                    _teams[nameTeam].Players.Add(player);
+                {
+                    _teams[nameTeam].Players.Add(player); // Si no está, lo añadimos
+                }
             }
         }
 
@@ -150,7 +151,6 @@ Seleccione una opción: ");
                 }
             }
         }
-
 
         static void ShowTeams()
         {
@@ -190,7 +190,7 @@ Seleccione una opción: ");
                         if (data.Length >= 2 && int.TryParse(data[1], out int score))
                         {
                             string name = data[0];
-                            List<string> players = new List<string>(data[2].Split(',')); // Leer los jugadores
+                            List<string> players = data.Length > 2 ? new List<string>(data[2].Split(',')) : new List<string>(); // Validar si hay jugadores
 
                             _teams[name] = new Team
                             {
@@ -199,7 +199,9 @@ Seleccione una opción: ");
                             };
                         }
                         else
+                        {
                             Console.WriteLine("Línea con formato incorrecto en el archivo.");
+                        }
                     }
                 }
             }
@@ -231,11 +233,11 @@ Seleccione una opción: ");
                 Console.WriteLine($"Error al escribir en el archivo: {ex.Message}");
             }
         }
+
         private static string ReadConsoleWord(string text)
         {
             Console.WriteLine(text);
             return Console.ReadLine();
         }
-
     }
 }
