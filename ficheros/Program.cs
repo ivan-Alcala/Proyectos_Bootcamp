@@ -41,33 +41,40 @@ Seleccione una opción: ");
                 // Validar si el input es un número
                 if (int.TryParse(input, out option))
                 {
-                    switch (option)
-                    {
-                        case 1:
-                            AddOrModifyTeam(false); // Dar de alta (false = add | true = modify)
-                            break;
-                        case 2:
-                            RemoveTeam(); // Dar de baja
-                            break;
-                        case 3:
-                            AddOrModifyTeam(true); // Añadir|Modificar equipo (false = add | true = modify)
-                            break;
-                        case 4:
-                            ShowTeams(); // Mostrar equipos
-                            break;
-                        case 0:
-                            SaveData(); // Guardar al salir
-                            break;
-                        default:
-                            Console.WriteLine("Opción no válida.");
-                            break;
-                    }
+                    ExecuteOption(option);
+                    SaveData();  // Guardar los datos después de cada opción seleccionada
                 }
                 else
                 {
                     Console.WriteLine("Opción no válida. Introduzca un número.");
                     option = -1; // Volver a solicitar una opción sin salir del bucle
                 }
+            }
+        }
+
+        // Ejecutar la opción del menú y realizar las acciones correspondientes
+        static void ExecuteOption(int option)
+        {
+            switch (option)
+            {
+                case 1:
+                    AddOrModifyTeam(false); // Dar de alta (false = add | true = modify)
+                    break;
+                case 2:
+                    RemoveTeam(); // Dar de baja
+                    break;
+                case 3:
+                    AddOrModifyTeam(true); // Modificar equipo
+                    break;
+                case 4:
+                    ShowTeams(); // Mostrar equipos
+                    break;
+                case 0:
+                    Console.WriteLine("Saliendo del programa...");
+                    break;
+                default:
+                    Console.WriteLine("Opción no válida.");
+                    break;
             }
         }
 
@@ -100,7 +107,6 @@ Seleccione una opción: ");
                         UpdateTeamMembers(name); // Actualiza los jugadores
 
                         Console.WriteLine(isModifying ? "Puntuación modificada exitosamente." : "Equipo agregado exitosamente.");
-                        SaveData();
                         break; // Salir del bucle una vez que se haya agregado/modificado exitosamente
                     }
                     else
@@ -134,7 +140,6 @@ Seleccione una opción: ");
                 {
                     _teams.Remove(name);
                     Console.WriteLine($"Equipo '{name}' eliminado exitosamente.");
-                    SaveData();
                     break;
                 }
                 else
