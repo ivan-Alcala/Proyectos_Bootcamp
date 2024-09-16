@@ -97,7 +97,7 @@ Seleccione una opción: ");
                         {
                             _teams[name] = new Team(); // Crear nuevo equipo si no existe
                         }
-                        _teams.Add(name,new Team(){Score = score});
+                        _teams.Add(name, new Team() { Score = score });
                         _teams[name].Score = score;
 
                         if (!isModifying)
@@ -134,14 +134,17 @@ Seleccione una opción: ");
                 if (_teams.ContainsKey(name))
                 {
                     _teams.Remove(name);
-                    Console.WriteLine("Equipo eliminado exitosamente.");
+                    Console.WriteLine($"Equipo '{name}' eliminado exitosamente.");
                     SaveData();
-                    break; // Salir del bucle una vez que se haya eliminado exitosamente
+                    break;
                 }
                 else
+                {
                     Console.WriteLine("El equipo no existe. Intente con otro nombre.");
+                }
             }
         }
+
 
         static void ShowTeams()
         {
