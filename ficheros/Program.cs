@@ -94,9 +94,7 @@ Seleccione una opción: ");
                     if (int.TryParse(Console.ReadLine(), out int score))
                     {
                         if (!_teams.ContainsKey(name))
-                        {
                             _teams[name] = new Team(); // Crear nuevo equipo si no existe
-                        }
 
                         _teams[name].Score = score;
                         UpdateTeamMembers(name); // Actualiza los jugadores
@@ -106,9 +104,7 @@ Seleccione una opción: ");
                         break; // Salir del bucle una vez que se haya agregado/modificado exitosamente
                     }
                     else
-                    {
                         Console.WriteLine("Puntuación no válida.");
-                    }
                 }
             }
         }
@@ -121,13 +117,9 @@ Seleccione una opción: ");
             foreach (string player in players)
             {
                 if (_teams[nameTeam].Players.Contains(player))
-                {
                     _teams[nameTeam].Players.Remove(player); // Si el jugador ya está, lo eliminamos
-                }
                 else
-                {
                     _teams[nameTeam].Players.Add(player); // Si no está, lo añadimos
-                }
             }
         }
 
@@ -146,9 +138,7 @@ Seleccione una opción: ");
                     break;
                 }
                 else
-                {
                     Console.WriteLine("El equipo no existe. Intente con otro nombre.");
-                }
             }
         }
 
@@ -162,15 +152,15 @@ Seleccione una opción: ");
                 {
                     Console.WriteLine($"Equipo: {team.Key}, Puntuación: {team.Value.Score}");
                     Console.WriteLine("Jugadores:");
+
                     foreach (var player in team.Value.Players)
                         Console.WriteLine($"- {player.Trim()}");
+
                     Console.WriteLine();
                 }
             }
             else
-            {
                 Console.WriteLine("No hay equipos registrados.");
-            }
         }
 
         static void LoadData()
@@ -187,6 +177,7 @@ Seleccione una opción: ");
                     while ((line = sr.ReadLine()) != null)
                     {
                         string[] data = line.Split(';'); // Cambiado para manejar jugadores
+
                         if (data.Length >= 2 && int.TryParse(data[1], out int score))
                         {
                             string name = data[0];
@@ -199,9 +190,7 @@ Seleccione una opción: ");
                             };
                         }
                         else
-                        {
                             Console.WriteLine("Línea con formato incorrecto en el archivo.");
-                        }
                     }
                 }
             }
