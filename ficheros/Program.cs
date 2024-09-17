@@ -232,15 +232,33 @@ Seleccione una opción: ");
 
         private static void Play()
         {
-            if (_teams.Where(x=>x.Value.Players.Any()).Count()>1)
+            if (_teams.Where(x => x.Value.Players.Any()).Count() > 1)
             {
                 (Team guest, Team house) teams = GetTeams();
             }
         }
 
-        private static (Team guest, Team house) GetTeams()
+        private static (string guestName, string houseName) GetTeams()
         {
-            throw new NotImplementedException();
+            Random random = new Random();
+            if (_teams.Count < 2)
+            {
+                Console.WriteLine("Debe haber al menos dos equipos para realizar un enfrentamiento.");
+                return (null, null);
+            }
+
+            // Seleccionar dos equipos aleatorios
+            List<string> teamNames = _teams.Keys.ToList();
+            string team1Name = teamNames[random.Next(teamNames.Count)];
+            string team2Name;
+
+            // Asegurarse de que el segundo equipo sea diferente
+            do
+            {
+                team2Name = teamNames[random.Next(teamNames.Count)];
+            } while (team1Name == team2Name);
+
+            return (team1Name, team2Name);
         }
 
         private static string ReadConsoleWord(string text)
