@@ -12,5 +12,32 @@ namespace POO.Class
             Name = name;
             Cards = new Queue<Card>();
         }
+
+        // Recibir una carta
+        public void ReceiveCard(Card card)
+        {
+            Cards.Enqueue(card);
+        }
+
+        // Jugar la carta superior del paquete
+        public Card PlayCard()
+        {
+            return Cards.Count > 0 ? Cards.Dequeue() : null;
+        }
+
+        // Ganar una mano y añadir las cartas ganadas al final del paquete
+        public void WinHand(List<Card> wonCards)
+        {
+            foreach (var card in wonCards)
+            {
+                Cards.Enqueue(card);
+            }
+        }
+
+        // Verificar si el jugador se quedó sin cartas
+        public bool OutOfCards()
+        {
+            return Cards.Count == 0;
+        }
     }
 }
