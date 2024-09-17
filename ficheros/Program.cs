@@ -1,4 +1,6 @@
-﻿namespace Ficheros
+﻿using System.Linq;
+
+namespace Ficheros
 {
     using System;
     using System.Collections.Generic;
@@ -226,6 +228,19 @@ Seleccione una opción: ");
             {
                 Console.WriteLine($"Error al escribir en el archivo: {ex.Message}");
             }
+        }
+
+        private static void Play()
+        {
+            if (_teams.Where(x=>x.Value.Players.Any()).Count()>1)
+            {
+                (Team guest, Team house) teams = GetTeams();
+            }
+        }
+
+        private static (Team guest, Team house) GetTeams()
+        {
+            throw new NotImplementedException();
         }
 
         private static string ReadConsoleWord(string text)
