@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\Card.cs" />
+    <Compile Include="Class\CardGame.cs" />
     <Compile Include="Class\Deck.cs" />
     <Compile Include="Class\Player.cs" />
     <Compile Include="Program.cs" />
