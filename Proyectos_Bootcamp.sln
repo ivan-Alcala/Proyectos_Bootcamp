@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake", "snake\Snake.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ficheros", "ficheros\Ficheros.csproj", "{22EFAFAE-5E67-422D-B8E9-BCA78A206F76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POO", "POO\POO.csproj", "{E706EE62-6893-4AA6-907F-DBC30A38419F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{22EFAFAE-5E67-422D-B8E9-BCA78A206F76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22EFAFAE-5E67-422D-B8E9-BCA78A206F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22EFAFAE-5E67-422D-B8E9-BCA78A206F76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E706EE62-6893-4AA6-907F-DBC30A38419F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E706EE62-6893-4AA6-907F-DBC30A38419F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E706EE62-6893-4AA6-907F-DBC30A38419F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E706EE62-6893-4AA6-907F-DBC30A38419F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
