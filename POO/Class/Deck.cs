@@ -46,5 +46,17 @@ namespace POO.Class
             }
             return null;
         }
+
+        // Robar una carta en una posición específica
+        public Card DrawCardAtPosition(int position)
+        {
+            if (position >= 0 && position < cards.Count)
+            {
+                Card card = cards[position];
+                cards.RemoveAt(position);
+                return card;
+            }
+            return null;
+        }
     }
 }
