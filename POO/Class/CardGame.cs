@@ -6,5 +6,7 @@ namespace POO.Class
     {
         private List<Player> players;
         private Deck deck;
+
+
     }
 }

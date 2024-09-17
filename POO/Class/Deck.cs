@@ -33,5 +33,18 @@ namespace POO.Class
         {
             cards = cards.OrderBy(c => random.Next()).ToList();
         }
+
+        // Robar una carta al azar
+        public Card DrawRandomCard()
+        {
+            if (cards.Count > 0)
+            {
+                int index = random.Next(cards.Count);
+                Card card = cards[index];
+                cards.RemoveAt(index);
+                return card;
+            }
+            return null;
+        }
     }
 }
