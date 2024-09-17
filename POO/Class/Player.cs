@@ -74,5 +74,16 @@ namespace POO.Class
 
             Console.WriteLine(); // Espacio en blanco para separar la visualización
         }
+
+        public Card PlaySpecificCard(int index)
+        {
+            if (index >= 0 && index < Cards.Count)
+            {
+                Card card = Cards.ElementAt(index);
+                Cards = new Queue<Card>(Cards.Where((c, i) => i != index));
+                return card;
+            }
+            return null;
+        }
     }
 }
