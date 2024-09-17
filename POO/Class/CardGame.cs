@@ -42,7 +42,50 @@ namespace POO.Class
         // Lógica del juego
         public void PlayGame()
         {
-            // TODO
+            while (players.Count(p => !p.OutOfCards()) > 1)
+            {
+                List<Card> cardsInPlay = new List<Card>();
+                Player roundWinner = null;
+                Card winningCard = null;
+
+                Console.WriteLine("\nComienza una nueva ronda:");
+                foreach (var player in players)
+                {
+                    if (!player.OutOfCards())
+                    {
+                        Card card = player.PlayCard();
+                        cardsInPlay.Add(card);
+                        Console.WriteLine($"{player.Name} juega {card}");
+
+                        if (winningCard == null || card.Value > winningCard.Value)
+                        {
+                            roundWinner = player;
+                            winningCard = card;
+                        }
+                    }
+                }
+
+                // El ganador de la ronda se lleva todas las cartas jugadas
+                if (roundWinner != null)
+                {
+                    Console.WriteLine($"{roundWinner.Name} gana la ronda");
+                    roundWinner.WinHand(cardsInPlay);
+                }
+
+                // Eliminar jugadores sin cartas
+                players = players.Where(p => !p.OutOfCards()).ToList();
+                Console.ReadLine();
+            }
+
+            // Anunciar el ganador final
+            if (players.Count == 1)
+            {
+                Console.WriteLine($"\n{players[0].Name} ha ganado el juego!");
+            }
+            else
+            {
+                Console.WriteLine("\nNo hay más jugadores en juego.");
+            }
         }
     }
 }
