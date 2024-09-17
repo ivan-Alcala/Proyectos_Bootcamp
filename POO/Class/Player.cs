@@ -42,23 +42,47 @@ namespace POO.Class
             return Cards.Count == 0;
         }
 
-        // Mostrar todas las cartas del jugador de forma más legible
+        // Mostrar todas las cartas del jugador de forma más legible y visualmente atractiva
         public void ShowCards()
         {
-            var groupedCards = Cards.GroupBy(card => card.Suit);
+            var groupedCards = Cards.GroupBy(card => card.Suit)
+                                    .OrderBy(group => group.Key)
+                                    .ToList();
 
-            Console.WriteLine($"{Name}'s cartas:");
+            Console.WriteLine($"\n{Name}'s cartas:");
 
-            foreach (var group in groupedCards)
+            const int maxCardsPerColumn = 10;
+            const int columnWidth = 20;
+
+            for (int i = 0; i < maxCardsPerColumn; i++)
             {
-                Console.WriteLine($"\n{group.Key}:");
-                foreach (var card in group)
+                bool printedAnyCard = false;
+                foreach (var group in groupedCards)
                 {
-                    Console.WriteLine($"  {card.Value}");
+                    if (i < group.Count())
+                    {
+                        var card = group.ElementAt(i);
+                        Console.Write($"| {card.Value,2} de {card.Suit,-7} ".PadRight(columnWidth));
+                        printedAnyCard = true;
+                    }
+                    else
+                    {
+                        Console.Write("| ".PadRight(columnWidth));
+                    }
+                }
+                if (printedAnyCard)
+                {
+                    Console.WriteLine("|");
                 }
             }
 
-            Console.WriteLine(); // Espacio en blanco para separar la visualización
+            if (groupedCards.Any())
+            {
+                string horizontalLine = new string('-', columnWidth * groupedCards.Count + 1);
+                Console.WriteLine(horizontalLine);
+            }
+
+            Console.WriteLine($"Total de cartas: {Cards.Count}");
         }
 
         // Mostrar el resumen de las cartas del jugador
@@ -67,7 +91,7 @@ namespace POO.Class
             var groupedCards = Cards.GroupBy(card => card.Suit);
 
             Console.WriteLine($"{Name} tiene {Cards.Count} cartas:");
-            foreach (var group in groupedCards)
+            foreach (var group in groupedCards.OrderBy(g => g.Key))
             {
                 Console.WriteLine($"  {group.Key}: {group.Count()} cartas");
             }
@@ -75,6 +99,7 @@ namespace POO.Class
             Console.WriteLine(); // Espacio en blanco para separar la visualización
         }
 
+        // Jugar una carta específica
         public Card PlaySpecificCard(int index)
         {
             if (index >= 0 && index < Cards.Count)
