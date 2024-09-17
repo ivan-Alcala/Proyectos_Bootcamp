@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace POO.Class
 {
@@ -25,6 +26,12 @@ namespace POO.Class
                     cards.Add(new Card(suit, value));
                 }
             }
+        }
+
+        // Barajar las cartas
+        public void Shuffle()
+        {
+            cards = cards.OrderBy(c => random.Next()).ToList();
         }
     }
 }
