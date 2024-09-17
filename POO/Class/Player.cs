@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace POO.Class
 {
@@ -38,6 +39,16 @@ namespace POO.Class
         public bool OutOfCards()
         {
             return Cards.Count == 0;
+        }
+
+        // Mostrar todas las cartas del jugador
+        public void ShowCards()
+        {
+            Console.WriteLine($"{Name}'s cartas:");
+            foreach (var card in Cards)
+            {
+                Console.WriteLine(card);
+            }
         }
     }
 }

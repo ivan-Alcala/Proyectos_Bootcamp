@@ -34,6 +34,13 @@ namespace POO.Class
             }
 
             DealCards();
+
+            // Mostrar todas las cartas de cada jugador al principio
+            Console.WriteLine("\nCartas de los jugadores al inicio del juego:");
+            foreach (var player in players)
+            {
+                player.ShowCards();
+            }
         }
 
         // Repartir las cartas entre los jugadores
@@ -85,6 +92,13 @@ namespace POO.Class
 
                 // Eliminar jugadores sin cartas
                 players = players.Where(p => !p.OutOfCards()).ToList();
+            }
+
+            // Mostrar todas las cartas de cada jugador al final
+            Console.WriteLine("\nCartas de los jugadores al final del juego:");
+            foreach (var player in players)
+            {
+                player.ShowCards();
             }
 
             // Anunciar el ganador final
