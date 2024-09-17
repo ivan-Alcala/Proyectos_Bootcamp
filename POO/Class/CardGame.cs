@@ -13,9 +13,12 @@ namespace POO.Class
 
         public CardGame(int numberOfPlayers, int maxRounds, bool includeHumanPlayer)
         {
-            if (numberOfPlayers < 1 || numberOfPlayers > 5)
+            int totalPlayers = includeHumanPlayer ? numberOfPlayers + 1 : numberOfPlayers;
+
+            if ((includeHumanPlayer && (numberOfPlayers < 1 || numberOfPlayers > 4)) ||
+                (!includeHumanPlayer && (numberOfPlayers < 2 || numberOfPlayers > 5)))
             {
-                throw new ArgumentException("El número de jugadores debe estar entre 1 y 5.");
+                throw new ArgumentException("Número de jugadores no válido.");
             }
 
             if (maxRounds <= 0)
@@ -145,31 +148,22 @@ namespace POO.Class
                 Console.WriteLine("3. Robar la carta superior de la baraja");
                 Console.WriteLine("4. Robar una carta de una posición específica de la baraja");
                 Console.WriteLine("5. Mostrar tu baraja");
-                Console.Write("Elige una opción: ");
 
-                if (int.TryParse(Console.ReadLine(), out int choice))
+                int choice = GetIntInput("Elige una opción: ", 1, 5);
+
+                switch (choice)
                 {
-                    switch (choice)
-                    {
-                        case 1:
-                            return PlayHumanCard();
-                        case 2:
-                            return DrawRandomCard();
-                        case 3:
-                            return DrawTopCard();
-                        case 4:
-                            return DrawSpecificCard();
-                        case 5:
-                            humanPlayer.ShowCards();
-                            break;
-                        default:
-                            Console.WriteLine("Opción no válida. Intenta de nuevo.");
-                            break;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Entrada no válida. Intenta de nuevo.");
+                    case 1:
+                        return PlayHumanCard();
+                    case 2:
+                        return DrawRandomCard();
+                    case 3:
+                        return DrawTopCard();
+                    case 4:
+                        return DrawSpecificCard();
+                    case 5:
+                        humanPlayer.ShowCards();
+                        break;
                 }
             }
         }
@@ -177,13 +171,8 @@ namespace POO.Class
         private Card PlayHumanCard()
         {
             humanPlayer.ShowCards();
-            Console.Write("Elige el número de la carta que quieres jugar: ");
-            if (int.TryParse(Console.ReadLine(), out int cardIndex) && cardIndex > 0 && cardIndex <= humanPlayer.Cards.Count)
-            {
-                return humanPlayer.PlaySpecificCard(cardIndex - 1);
-            }
-            Console.WriteLine("Selección no válida. Jugando la primera carta.");
-            return humanPlayer.PlayCard();
+            int cardIndex = GetIntInput("Elige el número de la carta que quieres jugar: ", 1, humanPlayer.Cards.Count) - 1;
+            return humanPlayer.PlaySpecificCard(cardIndex);
         }
 
         private Card DrawRandomCard()
@@ -218,25 +207,34 @@ namespace POO.Class
 
         private Card DrawSpecificCard()
         {
-            Console.Write("Elige la posición de la carta que quieres robar: ");
-            if (int.TryParse(Console.ReadLine(), out int position))
+            int position = GetIntInput("Elige la posición de la carta que quieres robar: ", 1, deck.RemainingCards());
+            Card card = deck.DrawCardAtPosition(position - 1);
+            if (card != null)
             {
-                Card card = deck.DrawCardAtPosition(position - 1);
-                if (card != null)
-                {
-                    humanPlayer.ReceiveCard(card);
-                    Console.WriteLine($"Has robado: {card}");
-                }
-                else
-                {
-                    Console.WriteLine("Posición no válida o no quedan cartas en la baraja.");
-                }
+                humanPlayer.ReceiveCard(card);
+                Console.WriteLine($"Has robado: {card}");
             }
             else
             {
-                Console.WriteLine("Entrada no válida.");
+                Console.WriteLine("No se pudo robar la carta de esa posición.");
             }
             return null;
+        }
+
+        private int GetIntInput(string prompt, int min, int max)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                if (int.TryParse(Console.ReadLine(), out int result))
+                {
+                    if (result >= min && result <= max)
+                    {
+                        return result;
+                    }
+                }
+                Console.WriteLine($"Entrada no válida. Por favor, introduce un número entre {min} y {max}.");
+            }
         }
     }
 }
