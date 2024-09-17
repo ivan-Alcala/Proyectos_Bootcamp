@@ -34,6 +34,18 @@ namespace POO.Class
             cards = cards.OrderBy(c => random.Next()).ToList();
         }
 
+        // Robar la carta superior de la baraja
+        public Card DrawCard()
+        {
+            if (cards.Count > 0)
+            {
+                Card card = cards[0];
+                cards.RemoveAt(0);
+                return card;
+            }
+            return null;
+        }
+
         // Robar una carta al azar
         public Card DrawRandomCard()
         {
@@ -64,6 +76,5 @@ namespace POO.Class
         {
             return cards.Count;
         }
-
     }
 }
