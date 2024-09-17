@@ -1,11 +1,19 @@
 ﻿namespace POO.Class
 {
+    public enum Suit
+    {
+        Oros,
+        Copas,
+        Espadas,
+        Bastos
+    }
+
     public class Card
     {
-        public string Suit { get; private set; }
+        public Suit Suit { get; private set; }
         public int Value { get; private set; }
 
-        public Card(string suit, int value)
+        public Card(Suit suit, int value)
         {
             Suit = suit;
             Value = value;
