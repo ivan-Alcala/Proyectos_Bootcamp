@@ -11,8 +11,12 @@ namespace POO
             Console.Write("Ingresa el número de jugadores (2-5): ");
             int numberOfPlayers = int.Parse(Console.ReadLine());
 
-            CardGame game = new CardGame(numberOfPlayers);
+            Console.Write("Ingresa el número máximo de rondas: ");
+            int maxRounds = int.Parse(Console.ReadLine());
+
+            CardGame game = new CardGame(numberOfPlayers, maxRounds);
             game.PlayGame();
+            Console.ReadLine();
         }
     }
 }

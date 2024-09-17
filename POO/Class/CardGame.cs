@@ -8,17 +8,25 @@ namespace POO.Class
     {
         private List<Player> players;
         private Deck deck;
+        private int maxRounds;
 
-        public CardGame(int numberOfPlayers)
+        public CardGame(int numberOfPlayers, int maxRounds)
         {
             if (numberOfPlayers < 2 || numberOfPlayers > 5)
             {
                 throw new ArgumentException("El número de jugadores debe estar entre 2 y 5.");
             }
 
+            if (maxRounds <= 0)
+            {
+                throw new ArgumentException("El número máximo de rondas debe ser mayor que 0.");
+            }
+
             players = new List<Player>();
             deck = new Deck();
             deck.Shuffle();
+
+            this.maxRounds = maxRounds;
 
             for (int i = 1; i <= numberOfPlayers; i++)
             {
@@ -42,13 +50,16 @@ namespace POO.Class
         // Lógica del juego
         public void PlayGame()
         {
-            while (players.Count(p => !p.OutOfCards()) > 1)
+            int roundsPlayed = 0;
+
+            while (players.Count(p => !p.OutOfCards()) > 1 && roundsPlayed < maxRounds)
             {
+                roundsPlayed++;
                 List<Card> cardsInPlay = new List<Card>();
                 Player roundWinner = null;
                 Card winningCard = null;
 
-                Console.WriteLine("\nComienza una nueva ronda:");
+                Console.WriteLine($"\nRonda {roundsPlayed}:");
                 foreach (var player in players)
                 {
                     if (!player.OutOfCards())
@@ -74,13 +85,16 @@ namespace POO.Class
 
                 // Eliminar jugadores sin cartas
                 players = players.Where(p => !p.OutOfCards()).ToList();
-                Console.ReadLine();
             }
 
             // Anunciar el ganador final
             if (players.Count == 1)
             {
                 Console.WriteLine($"\n{players[0].Name} ha ganado el juego!");
+            }
+            else if (roundsPlayed >= maxRounds)
+            {
+                Console.WriteLine($"\nSe ha alcanzado el límite de rondas ({maxRounds}). El juego ha terminado.");
             }
             else
             {
