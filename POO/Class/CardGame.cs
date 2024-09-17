@@ -35,11 +35,11 @@ namespace POO.Class
 
             DealCards();
 
-            // Mostrar todas las cartas de cada jugador al principio
-            Console.WriteLine("\nCartas de los jugadores al inicio del juego:");
+            // Mostrar resumen de las cartas de cada jugador al principio
+            Console.WriteLine("\nResumen de cartas de los jugadores al inicio del juego:");
             foreach (var player in players)
             {
-                player.ShowCards();
+                player.ShowCardSummary();
             }
         }
 
@@ -94,11 +94,11 @@ namespace POO.Class
                 players = players.Where(p => !p.OutOfCards()).ToList();
             }
 
-            // Mostrar todas las cartas de cada jugador al final
-            Console.WriteLine("\nCartas de los jugadores al final del juego:");
+            // Mostrar resumen de las cartas de cada jugador al final
+            Console.WriteLine("\nResumen de cartas de los jugadores al final del juego:");
             foreach (var player in players)
             {
-                player.ShowCards();
+                player.ShowCardSummary();
             }
 
             // Anunciar el ganador final

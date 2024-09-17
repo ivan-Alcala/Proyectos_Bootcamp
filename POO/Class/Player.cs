@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace POO.Class
 {
@@ -41,14 +42,37 @@ namespace POO.Class
             return Cards.Count == 0;
         }
 
-        // Mostrar todas las cartas del jugador
+        // Mostrar todas las cartas del jugador de forma más legible
         public void ShowCards()
         {
+            var groupedCards = Cards.GroupBy(card => card.Suit);
+
             Console.WriteLine($"{Name}'s cartas:");
-            foreach (var card in Cards)
+
+            foreach (var group in groupedCards)
             {
-                Console.WriteLine(card);
+                Console.WriteLine($"\n{group.Key}:");
+                foreach (var card in group)
+                {
+                    Console.WriteLine($"  {card.Value}");
+                }
             }
+
+            Console.WriteLine(); // Espacio en blanco para separar la visualización
+        }
+
+        // Mostrar el resumen de las cartas del jugador
+        public void ShowCardSummary()
+        {
+            var groupedCards = Cards.GroupBy(card => card.Suit);
+
+            Console.WriteLine($"{Name} tiene {Cards.Count} cartas:");
+            foreach (var group in groupedCards)
+            {
+                Console.WriteLine($"  {group.Key}: {group.Count()} cartas");
+            }
+
+            Console.WriteLine(); // Espacio en blanco para separar la visualización
         }
     }
 }
