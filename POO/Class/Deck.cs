@@ -58,5 +58,12 @@ namespace POO.Class
             }
             return null;
         }
+
+        // Devolver el número de cartas restantes en la baraja
+        public int RemainingCards()
+        {
+            return cards.Count;
+        }
+
     }
 }
