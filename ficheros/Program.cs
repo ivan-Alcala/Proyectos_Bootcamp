@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Eventing.Reader;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Ficheros
 {
@@ -19,6 +18,7 @@ namespace Ficheros
         // Diccionario para almacenar los equipos
         static Dictionary<string, Team> _teams = new Dictionary<string, Team>();
         static string file = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\equipos.txt";
+        static Random random = new Random();
 
         static void Main()
         {
@@ -240,8 +240,7 @@ Seleccione una opción: ");
             if (_teams.Where(x => x.Value.Players.Any()).Count() > 1)
             {
                 (string guestName, string houseName) teams = GetTeams();
-                Random random = new Random();
-                int scoreGuest = random.Next(0,10);
+                int scoreGuest = random.Next(0, 10);
                 int scoreHouse = random.Next(0, 10);
                 string result = "";
 
@@ -251,7 +250,7 @@ Seleccione una opción: ");
                     _teams[teams.houseName].Score += 1;
                     result = "Empate";
                 }
-                else if(scoreHouse>scoreGuest)
+                else if (scoreHouse > scoreGuest)
                 {
                     _teams[teams.guestName].Score += -2;
                     _teams[teams.houseName].Score += 2;
@@ -277,7 +276,6 @@ Seleccione una opción: ");
 
         private static (string guestName, string houseName) GetTeams()
         {
-            Random random = new Random();
             if (_teams.Count < 2)
             {
                 Console.WriteLine("Debe haber al menos dos equipos para realizar un enfrentamiento.");
