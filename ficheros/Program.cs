@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.Eventing.Reader;
+using System.Linq;
 
 namespace Ficheros
 {
@@ -34,6 +35,7 @@ namespace Ficheros
 2. Dar de baja equipo
 3. Modificar puntuación de equipo
 4. Mostrar equipos
+5. Iniciar partida
 0. Salir
 Seleccione una opción: ");
 
@@ -71,6 +73,10 @@ Seleccione una opción: ");
                 case 4:
                     ShowTeams(); // Mostrar equipos
                     break;
+                case 5:
+                    Play(); // Mostrar equipos
+                    break;
+
                 case 0:
                     Console.WriteLine("Saliendo del programa...");
                     break;
@@ -144,8 +150,7 @@ Seleccione una opción: ");
                     Console.WriteLine($"Equipo '{name}' eliminado exitosamente.");
                     break;
                 }
-                else
-                    Console.WriteLine("El equipo no existe. Intente con otro nombre.");
+                Console.WriteLine("El equipo no existe. Intente con otro nombre.");
             }
         }
 
@@ -234,11 +239,43 @@ Seleccione una opción: ");
         {
             if (_teams.Where(x=>x.Value.Players.Any()).Count()>1)
             {
-                (Team guest, Team house) teams = GetTeams();
+                (string guestName, string houseName) teams = GetTeams();
+                Random random = new Random();
+                int scoreGuest = random.Next(0,10);
+                int scoreHouse = random.Next(0, 10);
+                string result = "";
+
+                if (scoreHouse == scoreGuest)
+                {
+                    _teams[teams.guestName].Score += 1;
+                    _teams[teams.houseName].Score += 1;
+                    result = "Empate";
+                }
+                else if(scoreHouse>scoreGuest)
+                {
+                    _teams[teams.guestName].Score += -2;
+                    _teams[teams.houseName].Score += 2;
+                    result = $"Ganador {teams.houseName}";
+                }
+                else
+                {
+                    _teams[teams.guestName].Score += 2;
+                    _teams[teams.houseName].Score += -2;
+                    result = $"Ganador {teams.guestName}";
+                }
+
+                Console.WriteLine($@"Resultado del partido 
+{teams.guestName}
+{scoreGuest} goles
+{teams.houseName}
+{scoreHouse} goles
+{result}");
             }
+            else
+                Console.WriteLine("No hay equipos o jugadores para jugar la partida");
         }
 
-        private static (Team guest, Team house) GetTeams()
+        private static (string guestName, string houseName) GetTeams()
         {
             throw new NotImplementedException();
         }
