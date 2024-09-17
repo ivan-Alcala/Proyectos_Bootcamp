@@ -237,7 +237,7 @@ Seleccione una opción: ");
 
         private static void Play()
         {
-            if (_teams.Where(x=>x.Value.Players.Any()).Count()>1)
+            if (_teams.Where(x => x.Value.Players.Any()).Count() > 1)
             {
                 (string guestName, string houseName) teams = GetTeams();
                 Random random = new Random();
@@ -277,8 +277,32 @@ Seleccione una opción: ");
 
         private static (string guestName, string houseName) GetTeams()
         {
-            throw new NotImplementedException();
+            Random random = new Random();
+            if (_teams.Count < 2)
+            {
+                Console.WriteLine("Debe haber al menos dos equipos para realizar un enfrentamiento.");
+                return (null, null);
+            }
+
+            // Seleccionar equipos aleatorios hasta que ambos tengan jugadores
+            List<string> teamNames = _teams.Keys.ToList();
+            string team1Name = null;
+            string team2Name = null;
+
+            // Asegurarse de que ambos equipos tengan al menos un jugador
+            while (team1Name == null || _teams[team1Name].Players.Count == 0)
+            {
+                team1Name = teamNames[random.Next(teamNames.Count)];
+            }
+
+            do
+            {
+                team2Name = teamNames[random.Next(teamNames.Count)];
+            } while (team1Name == team2Name || _teams[team2Name].Players.Count == 0);
+
+            return (team1Name, team2Name);
         }
+
 
         private static string ReadConsoleWord(string text)
         {
