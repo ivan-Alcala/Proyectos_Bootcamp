@@ -54,6 +54,23 @@ namespace POO.Class
                 players[currentPlayer].ReceiveCard(deck.DrawCard());
                 currentPlayer = (currentPlayer + 1) % players.Count;
             }
+
+            // Equilibrar el número de cartas entre los jugadores
+            BalanceCards();
+        }
+
+        // Equilibrar el número de cartas entre los jugadores
+        private void BalanceCards()
+        {
+            int minCards = players.Min(p => p.Cards.Count);
+
+            foreach (var player in players)
+            {
+                while (player.Cards.Count > minCards)
+                    player.RemoveExtraCard();
+            }
+
+            Console.WriteLine("Se han equilibrado las cartas entre los jugadores.");
         }
 
         // Lógica del juego

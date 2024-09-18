@@ -107,5 +107,14 @@ namespace POO.Class
             }
             return null;
         }
+
+        // Remover una carta extra
+        public void RemoveExtraCard()
+        {
+            if (Cards.Count > 0)
+            {
+                Cards.Dequeue();
+            }
+        }
     }
 }
