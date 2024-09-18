@@ -12,16 +12,16 @@ namespace POO.Class
         public Deck()
         {
             cards = new List<Card>();
-            Suit[] suits = (Suit[])Enum.GetValues(typeof(Suit));
+            Suit[] esuits = (Suit[])Enum.GetValues(typeof(Suit));
 
             // Crear una baraja española de 40 cartas (sin 8 y 9)
-            foreach (Suit suit in suits)
+            foreach (Suit esuit in esuits)
             {
                 for (int value = 1; value <= 7; value++)
-                    cards.Add(new Card(suit, value));
+                    cards.Add(new Card(esuit, value));
 
                 for (int value = 10; value <= 12; value++)
-                    cards.Add(new Card(suit, value));
+                    cards.Add(new Card(esuit, value));
             }
         }
 

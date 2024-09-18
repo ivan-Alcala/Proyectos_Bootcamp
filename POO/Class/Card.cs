@@ -10,18 +10,18 @@
 
     public class Card
     {
-        public Suit Suit { get; private set; }
+        public Suit eSuit { get; private set; }
         public int Value { get; private set; }
 
-        public Card(Suit suit, int value)
+        public Card(Suit esuit, int value)
         {
-            Suit = suit;
+            eSuit = esuit;
             Value = value;
         }
 
         public override string ToString()
         {
-            return $"{Value} de {Suit}";
+            return $"{Value} de {eSuit}";
         }
     }
 }
