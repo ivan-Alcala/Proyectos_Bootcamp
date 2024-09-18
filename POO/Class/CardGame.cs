@@ -84,6 +84,7 @@ namespace POO.Class
                 Console.WriteLine($"\nRonda {roundsPlayed}:");
 
                 PlayRound();
+                CheckForLosers();
             }
 
             // Mostrar resumen de las cartas de cada jugador al final
@@ -116,7 +117,8 @@ namespace POO.Class
                 }
             }
 
-            if (cardsInPlay.Count == 0) return;
+            if (cardsInPlay.Count == 0)
+                return;
 
             int highestValue = cardsInPlay.Max(c => c.Value);
             var winnersAndCards = playerCards.Where(pc => pc.Value.Value == highestValue).ToList();
@@ -129,13 +131,7 @@ namespace POO.Class
                 winner.WinHand(cardsInPlay);
             }
             else
-            {
-                // Empate, iniciar desempate
-                ResolveWinner(winnersAndCards, cardsInPlay);
-            }
-
-            // Eliminar jugadores sin cartas
-            players = players.Where(p => !p.OutOfCards()).ToList();
+                ResolveWinner(winnersAndCards, cardsInPlay); // Empate, iniciar desempate
         }
 
         private void ResolveWinner(List<KeyValuePair<Player, Card>> tiedPlayers, List<Card> cardsInPlay)
@@ -159,7 +155,8 @@ namespace POO.Class
                     }
                 }
 
-                if (tiebreakPlayerCards.Count == 0) break;
+                if (tiebreakPlayerCards.Count == 0)
+                    break;
 
                 int highestTiebreakValue = tiebreakPlayerCards.Values.Max(c => c.Value);
                 var tiebreakWinnersAndCards = tiebreakPlayerCards.Where(pc => pc.Value.Value == highestTiebreakValue).ToList();
@@ -178,6 +175,16 @@ namespace POO.Class
                     Console.WriteLine("Continúa el desempate.");
                     tiedPlayers = tiebreakWinnersAndCards;
                 }
+            }
+        }
+
+        private void CheckForLosers()
+        {
+            List<Player> losers = players.Where(p => p.OutOfCards()).ToList();
+            foreach (var loser in losers)
+            {
+                Console.WriteLine($"\n¡{loser.Name} se ha quedado sin cartas y ha perdido el juego!");
+                players.Remove(loser);
             }
         }
 
