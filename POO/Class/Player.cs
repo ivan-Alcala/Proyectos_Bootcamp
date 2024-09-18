@@ -45,7 +45,7 @@ namespace POO.Class
         {
             var cardList = Cards.ToList(); // Convertimos la Queue a List para acceder por índice
             var groupedCards = cardList.Select((card, index) => new { Card = card, Index = index })
-                                       .GroupBy(item => item.Card.eSuit)
+                                       .GroupBy(item => item.Card.Suit)
                                        .OrderBy(group => group.Key)
                                        .ToList();
 
@@ -70,7 +70,7 @@ namespace POO.Class
                     if (i < group.Count())
                     {
                         var item = group.ElementAt(i);
-                        Console.Write($"| [{item.Index + 1,2}] {item.Card.Value,2} de {item.Card.eSuit,-7} ".PadRight(columnWidth));
+                        Console.Write($"| [{item.Index + 1,2}] {item.Card.Value,2} de {item.Card.Suit,-7} ".PadRight(columnWidth));
                         printedAnyCard = true;
                     }
                     else
@@ -87,7 +87,7 @@ namespace POO.Class
         // Mostrar el resumen de las cartas del jugador
         public void ShowCardSummary()
         {
-            var groupedCards = Cards.GroupBy(card => card.eSuit);
+            var groupedCards = Cards.GroupBy(card => card.Suit);
             Console.WriteLine($"{Name} tiene {Cards.Count} cartas:");
 
             foreach (var group in groupedCards.OrderBy(g => g.Key))
