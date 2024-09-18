@@ -70,7 +70,7 @@ namespace POO.Class
                     if (i < group.Count())
                     {
                         var item = group.ElementAt(i);
-                        Console.Write($"| [{item.Index,2}] {item.Card.Value,2} de {item.Card.Suit,-7} ".PadRight(columnWidth));
+                        Console.Write($"| [{item.Index + 1,2}] {item.Card.Value,2} de {item.Card.Suit,-7} ".PadRight(columnWidth));
                         printedAnyCard = true;
                     }
                     else
