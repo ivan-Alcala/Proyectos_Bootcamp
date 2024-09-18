@@ -122,13 +122,13 @@ namespace POO.Class
         {
             while (true)
             {
-                Console.WriteLine(
-$"Opciones:",
-"1. Jugar una carta",
-"2. Robar una carta aleatoria de la baraja",
-"3. Robar la carta superior de la baraja",
-"4. Robar una carta de una posición específica de la baraja",
-"5. Mostrar tu baraja");
+                Console.WriteLine(@"
+Opciones:
+1. Jugar una carta
+2. Robar una carta aleatoria de la baraja
+3. Robar la carta superior de la baraja
+4. Robar una carta de una posición específica de la baraja
+5. Mostrar tu baraja");
 
                 int choice = GetIntInput("Elige una opción: ", 1, 5);
 
