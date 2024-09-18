@@ -6,8 +6,8 @@ namespace POO.Class
 {
     public class Deck
     {
-        private List<Card> cards;
-        private static Random random = new Random();
+        List<Card> cards;
+        static Random random = new Random();
 
         public Deck()
         {

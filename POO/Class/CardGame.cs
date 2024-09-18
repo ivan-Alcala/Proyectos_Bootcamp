@@ -6,10 +6,10 @@ namespace POO.Class
 {
     public class CardGame
     {
-        private List<Player> players;
-        private Deck deck;
-        private int maxRounds;
-        private Player humanPlayer;
+        List<Player> players;
+        Deck deck;
+        int maxRounds;
+        Player humanPlayer;
 
         public CardGame(int numberOfPlayers, int maxRounds, bool includeHumanPlayer)
         {
@@ -17,14 +17,10 @@ namespace POO.Class
 
             if ((includeHumanPlayer && (numberOfPlayers < 1 || numberOfPlayers > 4)) ||
                 (!includeHumanPlayer && (numberOfPlayers < 2 || numberOfPlayers > 5)))
-            {
                 throw new ArgumentException("Número de jugadores no válido.");
-            }
 
             if (maxRounds <= 0)
-            {
                 throw new ArgumentException("El número máximo de rondas debe ser mayor que 0.");
-            }
 
             players = new List<Player>();
             deck = new Deck();
@@ -33,9 +29,7 @@ namespace POO.Class
             this.maxRounds = maxRounds;
 
             for (int i = 1; i <= numberOfPlayers; i++)
-            {
                 players.Add(new Player($"Jugador {i}"));
-            }
 
             if (includeHumanPlayer)
             {
@@ -48,9 +42,7 @@ namespace POO.Class
             // Mostrar resumen de las cartas de cada jugador al principio
             Console.WriteLine("\nResumen de cartas de los jugadores al inicio del juego:");
             foreach (var player in players)
-            {
                 player.ShowCardSummary();
-            }
         }
 
         // Repartir las cartas entre los jugadores
@@ -83,13 +75,9 @@ namespace POO.Class
                     {
                         Card card;
                         if (player == humanPlayer)
-                        {
                             card = GetHumanPlayerAction();
-                        }
                         else
-                        {
                             card = player.PlayCard();
-                        }
 
                         if (card != null)
                         {
@@ -119,23 +107,15 @@ namespace POO.Class
             // Mostrar resumen de las cartas de cada jugador al final
             Console.WriteLine("\nResumen de cartas de los jugadores al final del juego:");
             foreach (var player in players)
-            {
                 player.ShowCardSummary();
-            }
 
             // Anunciar el ganador final
             if (players.Count == 1)
-            {
                 Console.WriteLine($"\n{players[0].Name} ha ganado el juego!");
-            }
             else if (roundsPlayed >= maxRounds)
-            {
                 Console.WriteLine($"\nSe ha alcanzado el límite de rondas ({maxRounds}). El juego ha terminado.");
-            }
             else
-            {
                 Console.WriteLine("\nNo hay más jugadores en juego.");
-            }
         }
 
         private Card GetHumanPlayerAction()
