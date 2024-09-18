@@ -40,17 +40,27 @@ namespace POO.Class
             return Cards.Count == 0;
         }
 
-        // Mostrar todas las cartas del jugador de forma más legible y visualmente atractiva
+        // Mostrar todas las cartas del jugador de forma más legible y visualmente atractiva, incluyendo la posición de cada carta
         public void ShowCards()
         {
-            var groupedCards = Cards.GroupBy(card => card.Suit)
-                                    .OrderBy(group => group.Key)
-                                    .ToList();
+            var cardList = Cards.ToList(); // Convertimos la Queue a List para acceder por índice
+            var groupedCards = cardList.Select((card, index) => new { Card = card, Index = index })
+                                       .GroupBy(item => item.Card.Suit)
+                                       .OrderBy(group => group.Key)
+                                       .ToList();
 
             Console.WriteLine($"\n{Name}'s cartas:");
 
             const int maxCardsPerColumn = 10;
-            const int columnWidth = 20;
+            const int columnWidth = 25;
+
+            // Imprimir encabezados de columnas
+            foreach (var group in groupedCards)
+                Console.Write($"| {group.Key,-15} ".PadRight(columnWidth));
+            Console.WriteLine("|");
+
+            string horizontalLine = new string('-', columnWidth * groupedCards.Count + 1);
+            Console.WriteLine(horizontalLine);
 
             for (int i = 0; i < maxCardsPerColumn; i++)
             {
@@ -59,24 +69,18 @@ namespace POO.Class
                 {
                     if (i < group.Count())
                     {
-                        var card = group.ElementAt(i);
-                        Console.Write($"| {card.Value,2} de {card.Suit,-7} ".PadRight(columnWidth));
+                        var item = group.ElementAt(i);
+                        Console.Write($"| [{item.Index,2}] {item.Card.Value,2} de {item.Card.Suit,-7} ".PadRight(columnWidth));
                         printedAnyCard = true;
                     }
                     else
                         Console.Write("| ".PadRight(columnWidth));
                 }
-
                 if (printedAnyCard)
                     Console.WriteLine("|");
             }
 
-            if (groupedCards.Any())
-            {
-                string horizontalLine = new string('-', columnWidth * groupedCards.Count + 1);
-                Console.WriteLine(horizontalLine);
-            }
-
+            Console.WriteLine(horizontalLine);
             Console.WriteLine($"Total de cartas: {Cards.Count}");
         }
 
