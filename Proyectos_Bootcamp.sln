@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake", "snake\Snake.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ficheros", "ficheros\Ficheros.csproj", "{22EFAFAE-5E67-422D-B8E9-BCA78A206F76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POO", "POO\POO.csproj", "{E706EE62-6893-4AA6-907F-DBC30A38419F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POO_Cards", "POO\POO_Cards.csproj", "{E706EE62-6893-4AA6-907F-DBC30A38419F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
