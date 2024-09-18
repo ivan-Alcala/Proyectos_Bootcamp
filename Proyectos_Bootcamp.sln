@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ficheros", "ficheros\Ficher
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POO_Cards", "POO\POO_Cards.csproj", "{E706EE62-6893-4AA6-907F-DBC30A38419F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POO_Poker", "POO_Poker\POO_Poker.csproj", "{F0136EB4-D698-4D03-AEA9-5F44702381E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{E706EE62-6893-4AA6-907F-DBC30A38419F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E706EE62-6893-4AA6-907F-DBC30A38419F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E706EE62-6893-4AA6-907F-DBC30A38419F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0136EB4-D698-4D03-AEA9-5F44702381E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0136EB4-D698-4D03-AEA9-5F44702381E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0136EB4-D698-4D03-AEA9-5F44702381E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0136EB4-D698-4D03-AEA9-5F44702381E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
