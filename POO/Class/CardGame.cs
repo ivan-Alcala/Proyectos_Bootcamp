@@ -81,44 +81,9 @@ namespace POO.Class
             while (players.Count(p => !p.OutOfCards()) > 1 && roundsPlayed < maxRounds)
             {
                 roundsPlayed++;
-                List<Card> cardsInPlay = new List<Card>();
-                Player roundWinner = null;
-                Card winningCard = null;
-
                 Console.WriteLine($"\nRonda {roundsPlayed}:");
-                foreach (var player in players)
-                {
-                    if (!player.OutOfCards())
-                    {
-                        Card card;
-                        if (player == humanPlayer)
-                            card = GetHumanPlayerAction();
-                        else
-                            card = player.PlayCard();
 
-                        if (card != null)
-                        {
-                            cardsInPlay.Add(card);
-                            Console.WriteLine($"{player.Name} juega {card}");
-
-                            if (winningCard == null || card.Value > winningCard.Value)
-                            {
-                                roundWinner = player;
-                                winningCard = card;
-                            }
-                        }
-                    }
-                }
-
-                // El ganador de la ronda se lleva todas las cartas jugadas
-                if (roundWinner != null)
-                {
-                    Console.WriteLine($"{roundWinner.Name} gana la ronda");
-                    roundWinner.WinHand(cardsInPlay);
-                }
-
-                // Eliminar jugadores sin cartas
-                players = players.Where(p => !p.OutOfCards()).ToList();
+                PlayRound();
             }
 
             // Mostrar resumen de las cartas de cada jugador al final
@@ -133,6 +98,87 @@ namespace POO.Class
                 Console.WriteLine($"\nSe ha alcanzado el límite de rondas ({maxRounds}). El juego ha terminado.");
             else
                 Console.WriteLine("\nNo hay más jugadores en juego.");
+        }
+
+        private void PlayRound()
+        {
+            List<Card> cardsInPlay = new List<Card>();
+            Dictionary<Player, Card> playerCards = new Dictionary<Player, Card>();
+
+            foreach (var player in players.Where(p => !p.OutOfCards()))
+            {
+                Card card = (player == humanPlayer) ? GetHumanPlayerAction() : player.PlayCard();
+                if (card != null)
+                {
+                    cardsInPlay.Add(card);
+                    playerCards[player] = card;
+                    Console.WriteLine($"{player.Name} juega {card}");
+                }
+            }
+
+            if (cardsInPlay.Count == 0) return;
+
+            int highestValue = cardsInPlay.Max(c => c.Value);
+            var winnersAndCards = playerCards.Where(pc => pc.Value.Value == highestValue).ToList();
+
+            if (winnersAndCards.Count == 1)
+            {
+                // Un solo ganador
+                var winner = winnersAndCards[0].Key;
+                Console.WriteLine($"{winner.Name} gana la ronda");
+                winner.WinHand(cardsInPlay);
+            }
+            else
+            {
+                // Empate, iniciar desempate
+                ResolveWinner(winnersAndCards, cardsInPlay);
+            }
+
+            // Eliminar jugadores sin cartas
+            players = players.Where(p => !p.OutOfCards()).ToList();
+        }
+
+        private void ResolveWinner(List<KeyValuePair<Player, Card>> tiedPlayers, List<Card> cardsInPlay)
+        {
+            Console.WriteLine("Empate detectado. Iniciando ronda de desempate.");
+            List<Card> tiebreakCards = new List<Card>();
+
+            while (true)
+            {
+                Dictionary<Player, Card> tiebreakPlayerCards = new Dictionary<Player, Card>();
+
+                foreach (var playerCard in tiedPlayers)
+                {
+                    var player = playerCard.Key;
+                    Card card = (player == humanPlayer) ? GetHumanPlayerAction() : player.PlayCard();
+                    if (card != null)
+                    {
+                        tiebreakCards.Add(card);
+                        tiebreakPlayerCards[player] = card;
+                        Console.WriteLine($"{player.Name} juega {card} para el desempate");
+                    }
+                }
+
+                if (tiebreakPlayerCards.Count == 0) break;
+
+                int highestTiebreakValue = tiebreakPlayerCards.Values.Max(c => c.Value);
+                var tiebreakWinnersAndCards = tiebreakPlayerCards.Where(pc => pc.Value.Value == highestTiebreakValue).ToList();
+
+                if (tiebreakWinnersAndCards.Count == 1)
+                {
+                    // Ganador del desempate
+                    var winner = tiebreakWinnersAndCards[0].Key;
+                    Console.WriteLine($"{winner.Name} gana el desempate");
+                    cardsInPlay.AddRange(tiebreakCards);
+                    winner.WinHand(cardsInPlay);
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Continúa el desempate.");
+                    tiedPlayers = tiebreakWinnersAndCards;
+                }
+            }
         }
 
         private Card GetHumanPlayerAction()
