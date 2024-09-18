@@ -10,16 +10,12 @@ namespace POO
             Console.WriteLine("Bienvenido al juego de cartas!");
 
             bool includeHumanPlayer = GetYesNoInput("¿Quieres jugar? (S/N): ");
-
             int numberOfPlayers;
+
             if (includeHumanPlayer)
-            {
                 numberOfPlayers = GetIntInput("Ingresa el número de jugadores IA (1-4): ", 1, 4);
-            }
             else
-            {
                 numberOfPlayers = GetIntInput("Ingresa el número de jugadores (2-5): ", 2, 5);
-            }
 
             int maxRounds = GetIntInput("Ingresa el número máximo de rondas: ", 1, int.MaxValue);
 
@@ -43,8 +39,12 @@ namespace POO
             {
                 Console.Write(prompt);
                 string input = Console.ReadLine().Trim().ToUpper();
-                if (input == "S") return true;
-                if (input == "N") return false;
+
+                if (input == "S")
+                    return true;
+                if (input == "N")
+                    return false;
+
                 Console.WriteLine("Entrada no válida. Por favor, introduce S o N.");
             }
         }
@@ -54,13 +54,13 @@ namespace POO
             while (true)
             {
                 Console.Write(prompt);
+
                 if (int.TryParse(Console.ReadLine(), out int result))
                 {
                     if (result >= min && result <= max)
-                    {
                         return result;
-                    }
                 }
+
                 Console.WriteLine($"Entrada no válida. Por favor, introduce un número entre {min} y {max}.");
             }
         }

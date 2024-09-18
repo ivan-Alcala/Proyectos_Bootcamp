@@ -142,12 +142,13 @@ namespace POO.Class
         {
             while (true)
             {
-                Console.WriteLine("\nOpciones:");
-                Console.WriteLine("1. Jugar una carta");
-                Console.WriteLine("2. Robar una carta aleatoria de la baraja");
-                Console.WriteLine("3. Robar la carta superior de la baraja");
-                Console.WriteLine("4. Robar una carta de una posición específica de la baraja");
-                Console.WriteLine("5. Mostrar tu baraja");
+                Console.WriteLine(
+$"Opciones:",
+"1. Jugar una carta",
+"2. Robar una carta aleatoria de la baraja",
+"3. Robar la carta superior de la baraja",
+"4. Robar una carta de una posición específica de la baraja",
+"5. Mostrar tu baraja");
 
                 int choice = GetIntInput("Elige una opción: ", 1, 5);
 
@@ -178,15 +179,15 @@ namespace POO.Class
         private Card DrawRandomCard()
         {
             Card card = deck.DrawRandomCard();
+
             if (card != null)
             {
                 humanPlayer.ReceiveCard(card);
                 Console.WriteLine($"Has robado: {card}");
             }
             else
-            {
                 Console.WriteLine("No quedan cartas en la baraja.");
-            }
+
             return null;
         }
 
@@ -199,9 +200,8 @@ namespace POO.Class
                 Console.WriteLine($"Has robado: {card}");
             }
             else
-            {
                 Console.WriteLine("No quedan cartas en la baraja.");
-            }
+
             return null;
         }
 
@@ -209,15 +209,15 @@ namespace POO.Class
         {
             int position = GetIntInput("Elige la posición de la carta que quieres robar: ", 1, deck.RemainingCards());
             Card card = deck.DrawCardAtPosition(position - 1);
+
             if (card != null)
             {
                 humanPlayer.ReceiveCard(card);
                 Console.WriteLine($"Has robado: {card}");
             }
             else
-            {
                 Console.WriteLine("No se pudo robar la carta de esa posición.");
-            }
+
             return null;
         }
 
@@ -226,13 +226,13 @@ namespace POO.Class
             while (true)
             {
                 Console.Write(prompt);
+
                 if (int.TryParse(Console.ReadLine(), out int result))
                 {
                     if (result >= min && result <= max)
-                    {
                         return result;
-                    }
                 }
+
                 Console.WriteLine($"Entrada no válida. Por favor, introduce un número entre {min} y {max}.");
             }
         }

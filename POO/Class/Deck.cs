@@ -18,13 +18,10 @@ namespace POO.Class
             foreach (Suit suit in suits)
             {
                 for (int value = 1; value <= 7; value++)
-                {
                     cards.Add(new Card(suit, value));
-                }
+
                 for (int value = 10; value <= 12; value++)
-                {
                     cards.Add(new Card(suit, value));
-                }
             }
         }
 

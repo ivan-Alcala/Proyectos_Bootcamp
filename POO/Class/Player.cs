@@ -31,9 +31,7 @@ namespace POO.Class
         public void WinHand(List<Card> wonCards)
         {
             foreach (var card in wonCards)
-            {
                 Cards.Enqueue(card);
-            }
         }
 
         // Verificar si el jugador se quedó sin cartas
@@ -66,14 +64,11 @@ namespace POO.Class
                         printedAnyCard = true;
                     }
                     else
-                    {
                         Console.Write("| ".PadRight(columnWidth));
-                    }
                 }
+
                 if (printedAnyCard)
-                {
                     Console.WriteLine("|");
-                }
             }
 
             if (groupedCards.Any())
@@ -89,12 +84,10 @@ namespace POO.Class
         public void ShowCardSummary()
         {
             var groupedCards = Cards.GroupBy(card => card.Suit);
-
             Console.WriteLine($"{Name} tiene {Cards.Count} cartas:");
+
             foreach (var group in groupedCards.OrderBy(g => g.Key))
-            {
                 Console.WriteLine($"  {group.Key}: {group.Count()} cartas");
-            }
 
             Console.WriteLine(); // Espacio en blanco para separar la visualización
         }
