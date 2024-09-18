@@ -112,9 +112,7 @@ namespace POO.Class
         public void RemoveExtraCard()
         {
             if (Cards.Count > 0)
-            {
                 Cards.Dequeue();
-            }
         }
     }
 }

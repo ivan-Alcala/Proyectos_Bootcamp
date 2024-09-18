@@ -13,15 +13,6 @@ namespace POO.Class
 
         public CardGame(int numberOfPlayers, int maxRounds, bool includeHumanPlayer)
         {
-            int totalPlayers = includeHumanPlayer ? numberOfPlayers + 1 : numberOfPlayers;
-
-            if ((includeHumanPlayer && (numberOfPlayers < 1 || numberOfPlayers > 4)) ||
-                (!includeHumanPlayer && (numberOfPlayers < 2 || numberOfPlayers > 5)))
-                throw new ArgumentException("Número de jugadores no válido.");
-
-            if (maxRounds <= 0)
-                throw new ArgumentException("El número máximo de rondas debe ser mayor que 0.");
-
             players = new List<Player>();
             deck = new Deck();
             deck.Shuffle();
