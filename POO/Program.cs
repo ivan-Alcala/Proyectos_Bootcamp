@@ -9,6 +9,24 @@ namespace POO
         {
             Console.WriteLine("Bienvenido al juego de cartas!");
 
+            // Selección del juego
+            Console.WriteLine("Selecciona el juego:");
+            Console.WriteLine("1. Cartas Españolas");
+            Console.WriteLine("2. Póker");
+            int gameChoice = GetIntInput("Elige 1 o 2: ", 1, 2);
+
+            if (gameChoice == 1)
+                PlaySpanishCardsGame();
+            else if (gameChoice == 2)
+                PlayPokerGame();
+
+            Console.WriteLine("Presiona Enter para salir...");
+            Console.ReadLine();
+        }
+
+        // Función para jugar cartas españolas
+        static void PlaySpanishCardsGame()
+        {
             bool includeHumanPlayer = GetYesNoInput("¿Quieres jugar? (S/N): ");
             int numberOfPlayers;
 
@@ -28,11 +46,16 @@ namespace POO
             {
                 Console.WriteLine($"Error al crear el juego: {e.Message}");
             }
-
-            Console.WriteLine("Presiona Enter para salir...");
-            Console.ReadLine();
         }
 
+        // Función para jugar póker (pendiente de implementar)
+        static void PlayPokerGame()
+        {
+            Console.WriteLine("Iniciando el juego de póker...");
+            // Aquí iría la lógica del póker, que se puede desarrollar en futuras clases y métodos.
+        }
+
+        // Función de entrada boolean
         static bool GetYesNoInput(string prompt)
         {
             while (true)
@@ -49,6 +72,7 @@ namespace POO
             }
         }
 
+        // Función de entrada numérica
         static int GetIntInput(string prompt, int min, int max)
         {
             while (true)
