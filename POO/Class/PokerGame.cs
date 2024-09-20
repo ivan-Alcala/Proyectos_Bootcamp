@@ -102,6 +102,14 @@ namespace POO.Class
 
             while (roundActive)
             {
+                // Verificar si solo queda un jugador activo
+                var activePlayers = players.Where(p => !p.IsFolded).ToList();
+                if (activePlayers.Count == 1)
+                {
+                    Console.WriteLine($"{activePlayers[0].Name} es el único jugador restante y gana la partida.");
+                    return; // Termina la ronda
+                }
+
                 Player player = players[playerIndex];
 
                 // Permitir que participen únicamente jugadores que no se hayan retirado
@@ -114,9 +122,9 @@ namespace POO.Class
                     Console.WriteLine($"Cartas comunitarias: {string.Join(", ", communityCards)}");
 
                     if (player.IsHuman)
-                        ProcesarApuestaHumano(player);
+                        ProcessHumanBet(player);
                     else
-                        ProcesarApuestaIA(player);
+                        ProcessIABet(player);
                 }
 
                 playerIndex = (playerIndex + 1) % players.Count;
@@ -128,7 +136,7 @@ namespace POO.Class
             ShowPot();
         }
 
-        private void ProcesarApuestaHumano(Player player)
+        private void ProcessHumanBet(Player player)
         {
             Console.WriteLine(@"
 Opciones:
@@ -160,7 +168,7 @@ Opciones:
             }
         }
 
-        private void ProcesarApuestaIA(Player player)
+        private void ProcessIABet(Player player)
         {
             Random rand = new Random();
             int aiChoice;
@@ -170,7 +178,7 @@ Opciones:
                 aiChoice = 5; // Fold
             else
                 // Elige entre las otras opciones (1-4)
-                aiChoice = rand.Next(1, 4);
+                aiChoice = rand.Next(1, 5);
 
             switch (aiChoice)
             {
