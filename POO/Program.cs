@@ -13,7 +13,7 @@ namespace POO
             Console.WriteLine("Selecciona el juego:");
             Console.WriteLine("1. Cartas Españolas");
             Console.WriteLine("2. Póker");
-            int gameChoice = GetIntInput("Elige 1 o 2: ", 1, 2);
+            int gameChoice = GetIntInput("Opción: ", 1, 2);
 
             if (gameChoice == 1)
                 PlaySpanishCardsGame();
@@ -28,18 +28,14 @@ namespace POO
         static void PlaySpanishCardsGame()
         {
             bool includeHumanPlayer = GetYesNoInput("¿Quieres jugar? (S/N): ");
-            int numberOfPlayers;
-
-            if (includeHumanPlayer)
-                numberOfPlayers = GetIntInput("Ingresa el número de jugadores IA (1-4): ", 1, 4);
-            else
-                numberOfPlayers = GetIntInput("Ingresa el número de jugadores (2-5): ", 2, 5);
+            int numberOfPlayers = includeHumanPlayer ? GetIntInput("Ingresa el número de jugadores IA (1-4): ", 1, 4)
+                                                     : GetIntInput("Ingresa el número de jugadores (2-5): ", 2, 5);
 
             int maxRounds = GetIntInput("Ingresa el número máximo de rondas: ", 1, int.MaxValue);
 
             try
             {
-                CardGame game = new CardGame(numberOfPlayers, maxRounds, includeHumanPlayer);
+                CardGame game = new CardGame(numberOfPlayers, maxRounds, includeHumanPlayer, "Spanish");
                 game.PlayGame();
             }
             catch (ArgumentException e)
@@ -48,11 +44,22 @@ namespace POO
             }
         }
 
-        // Función para jugar póker (pendiente de implementar)
+        // Función para jugar póker
         static void PlayPokerGame()
         {
-            Console.WriteLine("Iniciando el juego de póker...");
-            // Aquí iría la lógica del póker, que se puede desarrollar en futuras clases y métodos.
+            bool includeHumanPlayer = GetYesNoInput("¿Quieres jugar? (S/N): ");
+            int numberOfPlayers = includeHumanPlayer ? GetIntInput("Ingresa el número de jugadores IA (1-4): ", 1, 4)
+                                                     : GetIntInput("Ingresa el número de jugadores (2-5): ", 2, 5);
+
+            try
+            {
+                PokerGame game = new PokerGame(numberOfPlayers, includeHumanPlayer);
+                game.PlayGame();
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine($"Error al crear el juego: {e.Message}");
+            }
         }
 
         // Función de entrada boolean

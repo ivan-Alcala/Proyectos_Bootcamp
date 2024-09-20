@@ -6,16 +6,24 @@ namespace POO.Class
 {
     public class Deck
     {
-        List<Card> cards;
-        static Random random = new Random();
+        private List<Card> cards;
+        private static Random random = new Random();
 
-        public Deck()
+        public Deck(string gameType)
         {
             cards = new List<Card>();
-            eSuit[] suits = (eSuit[])Enum.GetValues(typeof(eSuit));
 
-            // Crear una baraja española de 40 cartas (sin 8 y 9)
-            foreach (eSuit suit in suits)
+            if (gameType == "Spanish")
+                LoadSpanishDeck();
+            else if (gameType == "Poker")
+                LoadPokerDeck();
+        }
+
+        private void LoadSpanishDeck()
+        {
+            eSpanishSuit[] suits = (eSpanishSuit[])Enum.GetValues(typeof(eSpanishSuit));
+
+            foreach (eSpanishSuit suit in suits)
             {
                 for (int value = 1; value <= 7; value++)
                     cards.Add(new Card(suit, value));
@@ -25,7 +33,20 @@ namespace POO.Class
             }
         }
 
-        // Barajar las cartas
+        private void LoadPokerDeck()
+        {
+            ePokerSuit[] suits = (ePokerSuit[])Enum.GetValues(typeof(ePokerSuit));
+
+            foreach (ePokerSuit suit in suits)
+            {
+                // Añadir cartas del 2 al A
+                for (int value = 2; value <= 14; value++)
+                {
+                    cards.Add(new Card(suit, value));  // Los valores 11, 12, 13 y 14 corresponden a J, Q, K y A
+                }
+            }
+        }
+
         public void Shuffle()
         {
             cards = cards.OrderBy(c => random.Next()).ToList();
@@ -51,18 +72,6 @@ namespace POO.Class
                 int index = random.Next(cards.Count);
                 Card card = cards[index];
                 cards.RemoveAt(index);
-                return card;
-            }
-            return null;
-        }
-
-        // Robar una carta en una posición específica
-        public Card DrawCardAtPosition(int position)
-        {
-            if (position >= 0 && position < cards.Count)
-            {
-                Card card = cards[position];
-                cards.RemoveAt(position);
                 return card;
             }
             return null;

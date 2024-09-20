@@ -6,15 +6,16 @@ namespace POO.Class
 {
     public class CardGame
     {
-        List<Player> players;
-        Deck deck;
-        int maxRounds;
-        Player humanPlayer;
+        private List<Player> players;
+        private Deck deck;
+        private int maxRounds;
+        private Player humanPlayer;
 
-        public CardGame(int numberOfPlayers, int maxRounds, bool includeHumanPlayer)
+        // Constructor que recibe el tipo de baraja
+        public CardGame(int numberOfPlayers, int maxRounds, bool includeHumanPlayer, string gameType)
         {
             players = new List<Player>();
-            deck = new Deck();
+            deck = new Deck(gameType);
             deck.Shuffle();
 
             this.maxRounds = maxRounds;
@@ -31,7 +32,7 @@ namespace POO.Class
             DealCards();
 
             // Mostrar resumen de las cartas de cada jugador al principio
-            Console.WriteLine("\nResumen de cartas de los jugadores al inicio del juego:");
+            Console.WriteLine("Resumen de cartas de los jugadores al inicio del juego:");
             foreach (var player in players)
                 player.ShowCardSummary();
         }
@@ -72,24 +73,24 @@ namespace POO.Class
             while (players.Count(p => !p.OutOfCards()) > 1 && roundsPlayed < maxRounds)
             {
                 roundsPlayed++;
-                Console.WriteLine($"\nRonda {roundsPlayed}:");
+                Console.WriteLine($"Ronda {roundsPlayed}:");
 
                 PlayRound();
                 CheckForLosers();
             }
 
             // Mostrar resumen de las cartas de cada jugador al final
-            Console.WriteLine("\nResumen de cartas de los jugadores al final del juego:");
+            Console.WriteLine("Resumen de cartas de los jugadores al final del juego:");
             foreach (var player in players)
                 player.ShowCardSummary();
 
             // Anunciar el ganador final
             if (players.Count == 1)
-                Console.WriteLine($"\n{players[0].Name} ha ganado el juego!");
+                Console.WriteLine($"{players[0].Name} ha ganado el juego!");
             else if (roundsPlayed >= maxRounds)
-                Console.WriteLine($"\nSe ha alcanzado el límite de rondas ({maxRounds}). El juego ha terminado.");
+                Console.WriteLine($"Se ha alcanzado el límite de rondas ({maxRounds}). El juego ha terminado.");
             else
-                Console.WriteLine("\nNo hay más jugadores en juego.");
+                Console.WriteLine("No hay más jugadores en juego.");
         }
 
         private void PlayRound()
@@ -174,7 +175,7 @@ namespace POO.Class
             List<Player> losers = players.Where(p => p.OutOfCards()).ToList();
             foreach (var loser in losers)
             {
-                Console.WriteLine($"\n¡{loser.Name} se ha quedado sin cartas y ha perdido el juego!");
+                Console.WriteLine($"¡{loser.Name} se ha quedado sin cartas y ha perdido el juego!");
                 players.Remove(loser);
             }
         }
@@ -188,10 +189,9 @@ Opciones:
 1. Jugar una carta
 2. Robar una carta aleatoria de la baraja
 3. Robar la carta superior de la baraja
-4. Robar una carta de una posición específica de la baraja
-5. Mostrar tu baraja");
+4. Mostrar tu baraja");
 
-                int choice = GetIntInput("Elige una opción: ", 1, 5);
+                int choice = GetIntInput("Elige una opción: ", 1, 4);
 
                 switch (choice)
                 {
@@ -202,8 +202,6 @@ Opciones:
                     case 3:
                         return DrawTopCard();
                     case 4:
-                        return DrawSpecificCard();
-                    case 5:
                         humanPlayer.ShowCards();
                         break;
                 }
@@ -242,22 +240,6 @@ Opciones:
             }
             else
                 Console.WriteLine("No quedan cartas en la baraja.");
-
-            return null;
-        }
-
-        private Card DrawSpecificCard()
-        {
-            int position = GetIntInput("Elige la posición de la carta que quieres robar: ", 1, deck.RemainingCards());
-            Card card = deck.DrawCardAtPosition(position - 1);
-
-            if (card != null)
-            {
-                humanPlayer.ReceiveCard(card);
-                Console.WriteLine($"Has robado: {card}");
-            }
-            else
-                Console.WriteLine("No se pudo robar la carta de esa posición.");
 
             return null;
         }

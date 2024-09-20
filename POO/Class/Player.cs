@@ -8,11 +8,23 @@ namespace POO.Class
     {
         public string Name { get; private set; }
         public Queue<Card> Cards { get; private set; }
+        public bool IsFolded { get; private set; }
+        public bool IsHuman { get; private set; }
+        private int chips;
+        public bool HasBetThisRound { get; private set; } // Nueva propiedad
 
-        public Player(string name)
+        public int Chips // Propiedad para acceder a las fichas del jugador
+        {
+            get { return chips; }
+        }
+
+        public Player(string name, bool isHuman = false)
         {
             Name = name;
+            IsHuman = isHuman;
             Cards = new Queue<Card>();
+            IsFolded = false;
+            chips = 1000; // Fichas iniciales
         }
 
         // Recibir una carta
@@ -49,7 +61,7 @@ namespace POO.Class
                                        .OrderBy(group => group.Key)
                                        .ToList();
 
-            Console.WriteLine($"\n{Name}'s cartas:");
+            Console.WriteLine($"{Name}'s cartas:");
 
             const int maxCardsPerColumn = 10;
             const int columnWidth = 25;
@@ -87,13 +99,10 @@ namespace POO.Class
         // Mostrar el resumen de las cartas del jugador
         public void ShowCardSummary()
         {
-            var groupedCards = Cards.GroupBy(card => card.Suit);
             Console.WriteLine($"{Name} tiene {Cards.Count} cartas:");
 
-            foreach (var group in groupedCards.OrderBy(g => g.Key))
-                Console.WriteLine($"  {group.Key}: {group.Count()} cartas");
-
-            Console.WriteLine(); // Espacio en blanco para separar la visualización
+            foreach (var card in Cards)
+                Console.WriteLine(@"    "+card.ToString());
         }
 
         // Jugar una carta específica
@@ -113,6 +122,53 @@ namespace POO.Class
         {
             if (Cards.Count > 0)
                 Cards.Dequeue();
+        }
+
+        // Métodos de apuesta
+        public void Bet(int amount)
+        {
+            if (amount <= chips)
+            {
+                chips -= amount;
+                HasBetThisRound = true; // Marcar que ha apostado
+            }
+            else
+                Console.WriteLine("No tienes suficientes fichas.");
+        }
+
+        public void ResetBetFlag()
+        {
+            HasBetThisRound = false;
+        }
+
+        public void Fold()
+        {
+            IsFolded = true;
+        }
+
+        public void SetPlayerColor(int playerIndex)
+        {
+            switch (playerIndex)
+            {
+                case 0:
+                    Console.ForegroundColor = ConsoleColor.Green; // Jugador humano
+                    break;
+                case 1:
+                    Console.ForegroundColor = ConsoleColor.Yellow; // Jugador 1
+                    break;
+                case 2:
+                    Console.ForegroundColor = ConsoleColor.Cyan; // Jugador 2
+                    break;
+                case 3:
+                    Console.ForegroundColor = ConsoleColor.Magenta; // Jugador 3
+                    break;
+                case 4:
+                    Console.ForegroundColor = ConsoleColor.Red; // Jugador 4
+                    break;
+                default:
+                    Console.ForegroundColor = ConsoleColor.White; // Colores por defecto para otros jugadores
+                    break;
+            }
         }
     }
 }
