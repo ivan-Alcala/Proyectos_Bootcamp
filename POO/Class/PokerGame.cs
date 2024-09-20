@@ -24,21 +24,18 @@ namespace POO.Class
             currentBet = 0;
             pot = 0;
             currentPlayerIndex = 0;
-
-            // Asignar ciegas
             smallBlindIndex = 0;
             bigBlindIndex = 1;
 
             // Crear jugadores
             for (int i = 1; i <= numberOfPlayers; i++)
-            {
-                if (i == 1 && includeHumanPlayer)
-                    players.Add(new Player($"Jugador Humano", isHuman: true));
-                else
-                    players.Add(new Player($"Jugador {i}", isHuman: false));
-            }
+                players.Add(i == 1 && includeHumanPlayer ? new Player($"Jugador Humano", true) : new Player($"Jugador {i}", false));
 
-            // Repartir cartas privadas a cada jugador
+            RepartirCartas();
+        }
+
+        private void RepartirCartas()
+        {
             foreach (var player in players)
             {
                 player.ReceiveCard(deck.DrawCard());
@@ -48,40 +45,50 @@ namespace POO.Class
 
         public void PlayGame()
         {
-            // Preflop (Small Blind, Big Blind)
             Console.ResetColor();
-            Console.WriteLine("\nPreflop:");
-            players[smallBlindIndex].Bet(10); // Small Blind apuesta 10
-            pot += 10;
-            players[bigBlindIndex].Bet(20); // Big Blind apuesta 20
-            pot += 20;
-            currentBet = 20; // La apuesta actual es igual a la Big Blind
-            BetRound(); // Ronda de apuestas
-
-            // Flop
-            Console.ResetColor();
-            Console.WriteLine("\nFlop:");
-            communityCards.Add(deck.DrawCard());
-            communityCards.Add(deck.DrawCard());
-            communityCards.Add(deck.DrawCard());
-            BetRound(); // Nueva ronda de apuestas
-
-            // Turn
-            Console.ResetColor();
-            Console.WriteLine("\nTurn:");
-            communityCards.Add(deck.DrawCard());
-            BetRound(); // Nueva ronda de apuestas
-
-            // River
-            Console.ResetColor();
-            Console.WriteLine("\nRiver:");
-            communityCards.Add(deck.DrawCard());
-            BetRound(); // Última ronda de apuestas
-
-            // Revelación de cartas
+            RealizarPreflop();
+            RealizarFlop();
+            RealizarTurn();
+            RealizarRiver();
             Console.ResetColor();
             RevealCards();
             DetermineWinner();
+        }
+
+        private void RealizarPreflop()
+        {
+            Console.WriteLine("\nPreflop:");
+            RealizarApuesta(smallBlindIndex, 10);
+            RealizarApuesta(bigBlindIndex, 20);
+            currentBet = 20;
+            BetRound();
+        }
+
+        private void RealizarFlop()
+        {
+            Console.WriteLine("\nFlop:");
+            communityCards.AddRange(new[] { deck.DrawCard(), deck.DrawCard(), deck.DrawCard() });
+            BetRound();
+        }
+
+        private void RealizarTurn()
+        {
+            Console.WriteLine("\nTurn:");
+            communityCards.Add(deck.DrawCard());
+            BetRound();
+        }
+
+        private void RealizarRiver()
+        {
+            Console.WriteLine("\nRiver:");
+            communityCards.Add(deck.DrawCard());
+            BetRound();
+        }
+
+        private void RealizarApuesta(int playerIndex, int amount)
+        {
+            players[playerIndex].Bet(amount);
+            pot += amount;
         }
 
         public void BetRound()
@@ -92,18 +99,31 @@ namespace POO.Class
             while (roundActive)
             {
                 Player player = players[playerIndex];
-                player.SetPlayerColor(playerIndex); // Establecer el color según el jugador
-
+                player.SetPlayerColor(playerIndex);
                 Console.WriteLine($"Turno del jugador {player.Name}:");
 
-                // Mostrar las cartas del jugador
                 player.ShowCardSummary();
-                // Mostrar cartas comunitarias
                 Console.WriteLine($"Cartas comunitarias: {string.Join(", ", communityCards)}");
 
-                if (player.IsHuman) // Turno del jugador humano
-                {
-                    Console.WriteLine(@"
+                if (player.IsHuman)
+                    ProcesarApuestaHumano(player);
+                else
+                    ProcesarApuestaIA(player);
+
+                playerIndex = (playerIndex + 1) % players.Count;
+
+                if (players.All(p => p.IsFolded || p.HasBetThisRound))
+                    roundActive = false;
+
+                Console.ResetColor();
+            }
+
+            MostrarPote();
+        }
+
+        private void ProcesarApuestaHumano(Player player)
+        {
+            Console.WriteLine(@"
 Opciones:
 1. Pasar (Check)
 2. Apostar (Bet)
@@ -111,88 +131,80 @@ Opciones:
 4. Subir (Raise)
 5. Retirarse (Fold)");
 
-                    int choice = GetIntInput("Elige una opción (1-5): ", 1, 5);
-                    int betAmount = 0;
-                    switch (choice)
-                    {
-                        case 1:
-                            if (currentBet == 0)
-                                Console.WriteLine("Has pasado.");
-                            else
-                                Console.WriteLine("No puedes pasar; necesitas igualar la apuesta.");
-                            break;
-                        case 2:
-                            betAmount = GetIntInput("Introduce la cantidad de fichas a apostar: ", 1, player.Chips);
-                            player.Bet(betAmount);
-                            currentBet = betAmount;
-                            pot += betAmount;
-                            break;
-                        case 3:
-                            player.Bet(currentBet);
-                            pot += currentBet;
-                            break;
-                        case 4:
-                            betAmount = GetIntInput("Introduce la cantidad de fichas a subir: ", currentBet + 1, player.Chips);
-                            player.Bet(betAmount);
-                            currentBet = betAmount;
-                            pot += betAmount;
-                            break;
-                        case 5:
-                            player.Fold();
-                            break;
-                    }
-                }
-                else // Turno de la IA
-                {
-                    Random rand = new Random();
-                    int aiChoice = rand.Next(1, 6); // Elige una opción aleatoria del menú
-                    int aiBet = 0;
-                    switch (aiChoice)
-                    {
-                        case 1:
-                            if (currentBet == 0)
-                                Console.WriteLine($"{player.Name} ha pasado (Check).");
-                            else
-                                Console.WriteLine($"{player.Name} no puede pasar, necesita igualar la apuesta.");
-                            break;
-                        case 2:
-                            aiBet = (int)(player.Chips * 0.2); // La IA apuesta el 20% de sus fichas
-                            Console.WriteLine($"{player.Name} ha apostado (Bet) {aiBet} fichas.");
-                            player.Bet(aiBet);
-                            currentBet = aiBet;
-                            pot += aiBet;
-                            break;
-                        case 3:
-                            Console.WriteLine($"{player.Name} ha igualado (Call) la apuesta de {currentBet} fichas.");
-                            player.Bet(currentBet);
-                            pot += currentBet;
-                            break;
-                        case 4:
-                            aiBet = currentBet + (int)(player.Chips * 0.1); // Sube la apuesta en 10% de sus fichas
-                            Console.WriteLine($"{player.Name} ha subido (Raise) la apuesta a {aiBet} fichas.");
-                            player.Bet(aiBet);
-                            currentBet = aiBet;
-                            pot += aiBet;
-                            break;
-                        case 5:
-                            Console.WriteLine($"{player.Name} se ha retirado (Fold).");
-                            player.Fold();
-                            break;
-                    }
-                }
-
-                playerIndex = (playerIndex + 1) % players.Count;
-
-                // Verificar si todos los jugadores han hecho su movimiento o se han retirado
-                if (players.All(p => p.IsFolded || p.HasBetThisRound))
-                    roundActive = false;
-
-                // Reset color to default after the player's turn
-                Console.ResetColor();
+            int choice = GetIntInput("Elige una opción (1-5): ", 1, 5);
+            switch (choice)
+            {
+                case 1:
+                    if (currentBet == 0) Console.WriteLine("Has pasado.");
+                    else Console.WriteLine("No puedes pasar; necesitas igualar la apuesta.");
+                    break;
+                case 2:
+                    Apostar(player);
+                    break;
+                case 3:
+                    Igualar(player);
+                    break;
+                case 4:
+                    Subir(player);
+                    break;
+                case 5:
+                    player.Fold();
+                    break;
             }
+        }
 
-            // Mostrar el pote después de la ronda de apuestas
-            Console.ForegroundColor = ConsoleColor.Gray; // Texto por defecto (gris)
+        private void ProcesarApuestaIA(Player player)
+        {
+            Random rand = new Random();
+            int aiChoice = rand.Next(1, 6);
+            switch (aiChoice)
+            {
+                case 1:
+                    if (currentBet == 0) Console.WriteLine($"{player.Name} ha pasado (Check).");
+                    else Console.WriteLine($"{player.Name} no puede pasar, necesita igualar la apuesta.");
+                    break;
+                case 2:
+                    Apostar(player, (int)(player.Chips * 0.2));
+                    break;
+                case 3:
+                    Igualar(player);
+                    break;
+                case 4:
+                    Subir(player, currentBet + (int)(player.Chips * 0.1));
+                    break;
+                case 5:
+                    Console.WriteLine($"{player.Name} se ha retirado (Fold).");
+                    player.Fold();
+                    break;
+            }
+        }
+
+        private void Apostar(Player player, int? amount = null)
+        {
+            int betAmount = amount ?? GetIntInput("Introduce la cantidad de fichas a apostar: ", 1, player.Chips);
+            player.Bet(betAmount);
+            currentBet = betAmount;
+            pot += betAmount;
+        }
+
+        private void Igualar(Player player)
+        {
+            Console.WriteLine($"{player.Name} ha igualado (Call) la apuesta de {currentBet} fichas.");
+            player.Bet(currentBet);
+            pot += currentBet;
+        }
+
+        private void Subir(Player player, int? amount = null)
+        {
+            int raiseAmount = amount ?? GetIntInput("Introduce la cantidad de fichas a subir: ", currentBet + 1, player.Chips);
+            player.Bet(raiseAmount);
+            currentBet = raiseAmount;
+            pot += raiseAmount;
+        }
+
+        private void MostrarPote()
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine($"El pote actual es de {pot} fichas.");
             Console.ResetColor();
         }
@@ -209,21 +221,18 @@ Opciones:
 
         private void DetermineWinner()
         {
-            // Obtener las manos de los jugadores que no se han retirado
             var hands = players.Where(p => !p.IsFolded).Select(p =>
             {
                 var hand = p.Cards.Concat(communityCards).ToList();
                 return new { Player = p, Hand = PokerHandEvaluator.EvaluateHand(hand) };
             }).ToList();
 
-            // Verificar si hay al menos un jugador no retirado
-            if (hands.Count == 0)
+            if (!hands.Any())
             {
                 Console.WriteLine("Todos los jugadores se han retirado. No hay ganador.");
                 return;
             }
 
-            // Determinar la mejor mano
             var bestHand = hands.OrderByDescending(h => h.Hand).First();
             Console.WriteLine($"{bestHand.Player.Name} gana con {bestHand.Hand}!");
         }
@@ -233,16 +242,10 @@ Opciones:
             while (true)
             {
                 Console.Write(prompt);
-
-                if (int.TryParse(Console.ReadLine(), out int result))
-                {
-                    if (result >= min && result <= max)
-                        return result;
-                }
-
+                if (int.TryParse(Console.ReadLine(), out int result) && result >= min && result <= max)
+                    return result;
                 Console.WriteLine($"Entrada no válida. Por favor, introduce un número entre {min} y {max}.");
             }
         }
     }
-
 }
