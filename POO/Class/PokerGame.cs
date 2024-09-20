@@ -96,26 +96,33 @@ namespace POO.Class
             int playerIndex = 0;
             bool roundActive = true;
 
+            // Reset the bet flag for all players at the start of each round
+            foreach (var player in players)
+                player.ResetBetFlag();
+
             while (roundActive)
             {
                 Player player = players[playerIndex];
-                player.SetPlayerColor(playerIndex);
-                Console.WriteLine($"Turno del jugador {player.Name}:");
 
-                player.ShowCardSummary();
-                Console.WriteLine($"Cartas comunitarias: {string.Join(", ", communityCards)}");
+                // Only allow players who haven't folded to participate
+                if (!player.IsFolded)
+                {
+                    player.SetPlayerColor(playerIndex);
+                    Console.WriteLine($"Turno del jugador {player.Name}:");
 
-                if (player.IsHuman)
-                    ProcesarApuestaHumano(player);
-                else
-                    ProcesarApuestaIA(player);
+                    player.ShowCardSummary();
+                    Console.WriteLine($"Cartas comunitarias: {string.Join(", ", communityCards)}");
+
+                    if (player.IsHuman)
+                        ProcesarApuestaHumano(player);
+                    else
+                        ProcesarApuestaIA(player);
+                }
 
                 playerIndex = (playerIndex + 1) % players.Count;
 
-                if (players.All(p => p.IsFolded || p.HasBetThisRound))
-                    roundActive = false;
-
-                Console.ResetColor();
+                // Check if all active players have completed their turn
+                roundActive = players.Any(p => !p.IsFolded && !p.HasBetThisRound);  // Keep the round active if there's any player left to bet
             }
 
             MostrarPote();
