@@ -96,7 +96,7 @@ namespace POO.Class
             int playerIndex = 0;
             bool roundActive = true;
 
-            // Reset the bet flag for all players at the start of each round
+            // Restablecer la bandera de apuesta para todos los jugadores al comienzo de cada ronda
             foreach (var player in players)
                 player.ResetBetFlag();
 
@@ -104,7 +104,7 @@ namespace POO.Class
             {
                 Player player = players[playerIndex];
 
-                // Only allow players who haven't folded to participate
+                // Permitir que participen únicamente jugadores que no se hayan retirado
                 if (!player.IsFolded)
                 {
                     player.SetPlayerColor(playerIndex);
@@ -121,11 +121,11 @@ namespace POO.Class
 
                 playerIndex = (playerIndex + 1) % players.Count;
 
-                // Check if all active players have completed their turn
-                roundActive = players.Any(p => !p.IsFolded && !p.HasBetThisRound);  // Keep the round active if there's any player left to bet
+                // Comprueba si todos los jugadores activos han completado su turno
+                roundActive = players.Any(p => !p.IsFolded && !p.HasBetThisRound);  // Mantener la ronda activa si queda algún jugador para apostar
             }
 
-            MostrarPote();
+            ShowPot();
         }
 
         private void ProcesarApuestaHumano(Player player)
@@ -146,13 +146,13 @@ Opciones:
                     else Console.WriteLine("No puedes pasar; necesitas igualar la apuesta.");
                     break;
                 case 2:
-                    Apostar(player);
+                    Bet(player);
                     break;
                 case 3:
-                    Igualar(player);
+                    Match(player);
                     break;
                 case 4:
-                    Subir(player);
+                    Raise(player);
                     break;
                 case 5:
                     player.Fold();
@@ -171,13 +171,13 @@ Opciones:
                     else Console.WriteLine($"{player.Name} no puede pasar, necesita igualar la apuesta.");
                     break;
                 case 2:
-                    Apostar(player, (int)(player.Chips * 0.2));
+                    Bet(player, (int)(player.Chips * 0.2));
                     break;
                 case 3:
-                    Igualar(player);
+                    Match(player);
                     break;
                 case 4:
-                    Subir(player, currentBet + (int)(player.Chips * 0.1));
+                    Raise(player, currentBet + (int)(player.Chips * 0.1));
                     break;
                 case 5:
                     Console.WriteLine($"{player.Name} se ha retirado (Fold).");
@@ -186,7 +186,7 @@ Opciones:
             }
         }
 
-        private void Apostar(Player player, int? amount = null)
+        private void Bet(Player player, int? amount = null)
         {
             int betAmount = amount ?? GetIntInput("Introduce la cantidad de fichas a apostar: ", 1, player.Chips);
             player.Bet(betAmount);
@@ -194,14 +194,14 @@ Opciones:
             pot += betAmount;
         }
 
-        private void Igualar(Player player)
+        private void Match(Player player)
         {
             Console.WriteLine($"{player.Name} ha igualado (Call) la apuesta de {currentBet} fichas.");
             player.Bet(currentBet);
             pot += currentBet;
         }
 
-        private void Subir(Player player, int? amount = null)
+        private void Raise(Player player, int? amount = null)
         {
             int raiseAmount = amount ?? GetIntInput("Introduce la cantidad de fichas a subir: ", currentBet + 1, player.Chips);
             player.Bet(raiseAmount);
@@ -209,7 +209,7 @@ Opciones:
             pot += raiseAmount;
         }
 
-        private void MostrarPote()
+        private void ShowPot()
         {
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine($"El pote actual es de {pot} fichas.");
