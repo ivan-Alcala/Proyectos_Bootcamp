@@ -163,12 +163,22 @@ Opciones:
         private void ProcesarApuestaIA(Player player)
         {
             Random rand = new Random();
-            int aiChoice = rand.Next(1, 6);
+            int aiChoice;
+
+            // 0.5% de probabilidad de retirarse (Fold)
+            if (rand.NextDouble() < 0.05)
+                aiChoice = 5; // Fold
+            else
+                // Elige entre las otras opciones (1-4)
+                aiChoice = rand.Next(1, 4);
+
             switch (aiChoice)
             {
                 case 1:
-                    if (currentBet == 0) Console.WriteLine($"{player.Name} ha pasado (Check).");
-                    else Console.WriteLine($"{player.Name} no puede pasar, necesita igualar la apuesta.");
+                    if (currentBet == 0)
+                        Console.WriteLine($"{player.Name} ha pasado (Check).");
+                    else
+                        Console.WriteLine($"{player.Name} no puede pasar, necesita igualar la apuesta.");
                     break;
                 case 2:
                     Bet(player, (int)(player.Chips * 0.2));
