@@ -31,10 +31,10 @@ namespace POO.Class
             for (int i = 1; i <= numberOfPlayers; i++)
                 players.Add(i == 1 && includeHumanPlayer ? new Player($"Jugador Humano", true) : new Player($"Jugador {i}", false));
 
-            RepartirCartas();
+            DealingCards();
         }
 
-        private void RepartirCartas()
+        private void DealingCards()
         {
             foreach (var player in players)
             {
@@ -46,8 +46,8 @@ namespace POO.Class
         public void PlayGame()
         {
             Console.ResetColor();
-            RealizarPreflop();
-            RealizarFlop();
+            PerformPreflop();
+            PerformFlop();
             RealizarTurn();
             RealizarRiver();
             Console.ResetColor();
@@ -55,16 +55,23 @@ namespace POO.Class
             DetermineWinner();
         }
 
-        private void RealizarPreflop()
+        private void PerformPreflop()
         {
             Console.WriteLine("\nPreflop:");
+
+            // Ciega pequeña
+            Console.WriteLine($"{players[smallBlindIndex].Name} apuesta la ciega pequeña (10 fichas).");
             RealizarApuesta(smallBlindIndex, 10);
+
+            // Ciega grande
+            Console.WriteLine($"{players[bigBlindIndex].Name} apuesta la ciega grande (20 fichas).");
             RealizarApuesta(bigBlindIndex, 20);
+
             currentBet = 20;
             BetRound();
         }
 
-        private void RealizarFlop()
+        private void PerformFlop()
         {
             Console.WriteLine("\nFlop:");
             communityCards.AddRange(new[] { deck.DrawCard(), deck.DrawCard(), deck.DrawCard() });
@@ -125,6 +132,13 @@ namespace POO.Class
                         ProcessHumanBet(player);
                     else
                         ProcessIABet(player);
+                }
+
+                // Mostrar las fichas de cada jugador después de cada turno
+                Console.WriteLine("Fichas actuales de los jugadores:");
+                foreach (var p in players)
+                {
+                    Console.WriteLine($"{p.Name} tiene {p.Chips} fichas.");
                 }
 
                 playerIndex = (playerIndex + 1) % players.Count;
@@ -260,6 +274,11 @@ Opciones:
 
             var bestHand = hands.OrderByDescending(h => h.Hand).First();
             Console.WriteLine($"{bestHand.Player.Name} gana con {bestHand.Hand}!");
+
+            // Mostrar las fichas ganadas por el jugador ganador
+            bestHand.Player.WinHand(communityCards);
+            Console.WriteLine($"{bestHand.Player.Name} gana el pote de {pot} fichas.");
+            bestHand.Player.Bet(-pot);  // Añadir el pote al jugador ganador
         }
 
         private int GetIntInput(string prompt, int min, int max)
