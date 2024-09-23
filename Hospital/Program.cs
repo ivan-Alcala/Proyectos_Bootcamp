@@ -15,38 +15,38 @@ namespace Hospital
         static void Main(string[] args)
         {
             // Inicializar datos de ejemplo
-            InicializarDatosEjemplo();
+            InitializeSampleData();
 
             bool exit = false;
             while (!exit)
             {
-                MostrarMenu();
+                ShowMenu();
                 Console.Write("Seleccione una opción: ");
-                string opcion = Console.ReadLine();
+                string option = Console.ReadLine();
                 Console.WriteLine();
 
-                switch (opcion)
+                switch (option)
                 {
                     case "1":
-                        DarDeAltaMedico();
+                        AddDoctor();
                         break;
                     case "2":
-                        DarDeAltaPaciente();
+                        AddPatient();
                         break;
                     case "3":
-                        DarDeAltaPersonalAdministrativo();
+                        AddAdminStaff();
                         break;
                     case "4":
-                        ListarMedicos();
+                        ListDoctors();
                         break;
                     case "5":
-                        ListarPacientesDeMedico();
+                        ListPatientsOfDoctor();
                         break;
                     case "6":
-                        EliminarPaciente();
+                        RemovePatient();
                         break;
                     case "7":
-                        VerListaPersonas();
+                        ViewPeopleList();
                         break;
                     case "8":
                         exit = true;
@@ -62,33 +62,33 @@ namespace Hospital
         }
 
         // Método para inicializar datos de ejemplo
-        static void InicializarDatosEjemplo()
+        static void InitializeSampleData()
         {
             // Crear médicos de ejemplo
-            Doctor medico1 = new Doctor(nextId++, "Dr. Juan Pérez", "Cardiología");
-            Doctor medico2 = new Doctor(nextId++, "Dra. María López", "Neurología");
-            Doctor medico3 = new Doctor(nextId++, "Dr. Carlos García", "Pediatría");
+            Doctor doctor1 = new Doctor(nextId++, "Dr. Juan Pérez", "Cardiología");
+            Doctor doctor2 = new Doctor(nextId++, "Dra. María López", "Neurología");
+            Doctor doctor3 = new Doctor(nextId++, "Dr. Carlos García", "Pediatría");
 
-            doctors.Add(medico1);
-            doctors.Add(medico2);
-            doctors.Add(medico3);
+            doctors.Add(doctor1);
+            doctors.Add(doctor2);
+            doctors.Add(doctor3);
 
             // Crear pacientes de ejemplo y asignarlos a médicos
-            Patient paciente1 = new Patient(nextId++, "Ana Torres", medico1.Id);
-            Patient paciente2 = new Patient(nextId++, "Luis Fernández", medico2.Id);
-            Patient paciente3 = new Patient(nextId++, "Sofía Martínez", medico1.Id);
-            Patient paciente4 = new Patient(nextId++, "Pedro Sánchez", medico3.Id);
+            Patient patient1 = new Patient(nextId++, "Ana Torres", doctor1.Id);
+            Patient patient2 = new Patient(nextId++, "Luis Fernández", doctor2.Id);
+            Patient patient3 = new Patient(nextId++, "Sofía Martínez", doctor1.Id);
+            Patient patient4 = new Patient(nextId++, "Pedro Sánchez", doctor3.Id);
 
-            patients.Add(paciente1);
-            patients.Add(paciente2);
-            patients.Add(paciente3);
-            patients.Add(paciente4);
+            patients.Add(patient1);
+            patients.Add(patient2);
+            patients.Add(patient3);
+            patients.Add(patient4);
 
             // Asignar pacientes a los médicos correspondientes
-            medico1.Patients.Add(paciente1);
-            medico1.Patients.Add(paciente3);
-            medico2.Patients.Add(paciente2);
-            medico3.Patients.Add(paciente4);
+            doctor1.Patients.Add(patient1);
+            doctor1.Patients.Add(patient3);
+            doctor2.Patients.Add(patient2);
+            doctor3.Patients.Add(patient4);
 
             // Crear personal administrativo de ejemplo
             AdminStaff admin1 = new AdminStaff(nextId++, "Laura Gómez", "Administración");
@@ -101,7 +101,7 @@ namespace Hospital
         }
 
         // Método para mostrar el menú de opciones
-        static void MostrarMenu()
+        static void ShowMenu()
         {
             Console.WriteLine("=== Gestión de un Hospital ===");
             Console.WriteLine("1. Dar de alta un médico");
@@ -116,23 +116,23 @@ namespace Hospital
         }
 
         // Método para dar de alta un médico
-        static void DarDeAltaMedico()
+        static void AddDoctor()
         {
             Console.WriteLine("=== Dar de Alta un Médico ===");
             Console.Write("Nombre del médico: ");
-            string nombre = Console.ReadLine();
+            string name = Console.ReadLine();
             Console.Write("Especialidad: ");
-            string especialidad = Console.ReadLine();
+            string specialty = Console.ReadLine();
 
-            Doctor medico = new Doctor(nextId++, nombre, especialidad);
-            doctors.Add(medico);
+            Doctor doctor = new Doctor(nextId++, name, specialty);
+            doctors.Add(doctor);
 
             Console.WriteLine("Médico dado de alta exitosamente:");
-            Console.WriteLine(medico);
+            Console.WriteLine(doctor);
         }
 
         // Método para dar de alta un paciente
-        static void DarDeAltaPaciente()
+        static void AddPatient()
         {
             Console.WriteLine("=== Dar de Alta un Paciente ===");
             if (doctors.Count == 0)
@@ -142,26 +142,26 @@ namespace Hospital
             }
 
             Console.Write("Nombre del paciente: ");
-            string nombre = Console.ReadLine();
+            string name = Console.ReadLine();
 
             Console.WriteLine("Seleccione el médico asignado:");
-            foreach (var medico in doctors)
+            foreach (var doctor in doctors)
             {
-                Console.WriteLine(medico);
+                Console.WriteLine(doctor);
             }
 
             Console.Write("Ingrese el ID del médico: ");
             if (int.TryParse(Console.ReadLine(), out int doctorId))
             {
-                Doctor medicoAsignado = doctors.Find(m => m.Id == doctorId);
-                if (medicoAsignado != null)
+                Doctor assignedDoctor = doctors.Find(d => d.Id == doctorId);
+                if (assignedDoctor != null)
                 {
-                    Patient paciente = new Patient(nextId++, nombre, doctorId);
-                    patients.Add(paciente);
-                    medicoAsignado.Patients.Add(paciente);
+                    Patient patient = new Patient(nextId++, name, doctorId);
+                    patients.Add(patient);
+                    assignedDoctor.Patients.Add(patient);
 
                     Console.WriteLine("Paciente dado de alta exitosamente:");
-                    Console.WriteLine(paciente);
+                    Console.WriteLine(patient);
                 }
                 else
                 {
@@ -175,15 +175,15 @@ namespace Hospital
         }
 
         // Método para dar de alta personal administrativo
-        static void DarDeAltaPersonalAdministrativo()
+        static void AddAdminStaff()
         {
             Console.WriteLine("=== Dar de Alta Personal Administrativo ===");
             Console.Write("Nombre del personal administrativo: ");
-            string nombre = Console.ReadLine();
+            string name = Console.ReadLine();
             Console.Write("Departamento: ");
-            string departamento = Console.ReadLine();
+            string department = Console.ReadLine();
 
-            AdminStaff admin = new AdminStaff(nextId++, nombre, departamento);
+            AdminStaff admin = new AdminStaff(nextId++, name, department);
             adminStaffs.Add(admin);
 
             Console.WriteLine("Personal administrativo dado de alta exitosamente:");
@@ -191,7 +191,7 @@ namespace Hospital
         }
 
         // Método para listar todos los médicos
-        static void ListarMedicos()
+        static void ListDoctors()
         {
             Console.WriteLine("=== Lista de Médicos ===");
             if (doctors.Count == 0)
@@ -200,14 +200,14 @@ namespace Hospital
                 return;
             }
 
-            foreach (var medico in doctors)
+            foreach (var doctor in doctors)
             {
-                Console.WriteLine(medico);
+                Console.WriteLine(doctor);
             }
         }
 
         // Método para listar los pacientes de un médico específico
-        static void ListarPacientesDeMedico()
+        static void ListPatientsOfDoctor()
         {
             Console.WriteLine("=== Listar Pacientes de un Médico ===");
             if (doctors.Count == 0)
@@ -217,27 +217,27 @@ namespace Hospital
             }
 
             Console.WriteLine("Seleccione el médico:");
-            foreach (var medico in doctors)
+            foreach (var doctor in doctors)
             {
-                Console.WriteLine(medico);
+                Console.WriteLine(doctor);
             }
 
             Console.Write("Ingrese el ID del médico: ");
             if (int.TryParse(Console.ReadLine(), out int doctorId))
             {
-                Doctor medicoSeleccionado = doctors.Find(m => m.Id == doctorId);
-                if (medicoSeleccionado != null)
+                Doctor selectedDoctor = doctors.Find(d => d.Id == doctorId);
+                if (selectedDoctor != null)
                 {
-                    Console.WriteLine($"Pacientes asignados al Dr. {medicoSeleccionado.Name}:");
-                    if (medicoSeleccionado.Patients.Count == 0)
+                    Console.WriteLine($"Pacientes asignados al Dr. {selectedDoctor.Name}:");
+                    if (selectedDoctor.Patients.Count == 0)
                     {
                         Console.WriteLine("No hay pacientes asignados a este médico.");
                     }
                     else
                     {
-                        foreach (var paciente in medicoSeleccionado.Patients)
+                        foreach (var patient in selectedDoctor.Patients)
                         {
-                            Console.WriteLine(paciente);
+                            Console.WriteLine(patient);
                         }
                     }
                 }
@@ -253,7 +253,7 @@ namespace Hospital
         }
 
         // Método para eliminar un paciente
-        static void EliminarPaciente()
+        static void RemovePatient()
         {
             Console.WriteLine("=== Eliminar un Paciente ===");
             if (patients.Count == 0)
@@ -263,25 +263,25 @@ namespace Hospital
             }
 
             Console.WriteLine("Lista de pacientes:");
-            foreach (var paciente in patients)
+            foreach (var patient in patients)
             {
-                Console.WriteLine(paciente);
+                Console.WriteLine(patient);
             }
 
             Console.Write("Ingrese el ID del paciente a eliminar: ");
-            if (int.TryParse(Console.ReadLine(), out int pacienteId))
+            if (int.TryParse(Console.ReadLine(), out int patientId))
             {
-                Patient pacienteAEliminar = patients.Find(p => p.Id == pacienteId);
-                if (pacienteAEliminar != null)
+                Patient patientToRemove = patients.Find(p => p.Id == patientId);
+                if (patientToRemove != null)
                 {
                     // Remover el paciente de la lista general
-                    patients.Remove(pacienteAEliminar);
+                    patients.Remove(patientToRemove);
 
                     // Remover el paciente de la lista del médico asignado
-                    Doctor medicoAsignado = doctors.Find(m => m.Id == pacienteAEliminar.DoctorId);
-                    if (medicoAsignado != null)
+                    Doctor assignedDoctor = doctors.Find(d => d.Id == patientToRemove.DoctorId);
+                    if (assignedDoctor != null)
                     {
-                        medicoAsignado.Patients.Remove(pacienteAEliminar);
+                        assignedDoctor.Patients.Remove(patientToRemove);
                     }
 
                     Console.WriteLine("Paciente eliminado exitosamente.");
@@ -298,7 +298,7 @@ namespace Hospital
         }
 
         // Método para ver la lista de todas las personas del hospital
-        static void VerListaPersonas()
+        static void ViewPeopleList()
         {
             Console.WriteLine("=== Lista de Personas del Hospital ===");
 
@@ -309,9 +309,9 @@ namespace Hospital
             }
             else
             {
-                foreach (var medico in doctors)
+                foreach (var doctor in doctors)
                 {
-                    Console.WriteLine(medico);
+                    Console.WriteLine(doctor);
                 }
             }
 
@@ -322,9 +322,9 @@ namespace Hospital
             }
             else
             {
-                foreach (var paciente in patients)
+                foreach (var patient in patients)
                 {
-                    Console.WriteLine(paciente);
+                    Console.WriteLine(patient);
                 }
             }
 
