@@ -1,4 +1,5 @@
 ﻿using Figuras2D.Class;
+using FormasGeometricas.Class;
 using System;
 
 namespace Figuras2D
@@ -9,13 +10,17 @@ namespace Figuras2D
         {
             // Crear formas 2D
             Circle circle = new Circle("Círculo A", 5);
+            Ellipse ellipse = new Ellipse("Elipse A", 6, 4);
             Rectangle rectangle = new Rectangle("Rectángulo A", 4, 6);
+            Square square = new Square("Cuadrado A", 5);
             Triangle triangle = new Triangle("Triángulo A", 3, 4);
 
             // Crear diagrama y añadir formas
             Diagram diagram = new Diagram();
             diagram.AddShape(circle);
+            diagram.AddShape(ellipse);
             diagram.AddShape(rectangle);
+            diagram.AddShape(square);
             diagram.AddShape(triangle);
 
             Console.WriteLine("Formas en el Diagrama:");
@@ -41,7 +46,8 @@ namespace Figuras2D
             Mesh mesh = new Mesh("Malla A");
             mesh.AddShape(circle);
             mesh.AddShape(rectangle);
-            mesh.AddShape(sphere);
+            mesh.AddShape(sphere); // También puede incluir formas 3D si se desea
+            mesh.AddShape(square);  // Añadimos un cuadrado a la malla
 
             Console.WriteLine($"Malla: {mesh.Name} - Área Total: {mesh.CalculateArea()}");
 

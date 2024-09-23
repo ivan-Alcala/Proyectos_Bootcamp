@@ -1,19 +1,15 @@
-﻿using System;
-
-namespace Figuras2D.Class
+﻿namespace Figuras2D.Class
 {
-    public class Circle : Shape2D
+    public class Circle : Ellipse
     {
         public double Radius { get; set; }
 
-        public Circle(string name, double radius) : base(name)
+        public Circle(string name, double radius)
+            : base(name, radius, radius) // En un círculo, majorAxis = minorAxis = radius
         {
             Radius = radius;
         }
 
-        public override double CalculateArea()
-        {
-            return Math.PI * Radius * Radius;
-        }
+        // Método abstracto para calcular el área ya está en la clase base
     }
 }
