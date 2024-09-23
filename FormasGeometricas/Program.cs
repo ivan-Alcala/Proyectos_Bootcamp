@@ -46,8 +46,8 @@ namespace Figuras2D
             Mesh mesh = new Mesh();
             mesh.AddShape(circle);
             mesh.AddShape(rectangle);
-            mesh.AddShape(sphere); // También puede incluir formas 3D si se desea
-            mesh.AddShape(square);  // Añadimos un cuadrado a la malla
+            mesh.AddShape(sphere);
+            mesh.AddShape(square);
 
             Console.WriteLine(mesh);
 
