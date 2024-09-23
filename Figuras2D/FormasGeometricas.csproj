@@ -43,6 +43,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\Circle.cs" />
+    <Compile Include="Class\Cube.cs" />
+    <Compile Include="Class\Diagram.cs" />
+    <Compile Include="Class\GeometricShape.cs" />
+    <Compile Include="Class\Mesh.cs" />
+    <Compile Include="Class\Polygon.cs" />
+    <Compile Include="Class\Pyramid.cs" />
+    <Compile Include="Class\Rectangle.cs" />
+    <Compile Include="Class\Shape2D.cs" />
+    <Compile Include="Class\Shape3D.cs" />
+    <Compile Include="Class\Sphere.cs" />
+    <Compile Include="Class\Triangle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

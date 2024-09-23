@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ficheros", "ficheros\Ficher
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POO", "POO\POO.csproj", "{E706EE62-6893-4AA6-907F-DBC30A38419F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Figuras2D", "Figuras2D\Figuras2D.csproj", "{3AC075CD-B817-49A6-92E0-962C2E936602}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormasGeometricas", "Figuras2D\FormasGeometricas.csproj", "{3AC075CD-B817-49A6-92E0-962C2E936602}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
