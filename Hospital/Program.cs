@@ -10,7 +10,6 @@ namespace Hospital
         static List<Doctor> doctors = new List<Doctor>();
         static List<Patient> patients = new List<Patient>();
         static List<AdminStaff> adminStaffs = new List<AdminStaff>();
-        static int nextId = 1; // Identificador incremental
 
         static void Main(string[] args)
         {
@@ -65,19 +64,19 @@ namespace Hospital
         static void InitializeSampleData()
         {
             // Crear médicos de ejemplo
-            Doctor doctor1 = new Doctor(nextId++, "Dr. Juan Pérez", "Cardiología");
-            Doctor doctor2 = new Doctor(nextId++, "Dra. María López", "Neurología");
-            Doctor doctor3 = new Doctor(nextId++, "Dr. Carlos García", "Pediatría");
+            Doctor doctor1 = new Doctor("Dr. Juan Pérez", "Cardiología");
+            Doctor doctor2 = new Doctor("Dra. María López", "Neurología");
+            Doctor doctor3 = new Doctor("Dr. Carlos García", "Pediatría");
 
             doctors.Add(doctor1);
             doctors.Add(doctor2);
             doctors.Add(doctor3);
 
             // Crear pacientes de ejemplo y asignarlos a médicos
-            Patient patient1 = new Patient(nextId++, "Ana Torres", doctor1.Id);
-            Patient patient2 = new Patient(nextId++, "Luis Fernández", doctor2.Id);
-            Patient patient3 = new Patient(nextId++, "Sofía Martínez", doctor1.Id);
-            Patient patient4 = new Patient(nextId++, "Pedro Sánchez", doctor3.Id);
+            Patient patient1 = new Patient("Ana Torres", doctor1.Id);
+            Patient patient2 = new Patient("Luis Fernández", doctor2.Id);
+            Patient patient3 = new Patient("Sofía Martínez", doctor1.Id);
+            Patient patient4 = new Patient("Pedro Sánchez", doctor3.Id);
 
             patients.Add(patient1);
             patients.Add(patient2);
@@ -91,9 +90,9 @@ namespace Hospital
             doctor3.Patients.Add(patient4);
 
             // Crear personal administrativo de ejemplo
-            AdminStaff admin1 = new AdminStaff(nextId++, "Laura Gómez", "Administración");
-            AdminStaff admin2 = new AdminStaff(nextId++, "Miguel Rodríguez", "Recursos Humanos");
-            AdminStaff admin3 = new AdminStaff(nextId++, "Elena Díaz", "Finanzas");
+            AdminStaff admin1 = new AdminStaff("Laura Gómez", "Administración");
+            AdminStaff admin2 = new AdminStaff("Miguel Rodríguez", "Recursos Humanos");
+            AdminStaff admin3 = new AdminStaff("Elena Díaz", "Finanzas");
 
             adminStaffs.Add(admin1);
             adminStaffs.Add(admin2);
@@ -119,16 +118,21 @@ namespace Hospital
         static void AddDoctor()
         {
             Console.WriteLine("=== Dar de Alta un Médico ===");
-            Console.Write("Nombre del médico: ");
-            string name = Console.ReadLine();
-            Console.Write("Especialidad: ");
-            string specialty = Console.ReadLine();
+            try
+            {
+                string name = ReadNonEmptyString("Nombre del médico: ");
+                string specialty = ReadNonEmptyString("Especialidad: ");
 
-            Doctor doctor = new Doctor(nextId++, name, specialty);
-            doctors.Add(doctor);
+                Doctor doctor = new Doctor(name, specialty);
+                doctors.Add(doctor);
 
-            Console.WriteLine("Médico dado de alta exitosamente:");
-            Console.WriteLine(doctor);
+                Console.WriteLine("Médico dado de alta exitosamente:");
+                Console.WriteLine(doctor);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al dar de alta el médico: {ex.Message}");
+            }
         }
 
         // Método para dar de alta un paciente
@@ -141,36 +145,34 @@ namespace Hospital
                 return;
             }
 
-            Console.Write("Nombre del paciente: ");
-            string name = Console.ReadLine();
-
-            Console.WriteLine("Seleccione el médico asignado:");
-            foreach (var doctor in doctors)
+            try
             {
-                Console.WriteLine(doctor);
-            }
+                string name = ReadNonEmptyString("Nombre del paciente: ");
 
-            Console.Write("Ingrese el ID del médico: ");
-            if (int.TryParse(Console.ReadLine(), out int doctorId))
-            {
-                Doctor assignedDoctor = doctors.Find(d => d.Id == doctorId);
-                if (assignedDoctor != null)
+                Console.WriteLine("Seleccione el médico asignado:");
+                foreach (var doctor in doctors)
                 {
-                    Patient patient = new Patient(nextId++, name, doctorId);
-                    patients.Add(patient);
-                    assignedDoctor.Patients.Add(patient);
-
-                    Console.WriteLine("Paciente dado de alta exitosamente:");
-                    Console.WriteLine(patient);
+                    Console.WriteLine(doctor);
                 }
-                else
+
+                int doctorId = ReadValidInteger("Ingrese el ID del médico: ");
+                Doctor assignedDoctor = doctors.Find(d => d.Id == doctorId);
+                if (assignedDoctor == null)
                 {
                     Console.WriteLine("Médico no encontrado. Paciente no dado de alta.");
+                    return;
                 }
+
+                Patient patient = new Patient(name, doctorId);
+                patients.Add(patient);
+                assignedDoctor.Patients.Add(patient);
+
+                Console.WriteLine("Paciente dado de alta exitosamente:");
+                Console.WriteLine(patient);
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("ID inválido. Paciente no dado de alta.");
+                Console.WriteLine($"Error al dar de alta el paciente: {ex.Message}");
             }
         }
 
@@ -178,16 +180,21 @@ namespace Hospital
         static void AddAdminStaff()
         {
             Console.WriteLine("=== Dar de Alta Personal Administrativo ===");
-            Console.Write("Nombre del personal administrativo: ");
-            string name = Console.ReadLine();
-            Console.Write("Departamento: ");
-            string department = Console.ReadLine();
+            try
+            {
+                string name = ReadNonEmptyString("Nombre del personal administrativo: ");
+                string department = ReadNonEmptyString("Departamento: ");
 
-            AdminStaff admin = new AdminStaff(nextId++, name, department);
-            adminStaffs.Add(admin);
+                AdminStaff admin = new AdminStaff(name, department);
+                adminStaffs.Add(admin);
 
-            Console.WriteLine("Personal administrativo dado de alta exitosamente:");
-            Console.WriteLine(admin);
+                Console.WriteLine("Personal administrativo dado de alta exitosamente:");
+                Console.WriteLine(admin);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al dar de alta el personal administrativo: {ex.Message}");
+            }
         }
 
         // Método para listar todos los médicos
@@ -216,39 +223,38 @@ namespace Hospital
                 return;
             }
 
-            Console.WriteLine("Seleccione el médico:");
-            foreach (var doctor in doctors)
+            try
             {
-                Console.WriteLine(doctor);
-            }
-
-            Console.Write("Ingrese el ID del médico: ");
-            if (int.TryParse(Console.ReadLine(), out int doctorId))
-            {
-                Doctor selectedDoctor = doctors.Find(d => d.Id == doctorId);
-                if (selectedDoctor != null)
+                Console.WriteLine("Seleccione el médico:");
+                foreach (var doctor in doctors)
                 {
-                    Console.WriteLine($"Pacientes asignados al Dr. {selectedDoctor.Name}:");
-                    if (selectedDoctor.Patients.Count == 0)
-                    {
-                        Console.WriteLine("No hay pacientes asignados a este médico.");
-                    }
-                    else
-                    {
-                        foreach (var patient in selectedDoctor.Patients)
-                        {
-                            Console.WriteLine(patient);
-                        }
-                    }
+                    Console.WriteLine(doctor);
+                }
+
+                int doctorId = ReadValidInteger("Ingrese el ID del médico: ");
+                Doctor selectedDoctor = doctors.Find(d => d.Id == doctorId);
+                if (selectedDoctor == null)
+                {
+                    Console.WriteLine("Médico no encontrado.");
+                    return;
+                }
+
+                Console.WriteLine($"Pacientes asignados al Dr. {selectedDoctor.Name}:");
+                if (selectedDoctor.Patients.Count == 0)
+                {
+                    Console.WriteLine("No hay pacientes asignados a este médico.");
                 }
                 else
                 {
-                    Console.WriteLine("Médico no encontrado.");
+                    foreach (var patient in selectedDoctor.Patients)
+                    {
+                        Console.WriteLine(patient);
+                    }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("ID inválido.");
+                Console.WriteLine($"Error al listar los pacientes: {ex.Message}");
             }
         }
 
@@ -262,38 +268,37 @@ namespace Hospital
                 return;
             }
 
-            Console.WriteLine("Lista de pacientes:");
-            foreach (var patient in patients)
+            try
             {
-                Console.WriteLine(patient);
-            }
-
-            Console.Write("Ingrese el ID del paciente a eliminar: ");
-            if (int.TryParse(Console.ReadLine(), out int patientId))
-            {
-                Patient patientToRemove = patients.Find(p => p.Id == patientId);
-                if (patientToRemove != null)
+                Console.WriteLine("Lista de pacientes:");
+                foreach (var patient in patients)
                 {
-                    // Remover el paciente de la lista general
-                    patients.Remove(patientToRemove);
-
-                    // Remover el paciente de la lista del médico asignado
-                    Doctor assignedDoctor = doctors.Find(d => d.Id == patientToRemove.DoctorId);
-                    if (assignedDoctor != null)
-                    {
-                        assignedDoctor.Patients.Remove(patientToRemove);
-                    }
-
-                    Console.WriteLine("Paciente eliminado exitosamente.");
+                    Console.WriteLine(patient);
                 }
-                else
+
+                int patientId = ReadValidInteger("Ingrese el ID del paciente a eliminar: ");
+                Patient patientToRemove = patients.Find(p => p.Id == patientId);
+                if (patientToRemove == null)
                 {
                     Console.WriteLine("Paciente no encontrado.");
+                    return;
                 }
+
+                // Remover el paciente de la lista general
+                patients.Remove(patientToRemove);
+
+                // Remover el paciente de la lista del médico asignado
+                Doctor assignedDoctor = doctors.Find(d => d.Id == patientToRemove.DoctorId);
+                if (assignedDoctor != null)
+                {
+                    assignedDoctor.Patients.Remove(patientToRemove);
+                }
+
+                Console.WriteLine("Paciente eliminado exitosamente.");
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("ID inválido.");
+                Console.WriteLine($"Error al eliminar el paciente: {ex.Message}");
             }
         }
 
@@ -339,6 +344,36 @@ namespace Hospital
                 {
                     Console.WriteLine(admin);
                 }
+            }
+        }
+
+        // Método para leer una cadena no vacía
+        static string ReadNonEmptyString(string prompt)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                string input = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(input))
+                {
+                    return input.Trim();
+                }
+                Console.WriteLine("Entrada inválida. Por favor, ingrese un valor no vacío.");
+            }
+        }
+
+        // Método para leer un entero válido
+        static int ReadValidInteger(string prompt)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                string input = Console.ReadLine();
+                if (int.TryParse(input, out int result))
+                {
+                    return result;
+                }
+                Console.WriteLine("Entrada inválida. Por favor, ingrese un número entero válido.");
             }
         }
     }

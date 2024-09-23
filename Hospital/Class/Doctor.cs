@@ -7,7 +7,7 @@ namespace Hospital.Class
         public string Specialty { get; set; }
         public List<Patient> Patients { get; set; }
 
-        public Doctor(int id, string name, string specialty) : base(id, name)
+        public Doctor(string name, string specialty) : base(name)
         {
             Specialty = specialty;
             Patients = new List<Patient>();

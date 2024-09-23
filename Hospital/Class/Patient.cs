@@ -4,7 +4,7 @@
     {
         public int DoctorId { get; set; }
 
-        public Patient(int id, string name, int doctorId) : base(id, name)
+        public Patient(string name, int doctorId) : base(name)
         {
             DoctorId = doctorId;
         }

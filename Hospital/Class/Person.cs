@@ -2,12 +2,14 @@
 {
     public class Person
     {
-        public int Id { get; set; }
+        private static int _nextId = 1; // Identificador incremental estático
+
+        public int Id { get; private set; }
         public string Name { get; set; }
 
-        public Person(int id, string name)
+        public Person(string name)
         {
-            Id = id;
+            Id = _nextId++;
             Name = name;
         }
 

@@ -4,7 +4,7 @@
     {
         public string Department { get; set; }
 
-        public AdminStaff(int id, string name, string department) : base(id, name)
+        public AdminStaff(string name, string department) : base(name)
         {
             Department = department;
         }
