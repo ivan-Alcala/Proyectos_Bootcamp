@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake", "snake\Snake.csproj", "{8F38EC39-CEEE-43A6-96DC-BE13C2A50200}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ficheros", "ficheros\Ficheros.csproj", "{22EFAFAE-5E67-422D-B8E9-BCA78A206F76}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POO", "POO\POO.csproj", "{E706EE62-6893-4AA6-907F-DBC30A38419F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormasGeometricas", "Figuras2D\FormasGeometricas.csproj", "{3AC075CD-B817-49A6-92E0-962C2E936602}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ficheros", "Ficheros\Ficheros.csproj", "{21BCD396-048F-40BC-B871-16AEB2BB0136}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake", "Snake\Snake.csproj", "{EF61FE97-052C-4726-8B3D-BE2FBB7A5F00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormasGeometricas", "FormasGeometricas\FormasGeometricas.csproj", "{7ED6C94D-0C94-4908-B922-4102F38D1F13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,22 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8F38EC39-CEEE-43A6-96DC-BE13C2A50200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F38EC39-CEEE-43A6-96DC-BE13C2A50200}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F38EC39-CEEE-43A6-96DC-BE13C2A50200}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F38EC39-CEEE-43A6-96DC-BE13C2A50200}.Release|Any CPU.Build.0 = Release|Any CPU
-		{22EFAFAE-5E67-422D-B8E9-BCA78A206F76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{22EFAFAE-5E67-422D-B8E9-BCA78A206F76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{22EFAFAE-5E67-422D-B8E9-BCA78A206F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{22EFAFAE-5E67-422D-B8E9-BCA78A206F76}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E706EE62-6893-4AA6-907F-DBC30A38419F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E706EE62-6893-4AA6-907F-DBC30A38419F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E706EE62-6893-4AA6-907F-DBC30A38419F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E706EE62-6893-4AA6-907F-DBC30A38419F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3AC075CD-B817-49A6-92E0-962C2E936602}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AC075CD-B817-49A6-92E0-962C2E936602}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AC075CD-B817-49A6-92E0-962C2E936602}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AC075CD-B817-49A6-92E0-962C2E936602}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21BCD396-048F-40BC-B871-16AEB2BB0136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21BCD396-048F-40BC-B871-16AEB2BB0136}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21BCD396-048F-40BC-B871-16AEB2BB0136}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21BCD396-048F-40BC-B871-16AEB2BB0136}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF61FE97-052C-4726-8B3D-BE2FBB7A5F00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF61FE97-052C-4726-8B3D-BE2FBB7A5F00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF61FE97-052C-4726-8B3D-BE2FBB7A5F00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF61FE97-052C-4726-8B3D-BE2FBB7A5F00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ED6C94D-0C94-4908-B922-4102F38D1F13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ED6C94D-0C94-4908-B922-4102F38D1F13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ED6C94D-0C94-4908-B922-4102F38D1F13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ED6C94D-0C94-4908-B922-4102F38D1F13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

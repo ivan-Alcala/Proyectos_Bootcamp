@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{22EFAFAE-5E67-422D-B8E9-BCA78A206F76}</ProjectGuid>
+    <ProjectGuid>{21BCD396-048F-40BC-B871-16AEB2BB0136}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ficheros</RootNamespace>
-    <AssemblyName>ficheros</AssemblyName>
+    <RootNamespace>Ficheros</RootNamespace>
+    <AssemblyName>Ficheros</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>

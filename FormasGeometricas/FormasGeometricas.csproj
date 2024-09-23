@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3AC075CD-B817-49A6-92E0-962C2E936602}</ProjectGuid>
+    <ProjectGuid>{7ED6C94D-0C94-4908-B922-4102F38D1F13}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Figuras2D</RootNamespace>
-    <AssemblyName>Figuras2D</AssemblyName>
+    <RootNamespace>FormasGeometricas</RootNamespace>
+    <AssemblyName>FormasGeometricas</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
