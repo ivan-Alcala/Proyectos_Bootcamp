@@ -6,7 +6,8 @@ namespace Figuras2D.Class
     {
         public List<GeometricShape> Shapes { get; set; }
 
-        public Mesh(string name) : base(name)
+        public Mesh()
+            : base()
         {
             Shapes = new List<GeometricShape>();
         }
@@ -20,9 +21,15 @@ namespace Figuras2D.Class
         {
             double totalArea = 0;
             foreach (var shape in Shapes)
+            {
                 totalArea += shape.CalculateArea();
-
+            }
             return totalArea;
+        }
+
+        public override string ToString()
+        {
+            return $"{GetType().Name} - Área Total: {CalculateArea()}";
         }
     }
 }

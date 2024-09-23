@@ -6,7 +6,8 @@ namespace Figuras2D.Class
     {
         public double Edge { get; set; }
 
-        public Cube(string name, double edge) : base(name)
+        public Cube(double edge)
+            : base()
         {
             Edge = edge;
         }
@@ -19,6 +20,11 @@ namespace Figuras2D.Class
         public override double CalculateVolume()
         {
             return Math.Pow(Edge, 3);
+        }
+
+        public override string ToString()
+        {
+            return $"{GetType().Name} - Área: {CalculateArea()} - Volumen: {CalculateVolume()}";
         }
     }
 }

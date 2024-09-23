@@ -5,8 +5,8 @@
         public double BaseLength { get; set; }
         public double Height { get; set; }
 
-        public Triangle(string name, double baseLength, double height)
-            : base(name, 3) // Un triángulo tiene 3 lados
+        public Triangle(double baseLength, double height)
+            : base(3) // Un triángulo tiene 3 lados
         {
             BaseLength = baseLength;
             Height = height;

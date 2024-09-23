@@ -9,11 +9,11 @@ namespace Figuras2D
         static void Main(string[] args)
         {
             // Crear formas 2D
-            Circle circle = new Circle("Círculo A", 5);
-            Ellipse ellipse = new Ellipse("Elipse A", 6, 4);
-            Rectangle rectangle = new Rectangle("Rectángulo A", 4, 6);
-            Square square = new Square("Cuadrado A", 5);
-            Triangle triangle = new Triangle("Triángulo A", 3, 4);
+            Circle circle = new Circle(5);
+            Ellipse ellipse = new Ellipse(6, 4);
+            Rectangle rectangle = new Rectangle(4, 6);
+            Square square = new Square(5);
+            Triangle triangle = new Triangle(3, 4);
 
             // Crear diagrama y añadir formas
             Diagram diagram = new Diagram();
@@ -30,28 +30,28 @@ namespace Figuras2D
             Console.WriteLine("\n---------------------------\n");
 
             // Crear formas 3D
-            Sphere sphere = new Sphere("Esfera A", 3);
-            Cube cube = new Cube("Cubo A", 2);
-            Pyramid pyramid = new Pyramid("Pirámide A", 4, 5);
+            Sphere sphere = new Sphere(3);
+            Cube cube = new Cube(2);
+            Pyramid pyramid = new Pyramid(4, 5);
 
             // Mostrar áreas y volúmenes de formas 3D
             Console.WriteLine("Formas 3D:");
-            Console.WriteLine($"{sphere.Name} - Área: {sphere.CalculateArea()} - Volumen: {sphere.CalculateVolume()}");
-            Console.WriteLine($"{cube.Name} - Área: {cube.CalculateArea()} - Volumen: {cube.CalculateVolume()}");
-            Console.WriteLine($"{pyramid.Name} - Área: {pyramid.CalculateArea()} - Volumen: {pyramid.CalculateVolume()}");
+            Console.WriteLine(sphere);
+            Console.WriteLine(cube);
+            Console.WriteLine(pyramid);
 
             Console.WriteLine("\n---------------------------\n");
 
             // Crear una malla compuesta por varias formas
-            Mesh mesh = new Mesh("Malla A");
+            Mesh mesh = new Mesh();
             mesh.AddShape(circle);
             mesh.AddShape(rectangle);
             mesh.AddShape(sphere); // También puede incluir formas 3D si se desea
             mesh.AddShape(square);  // Añadimos un cuadrado a la malla
 
-            Console.WriteLine($"Malla: {mesh.Name} - Área Total: {mesh.CalculateArea()}");
+            Console.WriteLine(mesh);
 
-            Console.WriteLine("\nPresiona cualquier tecla para salir...");
+            Console.Write("\nPresiona cualquier tecla para salir...");
             Console.ReadKey();
         }
     }

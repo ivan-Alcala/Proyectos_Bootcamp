@@ -6,7 +6,8 @@ namespace Figuras2D.Class
     {
         public double Radius { get; set; }
 
-        public Sphere(string name, double radius) : base(name)
+        public Sphere(double radius)
+            : base()
         {
             Radius = radius;
         }
@@ -19,6 +20,11 @@ namespace Figuras2D.Class
         public override double CalculateVolume()
         {
             return (4.0 / 3.0) * Math.PI * Math.Pow(Radius, 3);
+        }
+
+        public override string ToString()
+        {
+            return $"{GetType().Name} - Área: {CalculateArea()} - Volumen: {CalculateVolume()}";
         }
     }
 }

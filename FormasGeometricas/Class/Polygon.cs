@@ -4,7 +4,8 @@
     {
         public int NumberOfSides { get; set; }
 
-        public Polygon(string name, int numberOfSides) : base(name)
+        public Polygon(int numberOfSides)
+            : base()
         {
             NumberOfSides = numberOfSides;
         }

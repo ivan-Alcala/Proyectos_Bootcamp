@@ -1,19 +1,22 @@
-﻿using Figuras2D.Class;
-using System;
+﻿using System;
 
-public class Ellipse : Shape2D
+namespace Figuras2D.Class
 {
-    public double MajorAxis { get; set; }
-    public double MinorAxis { get; set; }
-
-    public Ellipse(string name, double majorAxis, double minorAxis) : base(name)
+    public class Ellipse : Shape2D
     {
-        MajorAxis = majorAxis;
-        MinorAxis = minorAxis;
-    }
+        public double MajorAxis { get; set; }
+        public double MinorAxis { get; set; }
 
-    public override double CalculateArea()
-    {
-        return Math.PI * MajorAxis * MinorAxis;
+        public Ellipse(double majorAxis, double minorAxis)
+            : base()
+        {
+            MajorAxis = majorAxis;
+            MinorAxis = minorAxis;
+        }
+
+        public override double CalculateArea()
+        {
+            return Math.PI * MajorAxis * MinorAxis;
+        }
     }
 }
