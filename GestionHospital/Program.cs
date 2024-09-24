@@ -1,16 +1,16 @@
-﻿using Hospital.Class;
+﻿using GestionHospital.Class;
 using System;
 
-namespace Hospital
+namespace GestionHospital
 {
     internal class Program
     {
-        static Hospitals hospital = new Hospitals();
+        static Hospital _hospital = new Hospital();
 
         static void Main(string[] args)
         {
             // Agregar datos de prueba al inicio
-            hospital.AddTestData();
+            _hospital.AddTestData();
 
             bool exit = false;
             while (!exit)
@@ -21,6 +21,9 @@ namespace Hospital
                 {
                     switch (option)
                     {
+                        case 0:
+                            exit = true;
+                            break;
                         case 1:
                             AddDoctor();
                             break;
@@ -34,10 +37,7 @@ namespace Hospital
                             RemovePerson();
                             break;
                         case 5:
-                            hospital.ListPeople();
-                            break;
-                        case 6:
-                            exit = true;
+                            _hospital.ListPeople();
                             break;
                         default:
                             Console.WriteLine("Opción no válida.");
@@ -52,7 +52,7 @@ namespace Hospital
         // Método para mostrar el menú
         static void ShowMenu()
         {
-            Console.WriteLine(@"
+            Console.Write(@"
 Menu:
 1. Dar de alta un médico
 2. Dar de alta un paciente
@@ -70,7 +70,7 @@ Seleccione una opción: ");
             string doctorName = Console.ReadLine();
             Console.Write("Especialidad: ");
             string specialty = Console.ReadLine();
-            hospital.AddPerson(new Doctor(doctorName, specialty));
+            _hospital.AddPerson(new Doctor(doctorName, specialty));
         }
 
         // Método para dar de alta un paciente
@@ -81,10 +81,10 @@ Seleccione una opción: ");
             Console.Write("ID del médico asignado: ");
             if (int.TryParse(Console.ReadLine(), out int doctorId))
             {
-                Doctor assignedDoctor = hospital.GetDoctorById(doctorId);
+                Doctor assignedDoctor = _hospital.GetDoctorById(doctorId);
 
                 if (assignedDoctor != null)
-                    hospital.AddPerson(new Patient(patientName, assignedDoctor));
+                    _hospital.AddPerson(new Patient(patientName, assignedDoctor));
                 else
                     Console.WriteLine("No se pudo asignar el médico. Intente nuevamente.");
             }
@@ -99,7 +99,7 @@ Seleccione una opción: ");
             string adminName = Console.ReadLine();
             Console.Write("Cargo: ");
             string position = Console.ReadLine();
-            hospital.AddPerson(new AdminStaff(adminName, position));
+            _hospital.AddPerson(new AdminStaff(adminName, position));
         }
 
         // Método para eliminar a una persona
@@ -108,7 +108,7 @@ Seleccione una opción: ");
             Console.Write("ID de la persona a eliminar: ");
 
             if (int.TryParse(Console.ReadLine(), out int idToRemove))
-                hospital.RemovePerson(idToRemove);
+                _hospital.RemovePerson(idToRemove);
             else
                 Console.WriteLine("ID inválido. Intente de nuevo.");
         }

@@ -1,4 +1,4 @@
-﻿namespace Hospital.Class
+﻿namespace GestionHospital.Class
 {
     public class Doctor : Person
     {

@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2172F637-E581-4A75-960D-8DB754CA0086}</ProjectGuid>
+    <ProjectGuid>{14966ED3-4215-4182-8209-A65F0BBC0452}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Hospital</RootNamespace>
-    <AssemblyName>Hospital</AssemblyName>
+    <RootNamespace>GestionHospital</RootNamespace>
+    <AssemblyName>GestionHospital</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Class\AdminStaff.cs" />
     <Compile Include="Class\Doctor.cs" />
-    <Compile Include="Class\Hospitals.cs" />
+    <Compile Include="Class\Hospital.cs" />
     <Compile Include="Class\Patient.cs" />
     <Compile Include="Class\Person.cs" />
     <Compile Include="Program.cs" />

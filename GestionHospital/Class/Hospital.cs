@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Hospital.Class
+namespace GestionHospital.Class
 {
-    public class Hospitals
+    public class Hospital
     {
         private List<Person> _people = new List<Person>();
 
