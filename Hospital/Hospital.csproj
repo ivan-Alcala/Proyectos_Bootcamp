@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Class\AdminStaff.cs" />
     <Compile Include="Class\Doctor.cs" />
+    <Compile Include="Class\Hospitals.cs" />
     <Compile Include="Class\Patient.cs" />
     <Compile Include="Class\Person.cs" />
     <Compile Include="Program.cs" />

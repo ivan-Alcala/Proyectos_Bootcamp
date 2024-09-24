@@ -2,16 +2,16 @@
 {
     public class AdminStaff : Person
     {
-        public string Department { get; set; }
+        public string Position { get; set; }
 
-        public AdminStaff(string name, string department) : base(name)
+        public AdminStaff(string name, string position) : base(name)
         {
-            Department = department;
+            Position = position;
         }
 
         public override string ToString()
         {
-            return base.ToString() + $", Departamento: {Department}";
+            return base.ToString() + $", Position: {Position}";
         }
     }
 }

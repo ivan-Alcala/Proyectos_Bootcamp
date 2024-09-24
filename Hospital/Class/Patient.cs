@@ -2,16 +2,16 @@
 {
     public class Patient : Person
     {
-        public int DoctorId { get; set; }
+        public Doctor AssignedDoctor { get; set; }
 
-        public Patient(string name, int doctorId) : base(name)
+        public Patient(string name, Doctor assignedDoctor) : base(name)
         {
-            DoctorId = doctorId;
+            AssignedDoctor = assignedDoctor;
         }
 
         public override string ToString()
         {
-            return base.ToString() + $", Médico Asignado ID: {DoctorId}";
+            return base.ToString() + $", Assigned Doctor: {AssignedDoctor.Name}";
         }
     }
 }
