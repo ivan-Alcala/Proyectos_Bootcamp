@@ -60,9 +60,7 @@ namespace GestionHospital.Class
                 patient.AdmissionDate = Tools.AskDate("Nueva fecha de admisión (dd/MM/yyyy): ");
             }
             else if (person is AdminStaff adminStaff)
-            {
                 adminStaff.Position = Tools.AskString("Nuevo cargo: ");
-            }
 
             Console.WriteLine("Datos modificados correctamente.");
         }
@@ -215,9 +213,7 @@ namespace GestionHospital.Class
                 Console.WriteLine("Historial médico actualizado correctamente.");
             }
             else
-            {
                 Console.WriteLine("Paciente no encontrado.");
-            }
         }
 
         public void ViewMedicalRecord()
@@ -229,24 +225,18 @@ namespace GestionHospital.Class
                 Console.WriteLine(patient.MedicalRecord);
                 Console.WriteLine("\nDiagnósticos:");
                 foreach (var diagnosis in patient.MedicalRecord.Diagnoses)
-                {
                     Console.WriteLine(diagnosis);
-                }
+
                 Console.WriteLine("\nTratamientos:");
                 foreach (var treatment in patient.MedicalRecord.Treatments)
-                {
                     Console.WriteLine(treatment);
-                }
+
                 Console.WriteLine("\nNotas del médico:");
                 foreach (var note in patient.MedicalRecord.DoctorNotes)
-                {
                     Console.WriteLine(note);
-                }
             }
             else
-            {
                 Console.WriteLine("Paciente no encontrado.");
-            }
         }
 
         #endregion
