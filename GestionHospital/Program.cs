@@ -49,6 +49,12 @@ namespace GestionHospital
                         case 9:
                             _hospital.ModifyAppointment();
                             break;
+                        case 10:
+                            AddMedicalHistory();
+                            break;
+                        case 11:
+                            ListMedicalHistory();
+                            break;
                         default:
                             Console.WriteLine("Opción no válida.");
                             break;
@@ -76,6 +82,8 @@ Menu:
 7. Listar citas
 8. Cancelar una cita
 9. Modificar una cita
+10. Añadir historial médico
+11. Listar historiales médicos
 Seleccione una opción: ");
         }
 
@@ -138,11 +146,16 @@ Seleccione una opción: ");
             _hospital.RemovePerson(idToRemove);
         }
 
-        // Método para modificar una persona
-        static void ModifyPerson()
+        static void AddMedicalHistory()
         {
-            int personId = Tools.AskInt("ID de la persona a modificar: ");
-            _hospital.ModifyPerson(personId);
+            int patientIdForRecord = Tools.AskInt("ID del paciente: ");
+            _hospital.AddMedicalRecord(patientIdForRecord);
+        }
+
+        static void ListMedicalHistory()
+        {
+            int patientId = Tools.AskInt("ID del paciente: ");
+            _hospital.ViewMedicalRecord(patientId);
         }
     }
 }
