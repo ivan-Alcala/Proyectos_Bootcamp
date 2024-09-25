@@ -15,9 +15,10 @@ namespace GestionHospital.Class
             Console.WriteLine("Persona añadida correctamente.");
         }
 
-        public void RemovePerson(int id)
+        public void RemovePerson()
         {
-            var personToRemove = _people.Find(p => p.Id == id);
+            int idToRemove = Tools.AskInt("ID de la persona a eliminar: ");
+            var personToRemove = _people.Find(p => p.Id == idToRemove);
             if (personToRemove != null)
             {
                 _people.Remove(personToRemove);
@@ -194,9 +195,10 @@ namespace GestionHospital.Class
         #endregion
 
         #region MedicalRecord
-        public void AddMedicalRecord(int patientId)
+        public void AddMedicalRecord()
         {
-            var patient = GetPatientById(patientId);
+            int patientIdForRecord = Tools.AskInt("ID del paciente: ");
+            var patient = GetPatientById(patientIdForRecord);
             if (patient != null)
             {
                 Console.WriteLine($"Agregando historial médico para el paciente {patient.Name}");
@@ -218,8 +220,9 @@ namespace GestionHospital.Class
             }
         }
 
-        public void ViewMedicalRecord(int patientId)
+        public void ViewMedicalRecord()
         {
+            int patientId = Tools.AskInt("ID del paciente: ");
             var patient = GetPatientById(patientId);
             if (patient != null)
             {
