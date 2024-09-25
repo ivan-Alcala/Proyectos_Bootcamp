@@ -15,9 +15,10 @@ namespace GestionHospital.Class
             Console.WriteLine("Persona añadida correctamente.");
         }
 
-        public void RemovePerson(int id)
+        public void RemovePerson()
         {
-            var personToRemove = _people.Find(p => p.Id == id);
+            int idToRemove = Tools.AskInt("ID de la persona a eliminar: ");
+            var personToRemove = _people.Find(p => p.Id == idToRemove);
             if (personToRemove != null)
             {
                 _people.Remove(personToRemove);
@@ -59,9 +60,7 @@ namespace GestionHospital.Class
                 patient.AdmissionDate = Tools.AskDate("Nueva fecha de admisión (dd/MM/yyyy): ");
             }
             else if (person is AdminStaff adminStaff)
-            {
                 adminStaff.Position = Tools.AskString("Nuevo cargo: ");
-            }
 
             Console.WriteLine("Datos modificados correctamente.");
         }
@@ -194,9 +193,10 @@ namespace GestionHospital.Class
         #endregion
 
         #region MedicalRecord
-        public void AddMedicalRecord(int patientId)
+        public void AddMedicalRecord()
         {
-            var patient = GetPatientById(patientId);
+            int patientIdForRecord = Tools.AskInt("ID del paciente: ");
+            var patient = GetPatientById(patientIdForRecord);
             if (patient != null)
             {
                 Console.WriteLine($"Agregando historial médico para el paciente {patient.Name}");
@@ -213,37 +213,30 @@ namespace GestionHospital.Class
                 Console.WriteLine("Historial médico actualizado correctamente.");
             }
             else
-            {
                 Console.WriteLine("Paciente no encontrado.");
-            }
         }
 
-        public void ViewMedicalRecord(int patientId)
+        public void ViewMedicalRecord()
         {
+            int patientId = Tools.AskInt("ID del paciente: ");
             var patient = GetPatientById(patientId);
             if (patient != null)
             {
                 Console.WriteLine(patient.MedicalRecord);
                 Console.WriteLine("\nDiagnósticos:");
                 foreach (var diagnosis in patient.MedicalRecord.Diagnoses)
-                {
                     Console.WriteLine(diagnosis);
-                }
+
                 Console.WriteLine("\nTratamientos:");
                 foreach (var treatment in patient.MedicalRecord.Treatments)
-                {
                     Console.WriteLine(treatment);
-                }
+
                 Console.WriteLine("\nNotas del médico:");
                 foreach (var note in patient.MedicalRecord.DoctorNotes)
-                {
                     Console.WriteLine(note);
-                }
             }
             else
-            {
                 Console.WriteLine("Paciente no encontrado.");
-            }
         }
 
         #endregion

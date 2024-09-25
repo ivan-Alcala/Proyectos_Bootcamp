@@ -32,7 +32,7 @@ namespace GestionHospital
                             AddAdminStaff();
                             break;
                         case 4:
-                            RemovePerson();
+                            _hospital.RemovePerson();
                             break;
                         case 5:
                             _hospital.ListPeople();
@@ -50,10 +50,10 @@ namespace GestionHospital
                             _hospital.ModifyAppointment();
                             break;
                         case 10:
-                            AddMedicalHistory();
+                            _hospital.AddMedicalRecord();
                             break;
                         case 11:
-                            ListMedicalHistory();
+                            _hospital.ViewMedicalRecord();
                             break;
                         default:
                             Console.WriteLine("Opción no válida.");
@@ -61,9 +61,7 @@ namespace GestionHospital
                     }
                 }
                 else
-                {
                     Console.WriteLine("Por favor, ingrese un número válido.");
-                }
             }
         }
 
@@ -137,25 +135,6 @@ Seleccione una opción: ");
             string department = Tools.AskString("Departamento: ");
 
             _hospital.AddPerson(new AdminStaff(adminName, position, dateOfBirth, height, weight, yearsInService, department));
-        }
-
-        // Método para eliminar a una persona
-        static void RemovePerson()
-        {
-            int idToRemove = Tools.AskInt("ID de la persona a eliminar: ");
-            _hospital.RemovePerson(idToRemove);
-        }
-
-        static void AddMedicalHistory()
-        {
-            int patientIdForRecord = Tools.AskInt("ID del paciente: ");
-            _hospital.AddMedicalRecord(patientIdForRecord);
-        }
-
-        static void ListMedicalHistory()
-        {
-            int patientId = Tools.AskInt("ID del paciente: ");
-            _hospital.ViewMedicalRecord(patientId);
         }
     }
 }
