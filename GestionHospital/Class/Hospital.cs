@@ -86,22 +86,22 @@ namespace GestionHospital.Class
         public void AddTestData()
         {
             // Agregar médicos
-            var doctor1 = new Doctor("Dr. Carlos", "Cardiología");
-            var doctor2 = new Doctor("Dr. Ana", "Neurología");
-            var doctor3 = new Doctor("Dr. Roberto", "Pediatría");
+            var doctor1 = new Doctor("Dr. Carlos", "Cardiología", new DateTime(1975, 5, 20), 1.78, 75, 20, "9am-2pm");
+            var doctor2 = new Doctor("Dra. Ana", "Neurología", new DateTime(1980, 10, 12), 1.65, 60, 15, "10am-4pm");
+            var doctor3 = new Doctor("Dr. Roberto", "Pediatría", new DateTime(1985, 1, 5), 1.80, 85, 10, "8am-1pm");
 
             _people.Add(doctor1);
             _people.Add(doctor2);
             _people.Add(doctor3);
 
             // Agregar pacientes asignados a médicos
-            _people.Add(new Patient("Paciente Juan", doctor1));
-            _people.Add(new Patient("Paciente María", doctor2));
-            _people.Add(new Patient("Paciente Pedro", doctor3));
+            _people.Add(new Patient("Juan Pérez", doctor1, new DateTime(1990, 7, 15), 1.70, 70, "Hipertensión", DateTime.Now.AddDays(-10)));
+            _people.Add(new Patient("María López", doctor2, new DateTime(1988, 2, 20), 1.62, 55, "Migraña Crónica", DateTime.Now.AddDays(-5)));
+            _people.Add(new Patient("Pedro Martínez", doctor3, new DateTime(1995, 11, 22), 1.75, 68, "Asma", DateTime.Now.AddDays(-2)));
 
             // Agregar empleados administrativos
-            _people.Add(new AdminStaff("Lucía", "Secretaria"));
-            _people.Add(new AdminStaff("Javier", "Contador"));
+            _people.Add(new AdminStaff("Lucía González", "Secretaria", new DateTime(1992, 4, 30), 1.60, 50, 5, "Administración"));
+            _people.Add(new AdminStaff("Javier Reyes", "Contador", new DateTime(1985, 8, 14), 1.75, 78, 12, "Finanzas"));
 
             Console.WriteLine("Datos de prueba añadidos.");
         }
