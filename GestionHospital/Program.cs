@@ -9,9 +9,7 @@ namespace GestionHospital
 
         static void Main(string[] args)
         {
-            // Agregar datos de prueba al inicio
             _hospital.AddTestData();
-
             bool exit = false;
             while (!exit)
             {
@@ -40,7 +38,16 @@ namespace GestionHospital
                             _hospital.ListPeople();
                             break;
                         case 6:
-                            ModifyPerson();
+                            _hospital.ScheduleAppointment();
+                            break;
+                        case 7:
+                            _hospital.ListAppointments();
+                            break;
+                        case 8:
+                            _hospital.CancelAppointment();
+                            break;
+                        case 9:
+                            _hospital.ModifyAppointment();
                             break;
                         default:
                             Console.WriteLine("Opción no válida.");
@@ -48,7 +55,9 @@ namespace GestionHospital
                     }
                 }
                 else
+                {
                     Console.WriteLine("Por favor, ingrese un número válido.");
+                }
             }
         }
 
@@ -57,13 +66,16 @@ namespace GestionHospital
         {
             Console.Write(@"
 Menu:
+0. Salir
 1. Dar de alta un médico
 2. Dar de alta un paciente
 3. Dar de alta personal administrativo
 4. Eliminar a una persona
 5. Listar personas
-6. Modificar persona
-0. Salir
+6. Programar una cita
+7. Listar citas
+8. Cancelar una cita
+9. Modificar una cita
 Seleccione una opción: ");
         }
 
