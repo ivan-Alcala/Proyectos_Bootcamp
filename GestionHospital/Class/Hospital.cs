@@ -25,6 +25,45 @@ namespace GestionHospital.Class
                 Console.WriteLine("Persona no encontrada.");
         }
 
+        // Método para modificar los datos de una persona
+        public void ModifyPerson(int id)
+        {
+            var person = _people.Find(p => p.Id == id);
+
+            if (person == null)
+            {
+                Console.WriteLine("Persona no encontrada.");
+                return;
+            }
+
+            Console.WriteLine($"Modificando datos de {person.Name} (ID: {person.Id})");
+
+            // Modificar atributos generales (comunes a todas las personas)
+            person.Name = Tools.AskString("Nuevo nombre: ");
+            person.DateOfBirth = Tools.AskDate("Nueva fecha de nacimiento (dd/MM/yyyy): ");
+            person.Height = Tools.AskDouble("Nueva altura (en metros): ");
+            person.Weight = Tools.AskDouble("Nuevo peso (en kg): ");
+
+            // Modificar atributos específicos según el tipo de persona
+            if (person is Doctor doctor)
+            {
+                doctor.Specialty = Tools.AskString("Nueva especialidad: ");
+                doctor.YearsOfExperience = Tools.AskInt("Años de experiencia: ");
+                doctor.ConsultationHours = Tools.AskString("Nuevo horario de consultas: ");
+            }
+            else if (person is Patient patient)
+            {
+                patient.Condition = Tools.AskString("Nueva condición del paciente: ");
+                patient.AdmissionDate = Tools.AskDate("Nueva fecha de admisión (dd/MM/yyyy): ");
+            }
+            else if (person is AdminStaff adminStaff)
+            {
+                adminStaff.Position = Tools.AskString("Nuevo cargo: ");
+            }
+
+            Console.WriteLine("Datos modificados correctamente.");
+        }
+
         public void ListPeople()
         {
             // Listar médicos

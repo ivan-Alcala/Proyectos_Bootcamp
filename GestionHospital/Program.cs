@@ -39,6 +39,9 @@ namespace GestionHospital
                         case 5:
                             _hospital.ListPeople();
                             break;
+                        case 6:
+                            ModifyPerson();
+                            break;
                         default:
                             Console.WriteLine("Opción no válida.");
                             break;
@@ -59,6 +62,7 @@ Menu:
 3. Dar de alta personal administrativo
 4. Eliminar a una persona
 5. Listar personas
+6. Modificar persona
 0. Salir
 Seleccione una opción: ");
         }
@@ -120,6 +124,13 @@ Seleccione una opción: ");
         {
             int idToRemove = Tools.AskInt("ID de la persona a eliminar: ");
             _hospital.RemovePerson(idToRemove);
+        }
+
+        // Método para modificar una persona
+        static void ModifyPerson()
+        {
+            int personId = Tools.AskInt("ID de la persona a modificar: ");
+            _hospital.ModifyPerson(personId);
         }
     }
 }
