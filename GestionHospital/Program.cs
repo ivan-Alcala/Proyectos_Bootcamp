@@ -63,29 +63,65 @@ Menu:
 Seleccione una opción: ");
         }
 
+        // Método genérico para preguntar y obtener un string válido
+        static string AskString(string question)
+        {
+            string input;
+            do
+            {
+                Console.Write(question);
+                input = Console.ReadLine();
+            } while (string.IsNullOrWhiteSpace(input));
+
+            return input;
+        }
+
+        // Método genérico para preguntar y obtener un int válido
+        static int AskInt(string question)
+        {
+            int result;
+            do
+            {
+                Console.Write(question);
+            } while (!int.TryParse(Console.ReadLine(), out result));
+
+            return result;
+        }
+
+        // Método genérico para preguntar y obtener un double válido
+        static double AskDouble(string question)
+        {
+            double result;
+            do
+            {
+                Console.Write(question);
+            } while (!double.TryParse(Console.ReadLine(), out result));
+
+            return result;
+        }
+
+        // Método genérico para preguntar y obtener una fecha válida
+        static DateTime AskDate(string question)
+        {
+            DateTime result;
+            do
+            {
+                Console.Write(question);
+            } while (!DateTime.TryParse(Console.ReadLine(), out result));
+
+            return result;
+        }
+
         // Método para dar de alta un médico
         static void AddDoctor()
         {
-            Console.Write("Nombre del médico: ");
-            string doctorName = Console.ReadLine();
-
-            Console.Write("Fecha de nacimiento (dd/MM/yyyy): ");
-            DateTime dateOfBirth = DateTime.Parse(Console.ReadLine());
-
-            Console.Write("Altura (en metros): ");
-            double height = double.Parse(Console.ReadLine());
-
-            Console.Write("Peso (en kg): ");
-            double weight = double.Parse(Console.ReadLine());
-
-            Console.Write("Especialidad: ");
-            string specialty = Console.ReadLine();
-
-            Console.Write("Años de experiencia: ");
-            int yearsOfExperience = int.Parse(Console.ReadLine());
-
-            Console.Write("Horario de consultas: ");
-            string consultationHours = Console.ReadLine();
+            string doctorName = AskString("Nombre del médico: ");
+            DateTime dateOfBirth = AskDate("Fecha de nacimiento (dd/MM/yyyy): ");
+            double height = AskDouble("Altura (en metros): ");
+            double weight = AskDouble("Peso (en kg): ");
+            string specialty = AskString("Especialidad: ");
+            int yearsOfExperience = AskInt("Años de experiencia: ");
+            string consultationHours = AskString("Horario de consultas: ");
 
             _hospital.AddPerson(new Doctor(doctorName, specialty, dateOfBirth, height, weight, yearsOfExperience, consultationHours));
         }
@@ -93,65 +129,37 @@ Seleccione una opción: ");
         // Método para dar de alta un paciente
         static void AddPatient()
         {
-            Console.Write("Nombre del paciente: ");
-            string patientName = Console.ReadLine();
+            string patientName = AskString("Nombre del paciente: ");
+            DateTime dateOfBirth = AskDate("Fecha de nacimiento (dd/MM/yyyy): ");
+            double height = AskDouble("Altura (en metros): ");
+            double weight = AskDouble("Peso (en kg): ");
 
-            Console.Write("Fecha de nacimiento (dd/MM/yyyy): ");
-            DateTime dateOfBirth = DateTime.Parse(Console.ReadLine());
+            int doctorId = AskInt("ID del médico asignado: ");
+            Doctor assignedDoctor = _hospital.GetDoctorById(doctorId);
 
-            Console.Write("Altura (en metros): ");
-            double height = double.Parse(Console.ReadLine());
-
-            Console.Write("Peso (en kg): ");
-            double weight = double.Parse(Console.ReadLine());
-
-            Console.Write("ID del médico asignado: ");
-            if (int.TryParse(Console.ReadLine(), out int doctorId))
+            if (assignedDoctor != null)
             {
-                Doctor assignedDoctor = _hospital.GetDoctorById(doctorId);
+                string condition = AskString("Condición del paciente: ");
+                DateTime admissionDate = AskDate("Fecha de admisión (dd/MM/yyyy): ");
 
-                if (assignedDoctor != null)
-                {
-                    Console.Write("Condición del paciente: ");
-                    string condition = Console.ReadLine();
-
-                    Console.Write("Fecha de admisión (dd/MM/yyyy): ");
-                    DateTime admissionDate = DateTime.Parse(Console.ReadLine());
-
-                    _hospital.AddPerson(new Patient(patientName, assignedDoctor, dateOfBirth, height, weight, condition, admissionDate));
-                }
-                else
-                {
-                    Console.WriteLine("No se pudo asignar el médico. Intente nuevamente.");
-                }
+                _hospital.AddPerson(new Patient(patientName, assignedDoctor, dateOfBirth, height, weight, condition, admissionDate));
             }
             else
-                Console.WriteLine("ID inválido. Intente de nuevo.");
+            {
+                Console.WriteLine("No se pudo asignar el médico. Intente nuevamente.");
+            }
         }
 
         // Método para dar de alta personal administrativo
         static void AddAdminStaff()
         {
-            Console.Write("Nombre del personal administrativo: ");
-            string adminName = Console.ReadLine();
-
-            Console.Write("Fecha de nacimiento (dd/MM/yyyy): ");
-            DateTime dateOfBirth = DateTime.Parse(Console.ReadLine());
-
-            Console.Write("Altura (en metros): ");
-            double height = double.Parse(Console.ReadLine());
-
-            Console.Write("Peso (en kg): ");
-            double weight = double.Parse(Console.ReadLine());
-
-            Console.Write("Cargo: ");
-            string position = Console.ReadLine();
-
-            Console.Write("Años de servicio: ");
-            int yearsInService = int.Parse(Console.ReadLine());
-
-            Console.Write("Departamento: ");
-            string department = Console.ReadLine();
+            string adminName = AskString("Nombre del personal administrativo: ");
+            DateTime dateOfBirth = DateTime.Parse(AskString("Fecha de nacimiento (dd/MM/yyyy): "));
+            double height = AskDouble("Altura (en metros): ");
+            double weight = AskDouble("Peso (en kg): ");
+            string position = AskString("Cargo: ");
+            int yearsInService = AskInt("Años de servicio: ");
+            string department = AskString("Departamento: ");
 
             _hospital.AddPerson(new AdminStaff(adminName, position, dateOfBirth, height, weight, yearsInService, department));
         }
@@ -159,12 +167,8 @@ Seleccione una opción: ");
         // Método para eliminar a una persona
         static void RemovePerson()
         {
-            Console.Write("ID de la persona a eliminar: ");
-
-            if (int.TryParse(Console.ReadLine(), out int idToRemove))
-                _hospital.RemovePerson(idToRemove);
-            else
-                Console.WriteLine("ID inválido. Intente de nuevo.");
+            int idToRemove = AskInt("ID de la persona a eliminar: ");
+            _hospital.RemovePerson(idToRemove);
         }
     }
 }
