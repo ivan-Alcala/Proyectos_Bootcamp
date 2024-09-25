@@ -63,65 +63,16 @@ Menu:
 Seleccione una opción: ");
         }
 
-        // Método genérico para preguntar y obtener un string válido
-        static string AskString(string question)
-        {
-            string input;
-            do
-            {
-                Console.Write(question);
-                input = Console.ReadLine();
-            } while (string.IsNullOrWhiteSpace(input));
-
-            return input;
-        }
-
-        // Método genérico para preguntar y obtener un int válido
-        static int AskInt(string question)
-        {
-            int result;
-            do
-            {
-                Console.Write(question);
-            } while (!int.TryParse(Console.ReadLine(), out result));
-
-            return result;
-        }
-
-        // Método genérico para preguntar y obtener un double válido
-        static double AskDouble(string question)
-        {
-            double result;
-            do
-            {
-                Console.Write(question);
-            } while (!double.TryParse(Console.ReadLine(), out result));
-
-            return result;
-        }
-
-        // Método genérico para preguntar y obtener una fecha válida
-        static DateTime AskDate(string question)
-        {
-            DateTime result;
-            do
-            {
-                Console.Write(question);
-            } while (!DateTime.TryParse(Console.ReadLine(), out result));
-
-            return result;
-        }
-
         // Método para dar de alta un médico
         static void AddDoctor()
         {
-            string doctorName = AskString("Nombre del médico: ");
-            DateTime dateOfBirth = AskDate("Fecha de nacimiento (dd/MM/yyyy): ");
-            double height = AskDouble("Altura (en metros): ");
-            double weight = AskDouble("Peso (en kg): ");
-            string specialty = AskString("Especialidad: ");
-            int yearsOfExperience = AskInt("Años de experiencia: ");
-            string consultationHours = AskString("Horario de consultas: ");
+            string doctorName = Tools.AskString("Nombre del médico: ");
+            DateTime dateOfBirth = Tools.AskDate("Fecha de nacimiento (dd/MM/yyyy): ");
+            double height = Tools.AskDouble("Altura (en metros): ");
+            double weight = Tools.AskDouble("Peso (en kg): ");
+            string specialty = Tools.AskString("Especialidad: ");
+            int yearsOfExperience = Tools.AskInt("Años de experiencia: ");
+            string consultationHours = Tools.AskString("Horario de consultas: ");
 
             _hospital.AddPerson(new Doctor(doctorName, specialty, dateOfBirth, height, weight, yearsOfExperience, consultationHours));
         }
@@ -129,18 +80,18 @@ Seleccione una opción: ");
         // Método para dar de alta un paciente
         static void AddPatient()
         {
-            string patientName = AskString("Nombre del paciente: ");
-            DateTime dateOfBirth = AskDate("Fecha de nacimiento (dd/MM/yyyy): ");
-            double height = AskDouble("Altura (en metros): ");
-            double weight = AskDouble("Peso (en kg): ");
+            string patientName = Tools.AskString("Nombre del paciente: ");
+            DateTime dateOfBirth = Tools.AskDate("Fecha de nacimiento (dd/MM/yyyy): ");
+            double height = Tools.AskDouble("Altura (en metros): ");
+            double weight = Tools.AskDouble("Peso (en kg): ");
 
-            int doctorId = AskInt("ID del médico asignado: ");
+            int doctorId = Tools.AskInt("ID del médico asignado: ");
             Doctor assignedDoctor = _hospital.GetDoctorById(doctorId);
 
             if (assignedDoctor != null)
             {
-                string condition = AskString("Condición del paciente: ");
-                DateTime admissionDate = AskDate("Fecha de admisión (dd/MM/yyyy): ");
+                string condition = Tools.AskString("Condición del paciente: ");
+                DateTime admissionDate = Tools.AskDate("Fecha de admisión (dd/MM/yyyy): ");
 
                 _hospital.AddPerson(new Patient(patientName, assignedDoctor, dateOfBirth, height, weight, condition, admissionDate));
             }
@@ -153,13 +104,13 @@ Seleccione una opción: ");
         // Método para dar de alta personal administrativo
         static void AddAdminStaff()
         {
-            string adminName = AskString("Nombre del personal administrativo: ");
-            DateTime dateOfBirth = DateTime.Parse(AskString("Fecha de nacimiento (dd/MM/yyyy): "));
-            double height = AskDouble("Altura (en metros): ");
-            double weight = AskDouble("Peso (en kg): ");
-            string position = AskString("Cargo: ");
-            int yearsInService = AskInt("Años de servicio: ");
-            string department = AskString("Departamento: ");
+            string adminName = Tools.AskString("Nombre del personal administrativo: ");
+            DateTime dateOfBirth = DateTime.Parse(Tools.AskString("Fecha de nacimiento (dd/MM/yyyy): "));
+            double height = Tools.AskDouble("Altura (en metros): ");
+            double weight = Tools.AskDouble("Peso (en kg): ");
+            string position = Tools.AskString("Cargo: ");
+            int yearsInService = Tools.AskInt("Años de servicio: ");
+            string department = Tools.AskString("Departamento: ");
 
             _hospital.AddPerson(new AdminStaff(adminName, position, dateOfBirth, height, weight, yearsInService, department));
         }
@@ -167,7 +118,7 @@ Seleccione una opción: ");
         // Método para eliminar a una persona
         static void RemovePerson()
         {
-            int idToRemove = AskInt("ID de la persona a eliminar: ");
+            int idToRemove = Tools.AskInt("ID de la persona a eliminar: ");
             _hospital.RemovePerson(idToRemove);
         }
     }

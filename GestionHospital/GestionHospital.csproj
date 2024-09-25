@@ -48,6 +48,7 @@
     <Compile Include="Class\Hospital.cs" />
     <Compile Include="Class\Patient.cs" />
     <Compile Include="Class\Person.cs" />
+    <Compile Include="Class\Tools.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
