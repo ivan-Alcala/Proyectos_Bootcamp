@@ -18,7 +18,7 @@ namespace GestionHospital.Class
         public void RemovePerson()
         {
             int idToRemove = Tools.AskInt("ID de la persona a eliminar: ");
-            var personToRemove = _people.Find(p => p.Id == idToRemove);
+            var personToRemove = _people.FirstOrDefault(p => p.Id == idToRemove);
             if (personToRemove != null)
             {
                 _people.Remove(personToRemove);
@@ -28,10 +28,9 @@ namespace GestionHospital.Class
                 Console.WriteLine("Persona no encontrada.");
         }
 
-        // Método para modificar los datos de una persona
         public void ModifyPerson(int id)
         {
-            var person = _people.Find(p => p.Id == id);
+            var person = _people.FirstOrDefault(p => p.Id == id);
 
             if (person == null)
             {
@@ -48,79 +47,56 @@ namespace GestionHospital.Class
             person.Weight = Tools.AskDouble("Nuevo peso (en kg): ");
 
             // Modificar atributos específicos según el tipo de persona
-            if (person is Doctor doctor)
+            switch (person)
             {
-                doctor.Specialty = Tools.AskString("Nueva especialidad: ");
-                doctor.YearsOfExperience = Tools.AskInt("Años de experiencia: ");
-                doctor.ConsultationHours = Tools.AskString("Nuevo horario de consultas: ");
+                case Doctor doctor:
+                    doctor.Specialty = Tools.AskString("Nueva especialidad: ");
+                    doctor.YearsOfExperience = Tools.AskInt("Años de experiencia: ");
+                    doctor.ConsultationHours = Tools.AskString("Nuevo horario de consultas: ");
+                    break;
+                case Patient patient:
+                    patient.Condition = Tools.AskString("Nueva condición del paciente: ");
+                    patient.AdmissionDate = Tools.AskDate("Nueva fecha de admisión (dd/MM/yyyy): ");
+                    break;
+                case AdminStaff adminStaff:
+                    adminStaff.Position = Tools.AskString("Nuevo cargo: ");
+                    break;
             }
-            else if (person is Patient patient)
-            {
-                patient.Condition = Tools.AskString("Nueva condición del paciente: ");
-                patient.AdmissionDate = Tools.AskDate("Nueva fecha de admisión (dd/MM/yyyy): ");
-            }
-            else if (person is AdminStaff adminStaff)
-                adminStaff.Position = Tools.AskString("Nuevo cargo: ");
 
             Console.WriteLine("Datos modificados correctamente.");
         }
 
         public void ListPeople()
         {
-            // Listar médicos
+            var doctors = _people.OfType<Doctor>();
+            var patients = _people.OfType<Patient>();
+            var adminStaff = _people.OfType<AdminStaff>();
+
             Console.WriteLine("\nMédicos:");
-            bool hasDoctors = false;
-            foreach (var person in _people)
-            {
-                if (person is Doctor doctor)
-                {
-                    Console.WriteLine(doctor);
-                    hasDoctors = true;
-                }
-            }
-            if (!hasDoctors)
+            if (doctors.Any())
+                doctors.ToList().ForEach(Console.WriteLine);
+            else
                 Console.WriteLine("No hay médicos registrados.");
 
-            // Listar pacientes
             Console.WriteLine("\nPacientes:");
-            bool hasPatients = false;
-            foreach (var person in _people)
-            {
-                if (person is Patient patient)
-                {
-                    Console.WriteLine(patient);
-                    hasPatients = true;
-                }
-            }
-            if (!hasPatients)
+            if (patients.Any())
+                patients.ToList().ForEach(Console.WriteLine);
+            else
                 Console.WriteLine("No hay pacientes registrados.");
 
-            // Listar personal administrativo
             Console.WriteLine("\nPersonal Administrativo:");
-            bool hasAdminStaff = false;
-            foreach (var person in _people)
-            {
-                if (person is AdminStaff adminStaff)
-                {
-                    Console.WriteLine(adminStaff);
-                    hasAdminStaff = true;
-                }
-            }
-            if (!hasAdminStaff)
+            if (adminStaff.Any())
+                adminStaff.ToList().ForEach(Console.WriteLine);
+            else
                 Console.WriteLine("No hay personal administrativo registrado.");
         }
 
         public Doctor GetDoctorById(int id)
         {
-            var doctor = _people.Find(p => p.Id == id && p is Doctor) as Doctor;
-
-            if (doctor != null)
-                return doctor;
-            else
-            {
+            var doctor = _people.OfType<Doctor>().FirstOrDefault(d => d.Id == id);
+            if (doctor == null)
                 Console.WriteLine("Médico no encontrado.");
-                return null;
-            }
+            return doctor;
         }
 
         #region Appointment
@@ -132,10 +108,9 @@ namespace GestionHospital.Class
             int patientId = Tools.AskInt("ID del paciente: ");
             Patient patient = GetPatientById(patientId);
 
-            DateTime appointmentDate = Tools.AskDate("Fecha de la cita (dd/MM/yyyy hh:mm): ");
-
             if (doctor != null && patient != null)
             {
+                DateTime appointmentDate = Tools.AskDate("Fecha de la cita (dd/MM/yyyy hh:mm): ");
                 Appointment appointment = new Appointment(doctor, patient, appointmentDate);
                 _appointments.Add(appointment);
                 Console.WriteLine("Cita programada correctamente.");
@@ -146,14 +121,13 @@ namespace GestionHospital.Class
 
         public void ListAppointments()
         {
-            if (_appointments.Count == 0)
+            if (!_appointments.Any())
             {
                 Console.WriteLine("No hay citas programadas.");
                 return;
             }
 
-            foreach (var appointment in _appointments)
-                Console.WriteLine(appointment);
+            _appointments.ForEach(Console.WriteLine);
         }
 
         public void CancelAppointment()
@@ -224,21 +198,17 @@ namespace GestionHospital.Class
             {
                 Console.WriteLine(patient.MedicalRecord);
                 Console.WriteLine("\nDiagnósticos:");
-                foreach (var diagnosis in patient.MedicalRecord.Diagnoses)
-                    Console.WriteLine(diagnosis);
+                patient.MedicalRecord.Diagnoses.ForEach(Console.WriteLine);
 
                 Console.WriteLine("\nTratamientos:");
-                foreach (var treatment in patient.MedicalRecord.Treatments)
-                    Console.WriteLine(treatment);
+                patient.MedicalRecord.Treatments.ForEach(Console.WriteLine);
 
                 Console.WriteLine("\nNotas del médico:");
-                foreach (var note in patient.MedicalRecord.DoctorNotes)
-                    Console.WriteLine(note);
+                patient.MedicalRecord.DoctorNotes.ForEach(Console.WriteLine);
             }
             else
                 Console.WriteLine("Paciente no encontrado.");
         }
-
         #endregion
 
         public void AddTestData()
