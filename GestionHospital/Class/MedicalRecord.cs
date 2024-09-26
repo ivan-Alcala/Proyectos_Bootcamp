@@ -4,15 +4,15 @@ namespace GestionHospital.Class
 {
     public class MedicalRecord
     {
-        public int PatientId { get; set; }
+        public Patient Patient { get; set; }
         public List<Appointment> Appointments { get; set; }
         public List<string> Diagnoses { get; set; }
         public List<string> Treatments { get; set; }
         public List<string> DoctorNotes { get; set; }
 
-        public MedicalRecord(int patientId)
+        public MedicalRecord(Patient patient)
         {
-            PatientId = patientId;
+            Patient = patient;
             Appointments = new List<Appointment>();
             Diagnoses = new List<string>();
             Treatments = new List<string>();
@@ -41,7 +41,7 @@ namespace GestionHospital.Class
 
         public override string ToString()
         {
-            return $"Historial médico del paciente ID: {PatientId}\n" +
+            return $"Historial médico de {Patient.Name} (ID: {Patient.Id})\n" +
                    $"Citas: {Appointments.Count}\n" +
                    $"Diagnósticos: {Diagnoses.Count}\n" +
                    $"Tratamientos: {Treatments.Count}\n" +

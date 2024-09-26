@@ -15,7 +15,7 @@ namespace GestionHospital.Class
             AssignedDoctor = assignedDoctor;
             Condition = condition;
             AdmissionDate = admissionDate;
-            MedicalRecord = new MedicalRecord(Id);
+            MedicalRecord = new MedicalRecord(this);
         }
 
         public override string ToString()
