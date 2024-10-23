@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntroducionWinForm;
+using System;
 using System.Windows.Forms;
 
 namespace FormTask
@@ -96,7 +97,7 @@ namespace FormTask
 
         private void btNewForm_Click(object sender, EventArgs e)
         {
-            FormMain formNew = new FormMain();
+            FormDaily formNew = new FormDaily();
             formNew.Show();
         }
 
