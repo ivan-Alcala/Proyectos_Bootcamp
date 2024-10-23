@@ -40,14 +40,6 @@ namespace FormTask
                 return;
             }
 
-            // Verifica si el DateTimePicker tiene el formato custom
-            if (dtpStartDate.Format == DateTimePickerFormat.Custom)
-            {
-                MessageBox.Show("Debe seleccionar una fecha de inicio.", "Error de validación",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             // Construye el mensaje con los campos no vacíos
             string message = "Campos completados:\n";
 
