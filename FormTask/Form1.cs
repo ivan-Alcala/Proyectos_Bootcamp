@@ -10,17 +10,17 @@ namespace FormTask
             InitializeComponent();
 
             // Configura ComboBox para que no se puedan escribir
-            cbType.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbCriticity.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbPercentComplete.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCriticity.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbPercentComplete.DropDownStyle = ComboBoxStyle.DropDownList;
 
             // Establece el primer elemento como seleccionado en cada ComboBox
-            cbLocation.SelectedIndex = 0;
-            cbType.SelectedIndex = 0;
-            cbCriticity.SelectedIndex = 0;
-            cbStatus.SelectedIndex = 0;
-            cbPercentComplete.SelectedIndex = 0;
+            cmbLocation.SelectedIndex = 0;
+            cmbType.SelectedIndex = 0;
+            cmbCriticity.SelectedIndex = 0;
+            cmbStatus.SelectedIndex = 0;
+            cmbPercentComplete.SelectedIndex = 0;
 
             // Inicializa el DateTimePicker para que aparezca "vacío"
             dtpStartDate.Format = DateTimePickerFormat.Custom;
@@ -30,7 +30,7 @@ namespace FormTask
         private void BtSubmit_Click(object sender, EventArgs e)
         {
             // Verifica que los campos obligatorios no estén vacíos
-            if (string.IsNullOrWhiteSpace(tbTitle.Text) ||
+            if (string.IsNullOrWhiteSpace(txtTitle.Text) ||
                 string.IsNullOrWhiteSpace(rtbDescription.Text) ||
                 clbEnviroment.CheckedItems.Count == 0)
             {
@@ -50,17 +50,17 @@ namespace FormTask
             // Construye el mensaje con los campos no vacíos
             string message = "Campos completados:\n";
 
-            if (!string.IsNullOrWhiteSpace(tbTitle.Text))
-                message += $"- Título: {tbTitle.Text}\n";
+            if (!string.IsNullOrWhiteSpace(txtTitle.Text))
+                message += $"- Título: {txtTitle.Text}\n";
 
-            if (!string.IsNullOrWhiteSpace(cbLocation.Text))
-                message += $"- Ubicación: {cbLocation.Text}\n";
+            if (!string.IsNullOrWhiteSpace(cmbLocation.Text))
+                message += $"- Ubicación: {cmbLocation.Text}\n";
 
-            if (!string.IsNullOrWhiteSpace(cbType.Text))
-                message += $"- Tipo: {cbType.Text}\n";
+            if (!string.IsNullOrWhiteSpace(cmbType.Text))
+                message += $"- Tipo: {cmbType.Text}\n";
 
-            if (!string.IsNullOrWhiteSpace(cbCriticity.Text))
-                message += $"- Criticidad: {cbCriticity.Text}\n";
+            if (!string.IsNullOrWhiteSpace(cmbCriticity.Text))
+                message += $"- Criticidad: {cmbCriticity.Text}\n";
 
             if (!string.IsNullOrWhiteSpace(rtbDescription.Text))
                 message += $"- Descripción: {rtbDescription.Text}\n";
@@ -71,11 +71,11 @@ namespace FormTask
             if (nudDurationH.Value > 0)
                 message += $"- Duración: {nudDurationH.Value} horas\n";
 
-            if (!string.IsNullOrWhiteSpace(cbStatus.Text))
-                message += $"- Estado: {cbStatus.Text}\n";
+            if (!string.IsNullOrWhiteSpace(cmbStatus.Text))
+                message += $"- Estado: {cmbStatus.Text}\n";
 
-            if (!string.IsNullOrWhiteSpace(cbPercentComplete.Text))
-                message += $"- Porcentaje completado: {cbPercentComplete.Text}\n";
+            if (!string.IsNullOrWhiteSpace(cmbPercentComplete.Text))
+                message += $"- Porcentaje completado: {cmbPercentComplete.Text}\n";
 
             // Entornos seleccionados
             if (clbEnviroment.CheckedItems.Count > 0)
@@ -87,7 +87,7 @@ namespace FormTask
                 }
             }
 
-            if (cbSendEmail.Checked)
+            if (chkSendEmail.Checked)
                 message += "- Se enviará un correo electrónico\n";
 
             // Mostrar el mensaje en un MessageBox

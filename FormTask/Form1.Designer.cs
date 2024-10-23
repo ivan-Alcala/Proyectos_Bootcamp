@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.lbTitle = new System.Windows.Forms.Label();
-            this.tbTitle = new System.Windows.Forms.TextBox();
-            this.btSubmit = new System.Windows.Forms.Button();
-            this.btCancel = new System.Windows.Forms.Button();
-            this.cbLocation = new System.Windows.Forms.ComboBox();
+            this.txtTitle = new System.Windows.Forms.TextBox();
+            this.btnSubmit = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.cmbLocation = new System.Windows.Forms.ComboBox();
             this.lbLocation = new System.Windows.Forms.Label();
             this.clbEnviroment = new System.Windows.Forms.CheckedListBox();
             this.lbType = new System.Windows.Forms.Label();
-            this.cbType = new System.Windows.Forms.ComboBox();
+            this.cmbType = new System.Windows.Forms.ComboBox();
             this.lbEnvironment = new System.Windows.Forms.Label();
-            this.cbCriticity = new System.Windows.Forms.ComboBox();
+            this.cmbCriticity = new System.Windows.Forms.ComboBox();
             this.lbCriticity = new System.Windows.Forms.Label();
             this.lbDescription = new System.Windows.Forms.Label();
             this.rtbDescription = new System.Windows.Forms.RichTextBox();
@@ -46,12 +46,12 @@
             this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
             this.nudDurationH = new System.Windows.Forms.NumericUpDown();
             this.lbDurationH = new System.Windows.Forms.Label();
-            this.cbStatus = new System.Windows.Forms.ComboBox();
+            this.cmbStatus = new System.Windows.Forms.ComboBox();
             this.lbStatus = new System.Windows.Forms.Label();
-            this.cbPercentComplete = new System.Windows.Forms.ComboBox();
+            this.cmbPercentComplete = new System.Windows.Forms.ComboBox();
             this.lbPercentComplete = new System.Windows.Forms.Label();
-            this.cbSendEmail = new System.Windows.Forms.CheckBox();
-            this.btNewForm = new System.Windows.Forms.Button();
+            this.chkSendEmail = new System.Windows.Forms.CheckBox();
+            this.btnNewForm = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudDurationH)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,50 +65,50 @@
             this.lbTitle.TabIndex = 0;
             this.lbTitle.Text = "Title";
             // 
-            // tbTitle
+            // txtTitle
             // 
-            this.tbTitle.Location = new System.Drawing.Point(12, 32);
-            this.tbTitle.Name = "tbTitle";
-            this.tbTitle.Size = new System.Drawing.Size(226, 22);
-            this.tbTitle.TabIndex = 1;
+            this.txtTitle.Location = new System.Drawing.Point(12, 32);
+            this.txtTitle.Name = "txtTitle";
+            this.txtTitle.Size = new System.Drawing.Size(226, 22);
+            this.txtTitle.TabIndex = 1;
             // 
-            // btSubmit
+            // btnSubmit
             // 
-            this.btSubmit.BackColor = System.Drawing.SystemColors.Highlight;
-            this.btSubmit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btSubmit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btSubmit.ForeColor = System.Drawing.SystemColors.Control;
-            this.btSubmit.Location = new System.Drawing.Point(420, 451);
-            this.btSubmit.Name = "btSubmit";
-            this.btSubmit.Size = new System.Drawing.Size(75, 31);
-            this.btSubmit.TabIndex = 2;
-            this.btSubmit.Text = "Submit";
-            this.btSubmit.UseVisualStyleBackColor = false;
-            this.btSubmit.Click += new System.EventHandler(this.BtSubmit_Click);
+            this.btnSubmit.BackColor = System.Drawing.SystemColors.Highlight;
+            this.btnSubmit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSubmit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSubmit.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnSubmit.Location = new System.Drawing.Point(420, 451);
+            this.btnSubmit.Name = "btnSubmit";
+            this.btnSubmit.Size = new System.Drawing.Size(75, 31);
+            this.btnSubmit.TabIndex = 2;
+            this.btnSubmit.Text = "Submit";
+            this.btnSubmit.UseVisualStyleBackColor = false;
+            this.btnSubmit.Click += new System.EventHandler(this.BtSubmit_Click);
             // 
-            // btCancel
+            // btnCancel
             // 
-            this.btCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btCancel.Location = new System.Drawing.Point(339, 451);
-            this.btCancel.Name = "btCancel";
-            this.btCancel.Size = new System.Drawing.Size(75, 31);
-            this.btCancel.TabIndex = 3;
-            this.btCancel.Text = "Cancel";
-            this.btCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnCancel.Location = new System.Drawing.Point(339, 451);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 31);
+            this.btnCancel.TabIndex = 3;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // cbLocation
+            // cmbLocation
             // 
-            this.cbLocation.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cbLocation.FormattingEnabled = true;
-            this.cbLocation.Items.AddRange(new object[] {
+            this.cmbLocation.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cmbLocation.FormattingEnabled = true;
+            this.cmbLocation.Items.AddRange(new object[] {
             "Barcelona",
             "Cataluña",
             "Otros"});
-            this.cbLocation.Location = new System.Drawing.Point(269, 32);
-            this.cbLocation.Name = "cbLocation";
-            this.cbLocation.Size = new System.Drawing.Size(226, 24);
-            this.cbLocation.TabIndex = 4;
+            this.cmbLocation.Location = new System.Drawing.Point(269, 32);
+            this.cmbLocation.Name = "cmbLocation";
+            this.cmbLocation.Size = new System.Drawing.Size(226, 24);
+            this.cmbLocation.TabIndex = 4;
             // 
             // lbLocation
             // 
@@ -145,18 +145,18 @@
             this.lbType.TabIndex = 7;
             this.lbType.Text = "Type";
             // 
-            // cbType
+            // cmbType
             // 
-            this.cbType.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cbType.FormattingEnabled = true;
-            this.cbType.Items.AddRange(new object[] {
+            this.cmbType.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Items.AddRange(new object[] {
             "Incident",
             "Pendent",
             "Refused"});
-            this.cbType.Location = new System.Drawing.Point(12, 94);
-            this.cbType.Name = "cbType";
-            this.cbType.Size = new System.Drawing.Size(149, 24);
-            this.cbType.TabIndex = 8;
+            this.cmbType.Location = new System.Drawing.Point(12, 94);
+            this.cmbType.Name = "cmbType";
+            this.cmbType.Size = new System.Drawing.Size(149, 24);
+            this.cmbType.TabIndex = 8;
             // 
             // lbEnvironment
             // 
@@ -168,17 +168,17 @@
             this.lbEnvironment.TabIndex = 11;
             this.lbEnvironment.Text = "Environment";
             // 
-            // cbCriticity
+            // cmbCriticity
             // 
-            this.cbCriticity.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cbCriticity.FormattingEnabled = true;
-            this.cbCriticity.Items.AddRange(new object[] {
+            this.cmbCriticity.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cmbCriticity.FormattingEnabled = true;
+            this.cmbCriticity.Items.AddRange(new object[] {
             "Minor",
             "Major"});
-            this.cbCriticity.Location = new System.Drawing.Point(196, 94);
-            this.cbCriticity.Name = "cbCriticity";
-            this.cbCriticity.Size = new System.Drawing.Size(149, 24);
-            this.cbCriticity.TabIndex = 13;
+            this.cmbCriticity.Location = new System.Drawing.Point(196, 94);
+            this.cmbCriticity.Name = "cmbCriticity";
+            this.cmbCriticity.Size = new System.Drawing.Size(149, 24);
+            this.cmbCriticity.TabIndex = 13;
             // 
             // lbCriticity
             // 
@@ -263,18 +263,18 @@
             this.lbDurationH.TabIndex = 19;
             this.lbDurationH.Text = "Duration (in hours)";
             // 
-            // cbStatus
+            // cmbStatus
             // 
-            this.cbStatus.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cbStatus.FormattingEnabled = true;
-            this.cbStatus.Items.AddRange(new object[] {
+            this.cmbStatus.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cmbStatus.FormattingEnabled = true;
+            this.cmbStatus.Items.AddRange(new object[] {
             "Planned",
             "Unplanned",
             "On hold"});
-            this.cbStatus.Location = new System.Drawing.Point(12, 371);
-            this.cbStatus.Name = "cbStatus";
-            this.cbStatus.Size = new System.Drawing.Size(228, 24);
-            this.cbStatus.TabIndex = 21;
+            this.cmbStatus.Location = new System.Drawing.Point(12, 371);
+            this.cmbStatus.Name = "cmbStatus";
+            this.cmbStatus.Size = new System.Drawing.Size(228, 24);
+            this.cmbStatus.TabIndex = 21;
             // 
             // lbStatus
             // 
@@ -286,21 +286,21 @@
             this.lbStatus.TabIndex = 20;
             this.lbStatus.Text = "Status";
             // 
-            // cbPercentComplete
+            // cmbPercentComplete
             // 
-            this.cbPercentComplete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cbPercentComplete.FormattingEnabled = true;
-            this.cbPercentComplete.Items.AddRange(new object[] {
+            this.cmbPercentComplete.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cmbPercentComplete.FormattingEnabled = true;
+            this.cmbPercentComplete.Items.AddRange(new object[] {
             "0%",
             "10%",
             "25%",
             "50%",
             "75%",
             "100%"});
-            this.cbPercentComplete.Location = new System.Drawing.Point(269, 371);
-            this.cbPercentComplete.Name = "cbPercentComplete";
-            this.cbPercentComplete.Size = new System.Drawing.Size(226, 24);
-            this.cbPercentComplete.TabIndex = 23;
+            this.cmbPercentComplete.Location = new System.Drawing.Point(269, 371);
+            this.cmbPercentComplete.Name = "cmbPercentComplete";
+            this.cmbPercentComplete.Size = new System.Drawing.Size(226, 24);
+            this.cmbPercentComplete.TabIndex = 23;
             // 
             // lbPercentComplete
             // 
@@ -312,38 +312,38 @@
             this.lbPercentComplete.TabIndex = 22;
             this.lbPercentComplete.Text = "PercentComplete";
             // 
-            // cbSendEmail
+            // chkSendEmail
             // 
-            this.cbSendEmail.AutoSize = true;
-            this.cbSendEmail.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cbSendEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbSendEmail.Location = new System.Drawing.Point(12, 415);
-            this.cbSendEmail.Name = "cbSendEmail";
-            this.cbSendEmail.Size = new System.Drawing.Size(301, 20);
-            this.cbSendEmail.TabIndex = 24;
-            this.cbSendEmail.Text = "Check here if you want to send an email";
-            this.cbSendEmail.UseVisualStyleBackColor = true;
+            this.chkSendEmail.AutoSize = true;
+            this.chkSendEmail.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.chkSendEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkSendEmail.Location = new System.Drawing.Point(12, 415);
+            this.chkSendEmail.Name = "chkSendEmail";
+            this.chkSendEmail.Size = new System.Drawing.Size(301, 20);
+            this.chkSendEmail.TabIndex = 24;
+            this.chkSendEmail.Text = "Check here if you want to send an email";
+            this.chkSendEmail.UseVisualStyleBackColor = true;
             // 
-            // btNewForm
+            // btnNewForm
             // 
-            this.btNewForm.Location = new System.Drawing.Point(12, 451);
-            this.btNewForm.Name = "btNewForm";
-            this.btNewForm.Size = new System.Drawing.Size(75, 31);
-            this.btNewForm.TabIndex = 25;
-            this.btNewForm.Text = "New form";
-            this.btNewForm.UseVisualStyleBackColor = true;
-            this.btNewForm.Click += new System.EventHandler(this.btNewForm_Click);
+            this.btnNewForm.Location = new System.Drawing.Point(12, 451);
+            this.btnNewForm.Name = "btnNewForm";
+            this.btnNewForm.Size = new System.Drawing.Size(75, 31);
+            this.btnNewForm.TabIndex = 25;
+            this.btnNewForm.Text = "New form";
+            this.btnNewForm.UseVisualStyleBackColor = true;
+            this.btnNewForm.Click += new System.EventHandler(this.btNewForm_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(507, 496);
-            this.Controls.Add(this.btNewForm);
-            this.Controls.Add(this.cbSendEmail);
-            this.Controls.Add(this.cbPercentComplete);
+            this.Controls.Add(this.btnNewForm);
+            this.Controls.Add(this.chkSendEmail);
+            this.Controls.Add(this.cmbPercentComplete);
             this.Controls.Add(this.lbPercentComplete);
-            this.Controls.Add(this.cbStatus);
+            this.Controls.Add(this.cmbStatus);
             this.Controls.Add(this.lbStatus);
             this.Controls.Add(this.lbDurationH);
             this.Controls.Add(this.nudDurationH);
@@ -351,17 +351,17 @@
             this.Controls.Add(this.lbStartDate);
             this.Controls.Add(this.rtbDescription);
             this.Controls.Add(this.lbDescription);
-            this.Controls.Add(this.cbCriticity);
+            this.Controls.Add(this.cmbCriticity);
             this.Controls.Add(this.lbCriticity);
             this.Controls.Add(this.lbEnvironment);
-            this.Controls.Add(this.cbType);
+            this.Controls.Add(this.cmbType);
             this.Controls.Add(this.lbType);
             this.Controls.Add(this.clbEnviroment);
             this.Controls.Add(this.lbLocation);
-            this.Controls.Add(this.cbLocation);
-            this.Controls.Add(this.btCancel);
-            this.Controls.Add(this.btSubmit);
-            this.Controls.Add(this.tbTitle);
+            this.Controls.Add(this.cmbLocation);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnSubmit);
+            this.Controls.Add(this.txtTitle);
             this.Controls.Add(this.lbTitle);
             this.Name = "FormMain";
             this.Text = "Create new task";
@@ -374,16 +374,16 @@
         #endregion
 
         private System.Windows.Forms.Label lbTitle;
-        private System.Windows.Forms.TextBox tbTitle;
-        private System.Windows.Forms.Button btSubmit;
-        private System.Windows.Forms.Button btCancel;
-        private System.Windows.Forms.ComboBox cbLocation;
+        private System.Windows.Forms.TextBox txtTitle;
+        private System.Windows.Forms.Button btnSubmit;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.ComboBox cmbLocation;
         private System.Windows.Forms.Label lbLocation;
         private System.Windows.Forms.CheckedListBox clbEnviroment;
         private System.Windows.Forms.Label lbType;
-        private System.Windows.Forms.ComboBox cbType;
+        private System.Windows.Forms.ComboBox cmbType;
         private System.Windows.Forms.Label lbEnvironment;
-        private System.Windows.Forms.ComboBox cbCriticity;
+        private System.Windows.Forms.ComboBox cmbCriticity;
         private System.Windows.Forms.Label lbCriticity;
         private System.Windows.Forms.Label lbDescription;
         private System.Windows.Forms.RichTextBox rtbDescription;
@@ -391,12 +391,12 @@
         private System.Windows.Forms.DateTimePicker dtpStartDate;
         private System.Windows.Forms.NumericUpDown nudDurationH;
         private System.Windows.Forms.Label lbDurationH;
-        private System.Windows.Forms.ComboBox cbStatus;
+        private System.Windows.Forms.ComboBox cmbStatus;
         private System.Windows.Forms.Label lbStatus;
-        private System.Windows.Forms.ComboBox cbPercentComplete;
+        private System.Windows.Forms.ComboBox cmbPercentComplete;
         private System.Windows.Forms.Label lbPercentComplete;
-        private System.Windows.Forms.CheckBox cbSendEmail;
-        private System.Windows.Forms.Button btNewForm;
+        private System.Windows.Forms.CheckBox chkSendEmail;
+        private System.Windows.Forms.Button btnNewForm;
     }
 }
 
