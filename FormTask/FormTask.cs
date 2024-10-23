@@ -105,5 +105,11 @@ namespace FormTask
         {
             dtpStartDate.Format = DateTimePickerFormat.Short;
         }
+
+        private void btnClearDate_Click(object sender, EventArgs e)
+        {
+            dtpStartDate.Format = DateTimePickerFormat.Custom;
+            dtpStartDate.CustomFormat = " ";
+        }
     }
 }

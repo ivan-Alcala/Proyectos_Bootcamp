@@ -52,6 +52,7 @@
             this.lbPercentComplete = new System.Windows.Forms.Label();
             this.chkSendEmail = new System.Windows.Forms.CheckBox();
             this.btnNewForm = new System.Windows.Forms.Button();
+            this.btnClearDate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudDurationH)).BeginInit();
             this.SuspendLayout();
             // 
@@ -224,7 +225,7 @@
             this.dtpStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpStartDate.Location = new System.Drawing.Point(12, 308);
             this.dtpStartDate.Name = "dtpStartDate";
-            this.dtpStartDate.Size = new System.Drawing.Size(228, 22);
+            this.dtpStartDate.Size = new System.Drawing.Size(212, 22);
             this.dtpStartDate.TabIndex = 17;
             this.dtpStartDate.Value = new System.DateTime(2024, 10, 23, 10, 24, 18, 0);
             this.dtpStartDate.ValueChanged += new System.EventHandler(this.DtpStartDate_ValueChanged);
@@ -334,11 +335,24 @@
             this.btnNewForm.UseVisualStyleBackColor = true;
             this.btnNewForm.Click += new System.EventHandler(this.btNewForm_Click);
             // 
+            // btnClearDate
+            // 
+            this.btnClearDate.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnClearDate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClearDate.Location = new System.Drawing.Point(221, 308);
+            this.btnClearDate.Name = "btnClearDate";
+            this.btnClearDate.Size = new System.Drawing.Size(19, 24);
+            this.btnClearDate.TabIndex = 26;
+            this.btnClearDate.Text = "X";
+            this.btnClearDate.UseVisualStyleBackColor = true;
+            this.btnClearDate.Click += new System.EventHandler(this.btnClearDate_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(507, 496);
+            this.Controls.Add(this.btnClearDate);
             this.Controls.Add(this.btnNewForm);
             this.Controls.Add(this.chkSendEmail);
             this.Controls.Add(this.cmbPercentComplete);
@@ -397,6 +411,7 @@
         private System.Windows.Forms.Label lbPercentComplete;
         private System.Windows.Forms.CheckBox chkSendEmail;
         private System.Windows.Forms.Button btnNewForm;
+        private System.Windows.Forms.Button btnClearDate;
     }
 }
 
