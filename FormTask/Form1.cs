@@ -21,6 +21,10 @@ namespace FormTask
             cbCriticity.SelectedIndex = 0;
             cbStatus.SelectedIndex = 0;
             cbPercentComplete.SelectedIndex = 0;
+
+            // Inicializa el DateTimePicker para que aparezca "vacío"
+            dtpStartDate.Format = DateTimePickerFormat.Custom;
+            dtpStartDate.CustomFormat = " ";
         }
 
         private void BtSubmit_Click(object sender, EventArgs e)
@@ -32,6 +36,14 @@ namespace FormTask
             {
                 MessageBox.Show("Los campos de Título, Descripción y uno de los entornos deben estar completos.",
                     "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Verifica si el DateTimePicker tiene el formato custom
+            if (dtpStartDate.Format == DateTimePickerFormat.Custom)
+            {
+                MessageBox.Show("Debe seleccionar una fecha de inicio.", "Error de validación",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -86,6 +98,11 @@ namespace FormTask
         {
             FormMain formNew = new FormMain();
             formNew.Show();
+        }
+
+        private void DtpStartDate_ValueChanged(object sender, EventArgs e)
+        {
+            dtpStartDate.Format = DateTimePickerFormat.Short;
         }
     }
 }

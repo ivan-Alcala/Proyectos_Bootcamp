@@ -227,6 +227,7 @@
             this.dtpStartDate.Size = new System.Drawing.Size(228, 22);
             this.dtpStartDate.TabIndex = 17;
             this.dtpStartDate.Value = new System.DateTime(2024, 10, 23, 10, 24, 18, 0);
+            this.dtpStartDate.ValueChanged += new System.EventHandler(this.DtpStartDate_ValueChanged);
             // 
             // nudDurationH
             // 
