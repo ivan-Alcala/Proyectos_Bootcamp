@@ -55,6 +55,12 @@
     <Compile Include="Class\Person.cs" />
     <Compile Include="Class\Program.cs" />
     <Compile Include="Class\Tools.cs" />
+    <Compile Include="Forms\UserControlPersons.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\UserControlPersons.Designer.cs">
+      <DependentUpon>UserControlPersons.cs</DependentUpon>
+    </Compile>
     <Compile Include="WinFormGestionHospital.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +69,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\UserControlPersons.resx">
+      <DependentUpon>UserControlPersons.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinFormGestionHospital.resx">
       <DependentUpon>WinFormGestionHospital.cs</DependentUpon>
     </EmbeddedResource>
@@ -88,8 +97,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Forms\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
