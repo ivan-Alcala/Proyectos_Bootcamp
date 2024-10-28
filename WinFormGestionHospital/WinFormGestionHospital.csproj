@@ -55,6 +55,18 @@
     <Compile Include="Class\Person.cs" />
     <Compile Include="Class\Program.cs" />
     <Compile Include="Class\Tools.cs" />
+    <Compile Include="Forms\UserControlAppointment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\UserControlAppointment.Designer.cs">
+      <DependentUpon>UserControlAppointment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UserControlMedicalRecord.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\UserControlMedicalRecord.Designer.cs">
+      <DependentUpon>UserControlMedicalRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UserControlPersons.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -69,6 +81,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\UserControlAppointment.resx">
+      <DependentUpon>UserControlAppointment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserControlMedicalRecord.resx">
+      <DependentUpon>UserControlMedicalRecord.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserControlPersons.resx">
       <DependentUpon>UserControlPersons.cs</DependentUpon>
     </EmbeddedResource>
