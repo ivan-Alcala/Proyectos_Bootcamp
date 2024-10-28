@@ -33,7 +33,7 @@
             this.btShowDataDoctor = new System.Windows.Forms.Button();
             this.btShowDataAdminStaff = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idPerson = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateOfBirth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Height = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -92,7 +92,7 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.id,
+            this.idPerson,
             this.Name,
             this.DateOfBirth,
             this.Height,
@@ -108,13 +108,13 @@
             this.dataGridView1.Size = new System.Drawing.Size(1053, 67);
             this.dataGridView1.TabIndex = 8;
             // 
-            // id
+            // idPerson
             // 
-            this.id.HeaderText = "ID";
-            this.id.MinimumWidth = 6;
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Width = 125;
+            this.idPerson.HeaderText = "ID";
+            this.idPerson.MinimumWidth = 6;
+            this.idPerson.Name = "idPerson";
+            this.idPerson.ReadOnly = true;
+            this.idPerson.Width = 125;
             // 
             // Name
             // 
@@ -166,14 +166,14 @@
             this.admissionDate.ReadOnly = true;
             this.admissionDate.Width = 125;
             // 
-            // UserControlPersons
+            // UsCtPersons
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.fwLtPnHospitalOptions);
-            this.Name = "UserControlPersons";
+            this.Name = null;
             this.Size = new System.Drawing.Size(1053, 121);
             this.fwLtPnHospitalOptions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -188,7 +188,7 @@
         private System.Windows.Forms.Button btShowDataDoctor;
         private System.Windows.Forms.Button btShowDataAdminStaff;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idPerson;
         private System.Windows.Forms.DataGridViewTextBoxColumn Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateOfBirth;
         private System.Windows.Forms.DataGridViewTextBoxColumn Height;
