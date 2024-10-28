@@ -13,6 +13,9 @@ namespace WinFormGestionHospital.Forms
             InitializeComponent();
             this._hospital = hospital;
 
+            ConfigurePatientColumns();
+            ShowPersonData(_hospital.GetPatients());
+
             // Asigna los eventos de los botones
             btShowDataPatient.Click += (sender, e) => { ConfigurePatientColumns(); ShowPersonData(_hospital.GetPatients()); };
             btShowDataDoctor.Click += (sender, e) => { ConfigureDoctorColumns(); ShowPersonData(_hospital.GetDoctors()); };
