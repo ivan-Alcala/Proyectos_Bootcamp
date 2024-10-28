@@ -99,6 +99,21 @@ namespace WinFormGestionHospital.Class
             return doctor;
         }
 
+        public List<Doctor> GetDoctors()
+        {
+            return _people.OfType<Doctor>().ToList();
+        }
+
+        public List<Patient> GetPatients()
+        {
+            return _people.OfType<Patient>().ToList();
+        }
+
+        public List<AdminStaff> GetAdminStaff()
+        {
+            return _people.OfType<AdminStaff>().ToList();
+        }
+
         #region Appointment
         public void ScheduleAppointment()
         {

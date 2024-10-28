@@ -1,19 +1,23 @@
 ﻿using System.Windows.Forms;
+using WinFormGestionHospital.Class;
 using WinFormGestionHospital.Forms;
 
 namespace WinFormGestionHospital
 {
     public partial class WinFormGestionHospital : Form
     {
+        Hospital _hospital = new Hospital();
+
         public WinFormGestionHospital()
         {
             InitializeComponent();
-            ShowFormPersons();
+            _hospital.AddTestData();
+            ShowFormPersons(_hospital);
         }
 
-        public void ShowFormPersons()
+        public void ShowFormPersons(Hospital hospital)
         {
-            UserControlPersons userControlPersons = new UserControlPersons();
+            UserControlPersons userControlPersons = new UserControlPersons(hospital);
             ReplacePanelContent(pnMainContent, userControlPersons);
         }
 
