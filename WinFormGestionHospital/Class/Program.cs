@@ -6,63 +6,63 @@ namespace WinFormGestionHospital.Class
     {
         static Hospital _hospital = new Hospital();
 
-        static void Main(string[] args)
-        {
-            _hospital.AddTestData();
-            bool exit = false;
-            while (!exit)
-            {
-                ShowMenu();
+        //static void Main(string[] args)
+        //{
+        //    _hospital.AddTestData();
+        //    bool exit = false;
+        //    while (!exit)
+        //    {
+        //        ShowMenu();
 
-                if (int.TryParse(Console.ReadLine(), out int option))
-                {
-                    switch (option)
-                    {
-                        case 0:
-                            exit = true;
-                            break;
-                        case 1:
-                            AddDoctor();
-                            break;
-                        case 2:
-                            AddPatient();
-                            break;
-                        case 3:
-                            AddAdminStaff();
-                            break;
-                        case 4:
-                            _hospital.RemovePerson();
-                            break;
-                        case 5:
-                            _hospital.ListPeople();
-                            break;
-                        case 6:
-                            _hospital.ScheduleAppointment();
-                            break;
-                        case 7:
-                            _hospital.ListAppointments();
-                            break;
-                        case 8:
-                            _hospital.CancelAppointment();
-                            break;
-                        case 9:
-                            _hospital.ModifyAppointment();
-                            break;
-                        case 10:
-                            _hospital.AddMedicalRecord();
-                            break;
-                        case 11:
-                            _hospital.ViewMedicalRecord();
-                            break;
-                        default:
-                            Console.WriteLine("Opción no válida.");
-                            break;
-                    }
-                }
-                else
-                    Console.WriteLine("Por favor, ingrese un número válido.");
-            }
-        }
+        //        if (int.TryParse(Console.ReadLine(), out int option))
+        //        {
+        //            switch (option)
+        //            {
+        //                case 0:
+        //                    exit = true;
+        //                    break;
+        //                case 1:
+        //                    AddDoctor();
+        //                    break;
+        //                case 2:
+        //                    AddPatient();
+        //                    break;
+        //                case 3:
+        //                    AddAdminStaff();
+        //                    break;
+        //                case 4:
+        //                    _hospital.RemovePerson();
+        //                    break;
+        //                case 5:
+        //                    _hospital.ListPeople();
+        //                    break;
+        //                case 6:
+        //                    _hospital.ScheduleAppointment();
+        //                    break;
+        //                case 7:
+        //                    _hospital.ListAppointments();
+        //                    break;
+        //                case 8:
+        //                    _hospital.CancelAppointment();
+        //                    break;
+        //                case 9:
+        //                    _hospital.ModifyAppointment();
+        //                    break;
+        //                case 10:
+        //                    _hospital.AddMedicalRecord();
+        //                    break;
+        //                case 11:
+        //                    _hospital.ViewMedicalRecord();
+        //                    break;
+        //                default:
+        //                    Console.WriteLine("Opción no válida.");
+        //                    break;
+        //            }
+        //        }
+        //        else
+        //            Console.WriteLine("Por favor, ingrese un número válido.");
+        //    }
+        //}
 
         // Método para mostrar el menú
         static void ShowMenu()
