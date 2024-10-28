@@ -13,12 +13,29 @@ namespace WinFormGestionHospital
             InitializeComponent();
             _hospital.AddTestData();
             ShowFormPersons(_hospital);
+
+            // Asigna los eventos de los botones
+            btShowFormPerson.Click += (sender, e) => { ShowFormPersons(_hospital); };
+            btShowFormAppointment.Click += (sender, e) => { ShowFormAppointments(_hospital); };
+            btShowFormMedicalRecord.Click += (sender, e) => { ShowFormMedicalRecords(_hospital); };
         }
 
         public void ShowFormPersons(Hospital hospital)
         {
             UserControlPersons userControlPersons = new UserControlPersons(hospital);
             ReplacePanelContent(pnMainContent, userControlPersons);
+        }
+
+        public void ShowFormAppointments(Hospital hospital)
+        {
+            UserControlAppointment userControlAppointment = new UserControlAppointment(hospital);
+            ReplacePanelContent(pnMainContent, userControlAppointment);
+        }
+
+        public void ShowFormMedicalRecords(Hospital hospital)
+        {
+            UserControlMedicalRecord userControlMedicalRecord = new UserControlMedicalRecord(hospital);
+            ReplacePanelContent(pnMainContent, userControlMedicalRecord);
         }
 
         public static void ReplacePanelContent<T>(Panel panel, T userControl) where T : UserControl
