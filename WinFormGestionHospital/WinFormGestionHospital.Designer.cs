@@ -1,6 +1,6 @@
 ﻿namespace WinFormGestionHospital
 {
-    partial class Form1
+    partial class WinFormGestionHospital
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -88,17 +88,17 @@
             this.pnMainContent.Size = new System.Drawing.Size(942, 399);
             this.pnMainContent.TabIndex = 7;
             // 
-            // Form1
+            // WinFormGestionHospital
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(982, 493);
             this.Controls.Add(this.pnMainContent);
             this.Controls.Add(this.fwLtPnHospitalOptions);
-            this.Name = "Form1";
+            this.Name = "WinFormGestionHospital";
             this.Padding = new System.Windows.Forms.Padding(20);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Gestion del hopital - GUI";
             this.fwLtPnHospitalOptions.ResumeLayout(false);
             this.ResumeLayout(false);
 
