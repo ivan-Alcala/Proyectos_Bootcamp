@@ -37,6 +37,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.btSavePerson = new System.Windows.Forms.Button();
+            this.btRemovePerson = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtGdVwShowPersons)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -55,14 +56,15 @@
             this.dtGdVwShowPersons.RowHeadersVisible = false;
             this.dtGdVwShowPersons.RowHeadersWidth = 51;
             this.dtGdVwShowPersons.RowTemplate.Height = 24;
-            this.dtGdVwShowPersons.Size = new System.Drawing.Size(438, 64);
+            this.dtGdVwShowPersons.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dtGdVwShowPersons.Size = new System.Drawing.Size(485, 64);
             this.dtGdVwShowPersons.TabIndex = 12;
             this.dtGdVwShowPersons.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtGdVwShowPersons_CellValueChanged);
             // 
             // btAddPerson
             // 
             this.btAddPerson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btAddPerson.Location = new System.Drawing.Point(40, 0);
+            this.btAddPerson.Location = new System.Drawing.Point(87, 0);
             this.btAddPerson.Margin = new System.Windows.Forms.Padding(0);
             this.btAddPerson.Name = "btAddPerson";
             this.btAddPerson.Size = new System.Drawing.Size(37, 36);
@@ -128,24 +130,25 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(444, 120);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(491, 120);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Controls.Add(this.btAddPerson);
             this.flowLayoutPanel2.Controls.Add(this.btSavePerson);
+            this.flowLayoutPanel2.Controls.Add(this.btRemovePerson);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(364, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(77, 44);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(124, 44);
             this.flowLayoutPanel2.TabIndex = 11;
             // 
             // btSavePerson
             // 
             this.btSavePerson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSavePerson.Location = new System.Drawing.Point(3, 0);
+            this.btSavePerson.Location = new System.Drawing.Point(50, 0);
             this.btSavePerson.Margin = new System.Windows.Forms.Padding(0);
             this.btSavePerson.Name = "btSavePerson";
             this.btSavePerson.Size = new System.Drawing.Size(37, 36);
@@ -153,6 +156,18 @@
             this.btSavePerson.Text = "->";
             this.btSavePerson.UseVisualStyleBackColor = true;
             this.btSavePerson.Click += new System.EventHandler(this.BtSavePerson_Click);
+            // 
+            // btRemovePerson
+            // 
+            this.btRemovePerson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btRemovePerson.Location = new System.Drawing.Point(13, 0);
+            this.btRemovePerson.Margin = new System.Windows.Forms.Padding(0);
+            this.btRemovePerson.Name = "btRemovePerson";
+            this.btRemovePerson.Size = new System.Drawing.Size(37, 36);
+            this.btRemovePerson.TabIndex = 11;
+            this.btRemovePerson.Text = "x";
+            this.btRemovePerson.UseVisualStyleBackColor = true;
+            this.btRemovePerson.Click += new System.EventHandler(this.btRemovePerson_Click);
             // 
             // UserControlPersons
             // 
@@ -162,7 +177,7 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "UserControlPersons";
-            this.Size = new System.Drawing.Size(444, 120);
+            this.Size = new System.Drawing.Size(491, 120);
             ((System.ComponentModel.ISupportInitialize)(this.dtGdVwShowPersons)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -182,5 +197,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Button btSavePerson;
+        private System.Windows.Forms.Button btRemovePerson;
     }
 }

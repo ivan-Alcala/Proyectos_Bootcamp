@@ -435,5 +435,56 @@ namespace WinFormGestionHospital.Forms
                 ValidateCell(row.Index, i, values[i]);
             }
         }
+
+        private void btRemovePerson_Click(object sender, EventArgs e)
+        {
+            {
+                if (dtGdVwShowPersons.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Por favor, seleccione una persona para eliminar.",
+                                  "Ninguna fila seleccionada",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Warning);
+                    return;
+                }
+
+                DataGridViewRow selectedRow = dtGdVwShowPersons.SelectedRows[0];
+
+                // Obtener el ID de la columna "idPerson"
+                if (!int.TryParse(selectedRow.Cells["idPerson"].Value?.ToString(), out int idToRemove))
+                {
+                    MessageBox.Show("No se puede obtener el ID de la persona seleccionada.",
+                                  "Error",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Error);
+                    return;
+                }
+
+                DialogResult result = MessageBox.Show(
+                    $"¿Está seguro de que desea eliminar la persona con ID {idToRemove}?",
+                    "Confirmar eliminación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        // Eliminar la persona usando el método de Hospital
+                        _hospital.RemovePerson(idToRemove);
+
+                        // Actualizar la vista según el tipo actual
+                        RefreshCurrentView();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al eliminar la persona: {ex.Message}",
+                                      "Error",
+                                      MessageBoxButtons.OK,
+                                      MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
     }
 }

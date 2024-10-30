@@ -15,9 +15,8 @@ namespace WinFormGestionHospital.Class
             Console.WriteLine("Persona añadida correctamente.");
         }
 
-        public void RemovePerson()
+        public void RemovePerson(int idToRemove)
         {
-            int idToRemove = Tools.AskInt("ID de la persona a eliminar: ");
             var personToRemove = _people.FirstOrDefault(p => p.Id == idToRemove);
             if (personToRemove != null)
             {
