@@ -13,6 +13,7 @@ namespace WinFormGestionHospital.Forms
         private readonly Hospital _hospital;
         private Dictionary<int, bool> modifiedRows = new Dictionary<int, bool>();
         private Dictionary<int, Person> rowPersonMapping = new Dictionary<int, Person>();
+        private Dictionary<(int row, int column), bool> cellValidation = new Dictionary<(int row, int column), bool>();
 
         public UserControlPersons(Hospital hospital)
         {
@@ -43,9 +44,6 @@ namespace WinFormGestionHospital.Forms
                 ConfigureAdminStaffColumns();
                 ShowPersonData(_hospital.GetAdminStaff());
             };
-
-            // Agregar el evento para el botón de guardar
-            btSavePerson.Click += BtSavePerson_Click;
         }
 
         private void ConfigurePatientColumns()
@@ -160,47 +158,37 @@ namespace WinFormGestionHospital.Forms
             }
         }
 
-        private void btAddPerson_Click(object sender, System.EventArgs e)
+        private void btAddPerson_Click(object sender, EventArgs e)
         {
             int rowIndex = dtGdVwShowPersons.Rows.Add();
-
             DataGridViewRow newRow = dtGdVwShowPersons.Rows[rowIndex];
-            newRow.DefaultCellStyle.ForeColor = System.Drawing.Color.Red; // Colorea el texto en rojo inicialmente
 
-            // Dependiendo del tipo actual, configura la fila con los valores predeterminados
+            // Inicializar la validación de todas las celdas como false
+            for (int i = 0; i < newRow.Cells.Count; i++)
+            {
+                cellValidation[(rowIndex, i)] = false;
+                newRow.Cells[i].Style.ForeColor = Color.Red;
+            }
+
+            // Establecer valores predeterminados según el tipo
             switch (_currentPersonType)
             {
                 case "Patient":
-                    newRow.Cells["idPerson"].Value = "Auto"; // Usar texto de referencia o ID temporal
-                    newRow.Cells["Name"].Value = "-";
-                    newRow.Cells["DateOfBirth"].Value = new DateTime();
-                    newRow.Cells["Height"].Value = "-";
-                    newRow.Cells["Weight"].Value = "-";
-                    newRow.Cells["Condition"].Value = "-";
-                    newRow.Cells["AdmissionDate"].Value = new DateTime();
+                    SetDefaultValues(newRow, new[] {
+                        "Auto", "-", DateTime.Now.ToShortDateString(), "-", "-", "N/A", "-", DateTime.Now.ToShortDateString()
+                    });
                     break;
                 case "Doctor":
-                    newRow.Cells["idPerson"].Value = "Auto";
-                    newRow.Cells["Name"].Value = "-";
-                    newRow.Cells["DateOfBirth"].Value = new DateTime();
-                    newRow.Cells["Height"].Value = "-";
-                    newRow.Cells["Weight"].Value = "-";
-                    newRow.Cells["Specialty"].Value = "-";
-                    newRow.Cells["YearsExperience"].Value = "-";
-                    newRow.Cells["consultationHours"].Value = "-";
+                    SetDefaultValues(newRow, new[] {
+                        "Auto", "-", DateTime.Now.ToShortDateString(), "-", "-", "-", "0", "-"
+                    });
                     break;
                 case "AdminStaff":
-                    newRow.Cells["idPerson"].Value = "Auto";
-                    newRow.Cells["Name"].Value = "-";
-                    newRow.Cells["Position"].Value = "-";
-                    newRow.Cells["DateOfBirth"].Value = new DateTime();
-                    newRow.Cells["Height"].Value = "-";
-                    newRow.Cells["Weight"].Value = "-";
-                    newRow.Cells["YearsInService"].Value = "-";
+                    SetDefaultValues(newRow, new[] {
+                        "Auto", "-", "-", DateTime.Now.ToShortDateString(), "-", "-", "0", "-"
+                    });
                     break;
             }
-
-            newRow.DefaultCellStyle.ForeColor = System.Drawing.Color.Red; // Colorea el texto en negro por defecto
         }
 
         private void dtGdVwShowPersons_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -209,28 +197,98 @@ namespace WinFormGestionHospital.Forms
 
             DataGridViewRow currentRow = dtGdVwShowPersons.Rows[e.RowIndex];
 
-            if (ValidateRow(currentRow))
+            // Validar la celda que cambió
+            ValidateCell(e.RowIndex, e.ColumnIndex, currentRow.Cells[e.ColumnIndex].Value);
+
+            // Verificar si toda la fila es válida
+            bool isRowValid = true;
+            foreach (DataGridViewCell cell in currentRow.Cells)
             {
-                // Marcar la fila como modificada
-                modifiedRows[e.RowIndex] = true;
-                currentRow.DefaultCellStyle.ForeColor = Color.Orange; // Color para indicar cambios pendientes
+                if (!cellValidation.ContainsKey((e.RowIndex, cell.ColumnIndex)) ||
+                    !cellValidation[(e.RowIndex, cell.ColumnIndex)])
+                {
+                    isRowValid = false;
+                    break;
+                }
             }
-            else
+
+            modifiedRows[e.RowIndex] = true;
+
+            // Si la fila es válida, cambiar el color del texto de la fila a naranja (pendiente de guardar)
+            if (isRowValid)
             {
-                currentRow.DefaultCellStyle.ForeColor = Color.Red; // Color para indicar datos inválidos
+                foreach (DataGridViewCell cell in currentRow.Cells)
+                {
+                    if (cellValidation[(e.RowIndex, cell.ColumnIndex)])
+                    {
+                        cell.Style.ForeColor = Color.Orange;
+                    }
+                }
             }
         }
 
         private bool ValidateRow(DataGridViewRow row)
         {
-            foreach (DataGridViewCell cell in row.Cells)
+            bool isValid = true;
+
+            for (int i = 0; i < row.Cells.Count; i++)
             {
-                if (cell.Value == null || string.IsNullOrWhiteSpace(cell.Value.ToString()) || cell.Value.ToString().Equals("-"))
+                ValidateCell(row.Index, i, row.Cells[i].Value);
+                if (!cellValidation[(row.Index, i)])
                 {
-                    return false; // Si algún campo está vacío o no válido, retorna falso
+                    isValid = false;
                 }
             }
-            return true;
+
+            return isValid;
+        }
+
+        private void ValidateCell(int rowIndex, int columnIndex, object value)
+        {
+            var cell = dtGdVwShowPersons.Rows[rowIndex].Cells[columnIndex];
+            bool isValid = true;
+            string columnName = dtGdVwShowPersons.Columns[columnIndex].Name;
+
+            if (value == null || string.IsNullOrWhiteSpace(value.ToString()) || value.ToString() == "-")
+            {
+                isValid = false;
+            }
+            else
+            {
+                // Validación específica según el tipo de columna
+                switch (columnName)
+                {
+                    case "Height":
+                    case "Weight":
+                        isValid = double.TryParse(value.ToString(), out _);
+                        break;
+
+                    case "YearsExperience":
+                    case "YearsInService":
+                        isValid = int.TryParse(value.ToString(), out _) &&
+                                int.Parse(value.ToString()) >= 0;
+                        break;
+
+                    case "DateOfBirth":
+                    case "AdmissionDate":
+                        isValid = DateTime.TryParse(value.ToString(), out var date) &&
+                                date <= DateTime.Now;
+                        break;
+
+                    case "AssignedDoctor":
+                        isValid = value.ToString() != "N/A" && !string.IsNullOrEmpty(value.ToString());
+                        break;
+
+                    // Para campos de texto como Name, Condition, Position, etc.
+                    default:
+                        isValid = !string.IsNullOrWhiteSpace(value.ToString()) &&
+                                value.ToString() != "-";
+                        break;
+                }
+            }
+
+            cellValidation[(rowIndex, columnIndex)] = isValid;
+            cell.Style.ForeColor = isValid ? Color.Green : Color.Red;
         }
 
         private void AddPersonToHospital(DataGridViewRow row)
@@ -366,6 +424,15 @@ namespace WinFormGestionHospital.Forms
                 case "AdminStaff":
                     ShowPersonData(_hospital.GetAdminStaff());
                     break;
+            }
+        }
+
+        private void SetDefaultValues(DataGridViewRow row, string[] values)
+        {
+            for (int i = 0; i < values.Length && i < row.Cells.Count; i++)
+            {
+                row.Cells[i].Value = values[i];
+                ValidateCell(row.Index, i, values[i]);
             }
         }
     }

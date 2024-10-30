@@ -152,6 +152,7 @@
             this.btSavePerson.TabIndex = 10;
             this.btSavePerson.Text = "->";
             this.btSavePerson.UseVisualStyleBackColor = true;
+            this.btSavePerson.Click += new System.EventHandler(this.BtSavePerson_Click);
             // 
             // UserControlPersons
             // 
