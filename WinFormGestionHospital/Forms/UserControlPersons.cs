@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using WinFormGestionHospital.Class;
 
@@ -49,7 +50,21 @@ namespace WinFormGestionHospital.Forms
             dtGdVwShowPersons.Columns.Add("DateOfBirth", "Fecha de Nacimiento");
             dtGdVwShowPersons.Columns.Add("Height", "Altura");
             dtGdVwShowPersons.Columns.Add("Weight", "Peso");
-            dtGdVwShowPersons.Columns.Add("AssignedDoctor", "Médico Asignado");
+
+            // Columna de médicos asignados con ComboBox
+            var assignedDoctorColumn = new DataGridViewComboBoxColumn
+            {
+                Name = "AssignedDoctor",
+                HeaderText = "Médico Asignado",
+                FlatStyle = FlatStyle.Flat
+            };
+
+            // Agregar la opción "N/A" como primera opción y establecerla como predeterminada
+            assignedDoctorColumn.Items.Add("N/A");
+            assignedDoctorColumn.Items.AddRange(_hospital.GetDoctorNames().ToArray());
+            assignedDoctorColumn.DefaultCellStyle.NullValue = "N/A";
+
+            dtGdVwShowPersons.Columns.Add(assignedDoctorColumn);
             dtGdVwShowPersons.Columns.Add("Condition", "Condición");
             dtGdVwShowPersons.Columns.Add("AdmissionDate", "Fecha de Admisión");
         }
@@ -144,7 +159,6 @@ namespace WinFormGestionHospital.Forms
                     newRow.Cells["DateOfBirth"].Value = new DateTime();
                     newRow.Cells["Height"].Value = "-";
                     newRow.Cells["Weight"].Value = "-";
-                    newRow.Cells["AssignedDoctor"].Value = "-";
                     newRow.Cells["Condition"].Value = "-";
                     newRow.Cells["AdmissionDate"].Value = new DateTime();
                     break;
@@ -212,9 +226,13 @@ namespace WinFormGestionHospital.Forms
             switch (_currentPersonType)
             {
                 case "Patient":
+                    // Obtener el nombre del doctor asignado del ComboBox
+                    string doctorName = row.Cells["AssignedDoctor"].Value?.ToString();
+                    Doctor assignedDoctor = _hospital.GetDoctors().FirstOrDefault(d => d.Name == doctorName);
+
                     var patient = new Patient(
                         row.Cells["Name"].Value.ToString(),
-                        null, // Médico asignado; puedes completar esta lógica
+                        assignedDoctor,
                         DateTime.Parse(row.Cells["DateOfBirth"].Value.ToString()),
                         double.Parse(row.Cells["Height"].Value.ToString()),
                         double.Parse(row.Cells["Weight"].Value.ToString()),

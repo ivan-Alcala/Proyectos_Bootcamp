@@ -114,6 +114,15 @@ namespace WinFormGestionHospital.Class
             return _people.OfType<AdminStaff>().ToList();
         }
 
+        public List<string> GetDoctorNames()
+        {
+            var doctorNames = new List<string>();
+            foreach (var doctor in GetDoctors())
+                doctorNames.Add(doctor.Name);
+
+            return doctorNames;
+        }
+
         #region Appointment
         public void ScheduleAppointment()
         {

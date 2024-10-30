@@ -44,11 +44,14 @@
             // 
             // dtGdVwShowPersons
             // 
+            this.dtGdVwShowPersons.AllowUserToAddRows = false;
+            this.dtGdVwShowPersons.AllowUserToDeleteRows = false;
             this.dtGdVwShowPersons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tableLayoutPanel1.SetColumnSpan(this.dtGdVwShowPersons, 2);
             this.dtGdVwShowPersons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtGdVwShowPersons.Location = new System.Drawing.Point(3, 53);
             this.dtGdVwShowPersons.Name = "dtGdVwShowPersons";
+            this.dtGdVwShowPersons.RowHeadersVisible = false;
             this.dtGdVwShowPersons.RowHeadersWidth = 51;
             this.dtGdVwShowPersons.RowTemplate.Height = 24;
             this.dtGdVwShowPersons.Size = new System.Drawing.Size(405, 64);
