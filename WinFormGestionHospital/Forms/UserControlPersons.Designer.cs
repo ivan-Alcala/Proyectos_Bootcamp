@@ -28,27 +28,55 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.fwLtPnHospitalOptions = new System.Windows.Forms.FlowLayoutPanel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btAddPerson = new System.Windows.Forms.Button();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btShowDataPatient = new System.Windows.Forms.Button();
             this.btShowDataDoctor = new System.Windows.Forms.Button();
             this.btShowDataAdminStaff = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.fwLtPnHospitalOptions.SuspendLayout();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // fwLtPnHospitalOptions
+            // dataGridView1
             // 
-            this.fwLtPnHospitalOptions.BackColor = System.Drawing.Color.Transparent;
-            this.fwLtPnHospitalOptions.Controls.Add(this.btShowDataPatient);
-            this.fwLtPnHospitalOptions.Controls.Add(this.btShowDataDoctor);
-            this.fwLtPnHospitalOptions.Controls.Add(this.btShowDataAdminStaff);
-            this.fwLtPnHospitalOptions.Dock = System.Windows.Forms.DockStyle.Top;
-            this.fwLtPnHospitalOptions.Location = new System.Drawing.Point(0, 0);
-            this.fwLtPnHospitalOptions.Margin = new System.Windows.Forms.Padding(0);
-            this.fwLtPnHospitalOptions.Name = "fwLtPnHospitalOptions";
-            this.fwLtPnHospitalOptions.Size = new System.Drawing.Size(361, 54);
-            this.fwLtPnHospitalOptions.TabIndex = 7;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tableLayoutPanel1.SetColumnSpan(this.dataGridView1, 2);
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 53);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(405, 64);
+            this.dataGridView1.TabIndex = 12;
+            // 
+            // btAddPerson
+            // 
+            this.btAddPerson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btAddPerson.Location = new System.Drawing.Point(7, 0);
+            this.btAddPerson.Margin = new System.Windows.Forms.Padding(0);
+            this.btAddPerson.Name = "btAddPerson";
+            this.btAddPerson.Size = new System.Drawing.Size(37, 36);
+            this.btAddPerson.TabIndex = 9;
+            this.btAddPerson.Text = "+";
+            this.btAddPerson.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.flowLayoutPanel1.Controls.Add(this.btShowDataPatient);
+            this.flowLayoutPanel1.Controls.Add(this.btShowDataDoctor);
+            this.flowLayoutPanel1.Controls.Add(this.btShowDataAdminStaff);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(361, 50);
+            this.flowLayoutPanel1.TabIndex = 10;
             // 
             // btShowDataPatient
             // 
@@ -80,16 +108,32 @@
             this.btShowDataAdminStaff.Text = "Personal administrativo";
             this.btShowDataAdminStaff.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // tableLayoutPanel1
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 54);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(361, 67);
-            this.dataGridView1.TabIndex = 8;
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(411, 120);
+            this.tableLayoutPanel1.TabIndex = 13;
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.btAddPerson);
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(364, 3);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(44, 44);
+            this.flowLayoutPanel2.TabIndex = 11;
             // 
             // UserControlPersons
             // 
@@ -97,22 +141,26 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.fwLtPnHospitalOptions);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "UserControlPersons";
-            this.Size = new System.Drawing.Size(361, 121);
-            this.fwLtPnHospitalOptions.ResumeLayout(false);
+            this.Size = new System.Drawing.Size(411, 120);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel fwLtPnHospitalOptions;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button btAddPerson;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button btShowDataPatient;
         private System.Windows.Forms.Button btShowDataDoctor;
         private System.Windows.Forms.Button btShowDataAdminStaff;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
     }
 }
