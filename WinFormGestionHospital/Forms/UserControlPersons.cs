@@ -95,15 +95,18 @@ namespace WinFormGestionHospital.Forms
             dtGdVwShowPersons.Columns.Add("Department", "Departamento");
         }
 
+        private Dictionary<int, Dictionary<string, object>> originalValues = new Dictionary<int, Dictionary<string, object>>();
+
         private void ShowPersonData<T>(List<T> persons) where T : Person
         {
             dtGdVwShowPersons.Rows.Clear();
+            originalValues.Clear(); // Limpiar los valores originales al mostrar nuevos datos
 
             foreach (var person in persons)
             {
                 if (person is Patient patient)
                 {
-                    dtGdVwShowPersons.Rows.Add(
+                    int rowIndex = dtGdVwShowPersons.Rows.Add(
                         patient.Id,
                         patient.Name,
                         patient.DateOfBirth.ToShortDateString(),
@@ -113,10 +116,22 @@ namespace WinFormGestionHospital.Forms
                         patient.Condition,
                         patient.AdmissionDate.ToShortDateString()
                     );
+
+                    // Almacenar los valores originales
+                    originalValues[rowIndex] = new Dictionary<string, object>
+            {
+                { "Name", patient.Name },
+                { "DateOfBirth", patient.DateOfBirth },
+                { "Height", patient.Height },
+                { "Weight", patient.Weight },
+                { "AssignedDoctor", patient.AssignedDoctor?.Name ?? "N/A" },
+                { "Condition", patient.Condition },
+                { "AdmissionDate", patient.AdmissionDate }
+            };
                 }
                 else if (person is Doctor doctor)
                 {
-                    dtGdVwShowPersons.Rows.Add(
+                    int rowIndex = dtGdVwShowPersons.Rows.Add(
                         doctor.Id,
                         doctor.Name,
                         doctor.DateOfBirth.ToShortDateString(),
@@ -126,10 +141,21 @@ namespace WinFormGestionHospital.Forms
                         doctor.YearsOfExperience,
                         doctor.ConsultationHours
                     );
+
+                    originalValues[rowIndex] = new Dictionary<string, object>
+            {
+                { "Name", doctor.Name },
+                { "DateOfBirth", doctor.DateOfBirth },
+                { "Height", doctor.Height },
+                { "Weight", doctor.Weight },
+                { "Specialty", doctor.Specialty },
+                { "YearsOfExperience", doctor.YearsOfExperience },
+                { "ConsultationHours", doctor.ConsultationHours }
+            };
                 }
                 else if (person is AdminStaff adminStaff)
                 {
-                    dtGdVwShowPersons.Rows.Add(
+                    int rowIndex = dtGdVwShowPersons.Rows.Add(
                         adminStaff.Id,
                         adminStaff.Name,
                         adminStaff.Position,
@@ -139,6 +165,17 @@ namespace WinFormGestionHospital.Forms
                         adminStaff.YearsInService,
                         adminStaff.Department
                     );
+
+                    originalValues[rowIndex] = new Dictionary<string, object>
+            {
+                { "Name", adminStaff.Name },
+                { "Position", adminStaff.Position },
+                { "DateOfBirth", adminStaff.DateOfBirth },
+                { "Height", adminStaff.Height },
+                { "Weight", adminStaff.Weight },
+                { "YearsInService", adminStaff.YearsInService },
+                { "Department", adminStaff.Department }
+            };
                 }
             }
         }
@@ -189,10 +226,23 @@ namespace WinFormGestionHospital.Forms
         private void dtGdVwShowPersons_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewRow currentRow = dtGdVwShowPersons.Rows[e.RowIndex];
+            var columnName = dtGdVwShowPersons.Columns[e.ColumnIndex].Name;
 
             if (ValidateRow(currentRow)) // Si todos los campos son válidos
             {
                 currentRow.DefaultCellStyle.ForeColor = System.Drawing.Color.Green;
+
+                // Cambiar el color del texto en la celda si el valor ha cambiado
+                if (originalValues.TryGetValue(e.RowIndex, out var originalValueDict))
+                {
+                    var originalValue = originalValueDict[columnName];
+                    var newValue = currentRow.Cells[e.ColumnIndex].Value;
+
+                    if (!originalValue.Equals(newValue))
+                    {
+                        currentRow.Cells[e.ColumnIndex].Style.ForeColor = System.Drawing.Color.Yellow; // Cambia el color a amarillo si se modifica
+                    }
+                }
 
                 // Iniciar el temporizador para revertir a negro después de 1 segundo
                 var timer = new Timer { Interval = 1000 };
