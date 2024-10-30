@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dtGdVwShowPersons = new System.Windows.Forms.DataGridView();
             this.btAddPerson = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btShowDataPatient = new System.Windows.Forms.Button();
@@ -36,23 +36,24 @@
             this.btShowDataAdminStaff = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtGdVwShowPersons)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dtGdVwShowPersons
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tableLayoutPanel1.SetColumnSpan(this.dataGridView1, 2);
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 53);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(405, 64);
-            this.dataGridView1.TabIndex = 12;
+            this.dtGdVwShowPersons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tableLayoutPanel1.SetColumnSpan(this.dtGdVwShowPersons, 2);
+            this.dtGdVwShowPersons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtGdVwShowPersons.Location = new System.Drawing.Point(3, 53);
+            this.dtGdVwShowPersons.Name = "dtGdVwShowPersons";
+            this.dtGdVwShowPersons.RowHeadersWidth = 51;
+            this.dtGdVwShowPersons.RowTemplate.Height = 24;
+            this.dtGdVwShowPersons.Size = new System.Drawing.Size(405, 64);
+            this.dtGdVwShowPersons.TabIndex = 12;
+            this.dtGdVwShowPersons.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtGdVwShowPersons_CellValueChanged);
             // 
             // btAddPerson
             // 
@@ -64,6 +65,7 @@
             this.btAddPerson.TabIndex = 9;
             this.btAddPerson.Text = "+";
             this.btAddPerson.UseVisualStyleBackColor = true;
+            this.btAddPerson.Click += new System.EventHandler(this.btAddPerson_Click);
             // 
             // flowLayoutPanel1
             // 
@@ -115,7 +117,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.dtGdVwShowPersons, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -144,7 +146,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "UserControlPersons";
             this.Size = new System.Drawing.Size(411, 120);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtGdVwShowPersons)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
@@ -154,7 +156,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dtGdVwShowPersons;
         private System.Windows.Forms.Button btAddPerson;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button btShowDataPatient;
