@@ -38,6 +38,7 @@
             // 
             // btShowFormPerson
             // 
+            this.btShowFormPerson.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btShowFormPerson.Location = new System.Drawing.Point(0, 0);
             this.btShowFormPerson.Margin = new System.Windows.Forms.Padding(0);
             this.btShowFormPerson.Name = "btShowFormPerson";
@@ -48,6 +49,7 @@
             // 
             // btShowFormMedicalRecord
             // 
+            this.btShowFormMedicalRecord.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btShowFormMedicalRecord.Location = new System.Drawing.Point(86, 0);
             this.btShowFormMedicalRecord.Margin = new System.Windows.Forms.Padding(0);
             this.btShowFormMedicalRecord.Name = "btShowFormMedicalRecord";
@@ -58,6 +60,7 @@
             // 
             // btShowFormAppointment
             // 
+            this.btShowFormAppointment.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btShowFormAppointment.Location = new System.Drawing.Point(245, 0);
             this.btShowFormAppointment.Margin = new System.Windows.Forms.Padding(0);
             this.btShowFormAppointment.Name = "btShowFormAppointment";

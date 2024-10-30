@@ -195,6 +195,7 @@ namespace WinFormGestionHospital.Forms
         {
             if (e.RowIndex < 0) return;
 
+            btSavePerson.Enabled = true;
             DataGridViewRow currentRow = dtGdVwShowPersons.Rows[e.RowIndex];
 
             // Validar la celda que cambió
@@ -377,6 +378,7 @@ namespace WinFormGestionHospital.Forms
 
             // Actualizar la vista
             RefreshCurrentView();
+            btSavePerson.Enabled = false;
         }
 
         private void UpdateExistingPerson(DataGridViewRow row, Person person)
@@ -485,6 +487,12 @@ namespace WinFormGestionHospital.Forms
                     }
                 }
             }
+        }
+
+        private void dtGdVwShowPersons_SelectionChanged(object sender, EventArgs e)
+        {
+            // Habilitar el botón de eliminar solo si hay una fila seleccionada
+            btRemovePerson.Enabled = dtGdVwShowPersons.SelectedRows.Count > 0;
         }
     }
 }

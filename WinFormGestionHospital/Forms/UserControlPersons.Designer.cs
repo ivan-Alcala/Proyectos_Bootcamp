@@ -60,10 +60,12 @@
             this.dtGdVwShowPersons.Size = new System.Drawing.Size(485, 64);
             this.dtGdVwShowPersons.TabIndex = 12;
             this.dtGdVwShowPersons.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtGdVwShowPersons_CellValueChanged);
+            this.dtGdVwShowPersons.SelectionChanged += new System.EventHandler(this.dtGdVwShowPersons_SelectionChanged);
             // 
             // btAddPerson
             // 
             this.btAddPerson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btAddPerson.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btAddPerson.Location = new System.Drawing.Point(87, 0);
             this.btAddPerson.Margin = new System.Windows.Forms.Padding(0);
             this.btAddPerson.Name = "btAddPerson";
@@ -88,6 +90,7 @@
             // 
             // btShowDataPatient
             // 
+            this.btShowDataPatient.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btShowDataPatient.Location = new System.Drawing.Point(0, 0);
             this.btShowDataPatient.Margin = new System.Windows.Forms.Padding(0);
             this.btShowDataPatient.Name = "btShowDataPatient";
@@ -98,6 +101,7 @@
             // 
             // btShowDataDoctor
             // 
+            this.btShowDataDoctor.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btShowDataDoctor.Location = new System.Drawing.Point(86, 0);
             this.btShowDataDoctor.Margin = new System.Windows.Forms.Padding(0);
             this.btShowDataDoctor.Name = "btShowDataDoctor";
@@ -108,6 +112,7 @@
             // 
             // btShowDataAdminStaff
             // 
+            this.btShowDataAdminStaff.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btShowDataAdminStaff.Location = new System.Drawing.Point(180, 0);
             this.btShowDataAdminStaff.Margin = new System.Windows.Forms.Padding(0);
             this.btShowDataAdminStaff.Name = "btShowDataAdminStaff";
@@ -148,6 +153,8 @@
             // btSavePerson
             // 
             this.btSavePerson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btSavePerson.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btSavePerson.Enabled = false;
             this.btSavePerson.Location = new System.Drawing.Point(50, 0);
             this.btSavePerson.Margin = new System.Windows.Forms.Padding(0);
             this.btSavePerson.Name = "btSavePerson";
@@ -160,6 +167,8 @@
             // btRemovePerson
             // 
             this.btRemovePerson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btRemovePerson.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btRemovePerson.Enabled = false;
             this.btRemovePerson.Location = new System.Drawing.Point(13, 0);
             this.btRemovePerson.Margin = new System.Windows.Forms.Padding(0);
             this.btRemovePerson.Name = "btRemovePerson";
