@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using WinFormGestionHospital.Class;
@@ -10,6 +11,8 @@ namespace WinFormGestionHospital.Forms
     {
         private string _currentPersonType;
         private readonly Hospital _hospital;
+        private Dictionary<int, bool> modifiedRows = new Dictionary<int, bool>();
+        private Dictionary<int, Person> rowPersonMapping = new Dictionary<int, Person>();
 
         public UserControlPersons(Hospital hospital)
         {
@@ -40,6 +43,9 @@ namespace WinFormGestionHospital.Forms
                 ConfigureAdminStaffColumns();
                 ShowPersonData(_hospital.GetAdminStaff());
             };
+
+            // Agregar el evento para el botón de guardar
+            btSavePerson.Click += BtSavePerson_Click;
         }
 
         private void ConfigurePatientColumns()
@@ -95,18 +101,18 @@ namespace WinFormGestionHospital.Forms
             dtGdVwShowPersons.Columns.Add("Department", "Departamento");
         }
 
-        private Dictionary<int, Dictionary<string, object>> originalValues = new Dictionary<int, Dictionary<string, object>>();
-
         private void ShowPersonData<T>(List<T> persons) where T : Person
         {
             dtGdVwShowPersons.Rows.Clear();
-            originalValues.Clear(); // Limpiar los valores originales al mostrar nuevos datos
+            rowPersonMapping.Clear();
+            modifiedRows.Clear();
 
             foreach (var person in persons)
             {
+                int rowIndex;
                 if (person is Patient patient)
                 {
-                    int rowIndex = dtGdVwShowPersons.Rows.Add(
+                    rowIndex = dtGdVwShowPersons.Rows.Add(
                         patient.Id,
                         patient.Name,
                         patient.DateOfBirth.ToShortDateString(),
@@ -116,22 +122,10 @@ namespace WinFormGestionHospital.Forms
                         patient.Condition,
                         patient.AdmissionDate.ToShortDateString()
                     );
-
-                    // Almacenar los valores originales
-                    originalValues[rowIndex] = new Dictionary<string, object>
-            {
-                { "Name", patient.Name },
-                { "DateOfBirth", patient.DateOfBirth },
-                { "Height", patient.Height },
-                { "Weight", patient.Weight },
-                { "AssignedDoctor", patient.AssignedDoctor?.Name ?? "N/A" },
-                { "Condition", patient.Condition },
-                { "AdmissionDate", patient.AdmissionDate }
-            };
                 }
                 else if (person is Doctor doctor)
                 {
-                    int rowIndex = dtGdVwShowPersons.Rows.Add(
+                    rowIndex = dtGdVwShowPersons.Rows.Add(
                         doctor.Id,
                         doctor.Name,
                         doctor.DateOfBirth.ToShortDateString(),
@@ -141,21 +135,10 @@ namespace WinFormGestionHospital.Forms
                         doctor.YearsOfExperience,
                         doctor.ConsultationHours
                     );
-
-                    originalValues[rowIndex] = new Dictionary<string, object>
-            {
-                { "Name", doctor.Name },
-                { "DateOfBirth", doctor.DateOfBirth },
-                { "Height", doctor.Height },
-                { "Weight", doctor.Weight },
-                { "Specialty", doctor.Specialty },
-                { "YearsOfExperience", doctor.YearsOfExperience },
-                { "ConsultationHours", doctor.ConsultationHours }
-            };
                 }
                 else if (person is AdminStaff adminStaff)
                 {
-                    int rowIndex = dtGdVwShowPersons.Rows.Add(
+                    rowIndex = dtGdVwShowPersons.Rows.Add(
                         adminStaff.Id,
                         adminStaff.Name,
                         adminStaff.Position,
@@ -165,18 +148,15 @@ namespace WinFormGestionHospital.Forms
                         adminStaff.YearsInService,
                         adminStaff.Department
                     );
-
-                    originalValues[rowIndex] = new Dictionary<string, object>
-            {
-                { "Name", adminStaff.Name },
-                { "Position", adminStaff.Position },
-                { "DateOfBirth", adminStaff.DateOfBirth },
-                { "Height", adminStaff.Height },
-                { "Weight", adminStaff.Weight },
-                { "YearsInService", adminStaff.YearsInService },
-                { "Department", adminStaff.Department }
-            };
                 }
+                else
+                {
+                    continue;
+                }
+
+                // Mapear la fila con la persona
+                rowPersonMapping[rowIndex] = person;
+                modifiedRows[rowIndex] = false;
             }
         }
 
@@ -225,37 +205,19 @@ namespace WinFormGestionHospital.Forms
 
         private void dtGdVwShowPersons_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0) return;
+
             DataGridViewRow currentRow = dtGdVwShowPersons.Rows[e.RowIndex];
-            var columnName = dtGdVwShowPersons.Columns[e.ColumnIndex].Name;
 
-            if (ValidateRow(currentRow)) // Si todos los campos son válidos
+            if (ValidateRow(currentRow))
             {
-                currentRow.DefaultCellStyle.ForeColor = System.Drawing.Color.Green;
-
-                // Cambiar el color del texto en la celda si el valor ha cambiado
-                if (originalValues.TryGetValue(e.RowIndex, out var originalValueDict))
-                {
-                    var originalValue = originalValueDict[columnName];
-                    var newValue = currentRow.Cells[e.ColumnIndex].Value;
-
-                    if (!originalValue.Equals(newValue))
-                    {
-                        currentRow.Cells[e.ColumnIndex].Style.ForeColor = System.Drawing.Color.Yellow; // Cambia el color a amarillo si se modifica
-                    }
-                }
-
-                // Iniciar el temporizador para revertir a negro después de 1 segundo
-                var timer = new Timer { Interval = 1000 };
-                timer.Tick += (s, args) =>
-                {
-                    timer.Stop();
-                    timer.Dispose();
-
-                    // Añadir la persona a la lista del hospital
-                    AddPersonToHospital(currentRow);
-                    currentRow.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
-                };
-                timer.Start();
+                // Marcar la fila como modificada
+                modifiedRows[e.RowIndex] = true;
+                currentRow.DefaultCellStyle.ForeColor = Color.Orange; // Color para indicar cambios pendientes
+            }
+            else
+            {
+                currentRow.DefaultCellStyle.ForeColor = Color.Red; // Color para indicar datos inválidos
             }
         }
 
@@ -319,6 +281,92 @@ namespace WinFormGestionHospital.Forms
                     break;
             }
 
+        }
+
+        private void BtSavePerson_Click(object sender, EventArgs e)
+        {
+            List<DataGridViewRow> rowsToProcess = new List<DataGridViewRow>();
+
+            // Recolectar todas las filas modificadas
+            foreach (DataGridViewRow row in dtGdVwShowPersons.Rows)
+            {
+                if (modifiedRows.ContainsKey(row.Index) && modifiedRows[row.Index])
+                {
+                    rowsToProcess.Add(row);
+                }
+            }
+
+            foreach (var row in rowsToProcess)
+            {
+                if (ValidateRow(row))
+                {
+                    if (rowPersonMapping.ContainsKey(row.Index))
+                    {
+                        // Modificar persona existente
+                        UpdateExistingPerson(row, rowPersonMapping[row.Index]);
+                    }
+                    else
+                    {
+                        // Agregar nueva persona
+                        AddPersonToHospital(row);
+                    }
+
+                    // Resetear el estado de modificación y el color
+                    modifiedRows[row.Index] = false;
+                    row.DefaultCellStyle.ForeColor = Color.Black;
+                }
+            }
+
+            // Actualizar la vista
+            RefreshCurrentView();
+        }
+
+        private void UpdateExistingPerson(DataGridViewRow row, Person person)
+        {
+            // Actualizar propiedades comunes
+            person.Name = row.Cells["Name"].Value.ToString();
+            person.DateOfBirth = DateTime.Parse(row.Cells["DateOfBirth"].Value.ToString());
+            person.Height = double.Parse(row.Cells["Height"].Value.ToString());
+            person.Weight = double.Parse(row.Cells["Weight"].Value.ToString());
+
+            // Actualizar propiedades específicas según el tipo
+            switch (person)
+            {
+                case Patient patient:
+                    string doctorName = row.Cells["AssignedDoctor"].Value?.ToString();
+                    patient.AssignedDoctor = _hospital.GetDoctors().FirstOrDefault(d => d.Name == doctorName);
+                    patient.Condition = row.Cells["Condition"].Value.ToString();
+                    patient.AdmissionDate = DateTime.Parse(row.Cells["AdmissionDate"].Value.ToString());
+                    break;
+
+                case Doctor doctor:
+                    doctor.Specialty = row.Cells["Specialty"].Value.ToString();
+                    doctor.YearsOfExperience = int.Parse(row.Cells["YearsExperience"].Value.ToString());
+                    doctor.ConsultationHours = row.Cells["consultationHours"].Value.ToString();
+                    break;
+
+                case AdminStaff adminStaff:
+                    adminStaff.Position = row.Cells["Position"].Value.ToString();
+                    adminStaff.YearsInService = int.Parse(row.Cells["YearsInService"].Value.ToString());
+                    adminStaff.Department = row.Cells["Department"].Value.ToString();
+                    break;
+            }
+        }
+
+        private void RefreshCurrentView()
+        {
+            switch (_currentPersonType)
+            {
+                case "Patient":
+                    ShowPersonData(_hospital.GetPatients());
+                    break;
+                case "Doctor":
+                    ShowPersonData(_hospital.GetDoctors());
+                    break;
+                case "AdminStaff":
+                    ShowPersonData(_hospital.GetAdminStaff());
+                    break;
+            }
         }
     }
 }
