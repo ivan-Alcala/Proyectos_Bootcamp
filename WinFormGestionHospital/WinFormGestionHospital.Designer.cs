@@ -39,35 +39,49 @@
             // btShowFormPerson
             // 
             this.btShowFormPerson.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btShowFormPerson.FlatAppearance.BorderSize = 0;
+            this.btShowFormPerson.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btShowFormPerson.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btShowFormPerson.Location = new System.Drawing.Point(0, 0);
             this.btShowFormPerson.Margin = new System.Windows.Forms.Padding(0);
             this.btShowFormPerson.Name = "btShowFormPerson";
-            this.btShowFormPerson.Size = new System.Drawing.Size(86, 39);
+            this.btShowFormPerson.Size = new System.Drawing.Size(215, 39);
             this.btShowFormPerson.TabIndex = 1;
-            this.btShowFormPerson.Text = "Personas";
+            this.btShowFormPerson.Text = "Lista de Personas";
+            this.btShowFormPerson.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btShowFormPerson.UseVisualStyleBackColor = true;
             // 
             // btShowFormMedicalRecord
             // 
             this.btShowFormMedicalRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btShowFormMedicalRecord.Location = new System.Drawing.Point(86, 0);
+            this.btShowFormMedicalRecord.FlatAppearance.BorderSize = 0;
+            this.btShowFormMedicalRecord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btShowFormMedicalRecord.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btShowFormMedicalRecord.Location = new System.Drawing.Point(215, 0);
             this.btShowFormMedicalRecord.Margin = new System.Windows.Forms.Padding(0);
             this.btShowFormMedicalRecord.Name = "btShowFormMedicalRecord";
-            this.btShowFormMedicalRecord.Size = new System.Drawing.Size(159, 39);
+            this.btShowFormMedicalRecord.Size = new System.Drawing.Size(216, 39);
             this.btShowFormMedicalRecord.TabIndex = 2;
             this.btShowFormMedicalRecord.Text = "Historiales medicos";
+            this.btShowFormMedicalRecord.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btShowFormMedicalRecord.UseVisualStyleBackColor = true;
+            this.btShowFormMedicalRecord.Visible = false;
             // 
             // btShowFormAppointment
             // 
             this.btShowFormAppointment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btShowFormAppointment.Location = new System.Drawing.Point(245, 0);
+            this.btShowFormAppointment.FlatAppearance.BorderSize = 0;
+            this.btShowFormAppointment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btShowFormAppointment.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btShowFormAppointment.Location = new System.Drawing.Point(431, 0);
             this.btShowFormAppointment.Margin = new System.Windows.Forms.Padding(0);
             this.btShowFormAppointment.Name = "btShowFormAppointment";
-            this.btShowFormAppointment.Size = new System.Drawing.Size(65, 39);
+            this.btShowFormAppointment.Size = new System.Drawing.Size(122, 39);
             this.btShowFormAppointment.TabIndex = 4;
             this.btShowFormAppointment.Text = "Citas";
+            this.btShowFormAppointment.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btShowFormAppointment.UseVisualStyleBackColor = true;
+            this.btShowFormAppointment.Visible = false;
             // 
             // fwLtPnHospitalOptions
             // 
@@ -95,6 +109,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(982, 493);
             this.Controls.Add(this.pnMainContent);
             this.Controls.Add(this.fwLtPnHospitalOptions);

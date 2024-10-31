@@ -18,6 +18,7 @@ namespace WinFormGestionHospital.Forms
         public UserControlPersons(Hospital hospital)
         {
             InitializeComponent();
+            InitStyleComponent();
             this._hospital = hospital;
 
             // Iniciar seleccionado un Paciente
@@ -31,19 +32,111 @@ namespace WinFormGestionHospital.Forms
                 _currentPersonType = "Patient";
                 ConfigurePatientColumns();
                 ShowPersonData(_hospital.GetPatients());
+
+                // Cambia el estilo al botón seleccionado y deselecciona los otros
+                SelectButtonStyle(btShowDataPatient, btShowDataDoctor, btShowDataAdminStaff);
             };
             btShowDataDoctor.Click += (sender, e) =>
             {
                 _currentPersonType = "Doctor";
                 ConfigureDoctorColumns();
                 ShowPersonData(_hospital.GetDoctors());
+
+                SelectButtonStyle(btShowDataDoctor, btShowDataPatient, btShowDataAdminStaff);
             };
             btShowDataAdminStaff.Click += (sender, e) =>
             {
                 _currentPersonType = "AdminStaff";
                 ConfigureAdminStaffColumns();
                 ShowPersonData(_hospital.GetAdminStaff());
+
+                SelectButtonStyle(btShowDataAdminStaff, btShowDataPatient, btShowDataDoctor);
             };
+        }
+
+        private void InitStyleComponent()
+        {
+            SelectedButtonStyle(btShowDataPatient);
+            UnselectedButtonStyle(btShowDataDoctor);
+            UnselectedButtonStyle(btShowDataAdminStaff);
+
+            // DataGridView de Persons
+            DataGridViewCellStyle selectedRowStyle = dtGdVwShowPersons.RowsDefaultCellStyle;
+            selectedRowStyle.SelectionBackColor = ColorTranslator.FromHtml("#d6e0ef");
+            selectedRowStyle.SelectionForeColor = ColorTranslator.FromHtml("#282b3e");
+            // Establecer el estilo para las filas pares
+            dtGdVwShowPersons.RowsDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#e9eff6");
+            // Establecer el estilo para las filas impares
+            dtGdVwShowPersons.AlternatingRowsDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#ffffff");
+            dtGdVwShowPersons.ColumnHeadersDefaultCellStyle.ForeColor = ColorTranslator.FromHtml("#f3f6fa");
+        }
+
+        private void SelectButtonStyle(Button selectedButton, params Button[] otherButtons)
+        {
+            // Aplica el estilo seleccionado al botón clicado
+            SelectedButtonStyle(selectedButton);
+
+            // Aplica el estilo "no seleccionado" a los otros botones
+            foreach (var button in otherButtons)
+            {
+                UnselectedButtonStyle(button);
+            }
+        }
+
+        private void UnselectedButtonStyle(Button button)
+        {
+            // Limpia los paneles agregados anteriormente
+            button.Controls.Clear();
+
+            button.FlatStyle = FlatStyle.Flat;
+            button.BackColor = Color.Transparent;
+            button.ForeColor = ColorTranslator.FromHtml("#9baaba");
+
+            // Aplica negrita solo si no está en negrita
+            if (button.Font.Style != FontStyle.Bold)
+            {
+                button.Font = new Font(button.Font, FontStyle.Bold);
+            }
+
+            button.FlatAppearance.BorderSize = 0;
+
+            // Crea el borde inferior y agrégalo
+            Panel borderBottom = new Panel
+            {
+                Height = 1,
+                Dock = DockStyle.Bottom,
+                BackColor = ColorTranslator.FromHtml("#edeef2")
+            };
+
+            button.Controls.Add(borderBottom);
+        }
+
+        private void SelectedButtonStyle(Button button)
+        {
+            // Limpia los paneles agregados anteriormente
+            button.Controls.Clear();
+
+            button.FlatStyle = FlatStyle.Flat;
+            button.BackColor = Color.Transparent;
+            button.ForeColor = ColorTranslator.FromHtml("#3579fe");
+
+            // Aplica negrita solo si no está en negrita
+            if (button.Font.Style != FontStyle.Bold)
+            {
+                button.Font = new Font(button.Font, FontStyle.Bold);
+            }
+
+            button.FlatAppearance.BorderSize = 0;
+
+            // Crea el borde inferior y agrégalo
+            Panel borderBottom = new Panel
+            {
+                Height = 1,
+                Dock = DockStyle.Bottom,
+                BackColor = ColorTranslator.FromHtml("#1361fe")
+            };
+
+            button.Controls.Add(borderBottom);
         }
 
         private void ConfigurePatientColumns()

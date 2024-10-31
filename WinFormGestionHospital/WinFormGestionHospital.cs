@@ -18,6 +18,8 @@ namespace WinFormGestionHospital
             btShowFormPerson.Click += (sender, e) => { ShowFormPersons(_hospital); };
             btShowFormAppointment.Click += (sender, e) => { ShowFormAppointments(_hospital); };
             btShowFormMedicalRecord.Click += (sender, e) => { ShowFormMedicalRecords(_hospital); };
+
+            //WinFormGestionHospital.DefaultBackColor = DefaultBackColor.;
         }
 
         public void ShowFormPersons(Hospital hospital)
