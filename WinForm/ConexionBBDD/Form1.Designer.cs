@@ -112,6 +112,7 @@
             // 
             this.pnJobsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnJobsView.Location = new System.Drawing.Point(15, 116);
+            this.pnJobsView.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.pnJobsView.Name = "pnJobsView";
             this.pnJobsView.Size = new System.Drawing.Size(564, 243);
             this.pnJobsView.TabIndex = 5;
