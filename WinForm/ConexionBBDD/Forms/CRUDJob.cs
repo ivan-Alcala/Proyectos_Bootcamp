@@ -1,4 +1,5 @@
 ﻿using ConexionBBDD.Class;
+using ConexionBBDD.Class.DAL;
 using ConexionBBDD.Class.Model;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,10 +10,11 @@ namespace ConexionBBDD.Forms
     public partial class CRUDJob : UserControl
     {
         BBDDConnect bbddConnect;
-        Job _job = new Job();
+        JobDAL _jobDAL;
 
         public CRUDJob(BBDDConnect bbddConnect)
         {
+            this._jobDAL = new JobDAL(bbddConnect);
             this.bbddConnect = bbddConnect;
             InitializeComponent();
             InitStyleComponent();
@@ -96,7 +98,7 @@ namespace ConexionBBDD.Forms
         {
             if (bbddConnect.IsConnected())
             {
-                List<Job> jobs = _job.GetJobs(bbddConnect.connection);
+                List<Job> jobs = _jobDAL.GetJobs();
                 dtGdVwShowData.DataSource = jobs;
             }
             else
