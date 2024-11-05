@@ -47,6 +47,7 @@
             this.btBBDDConect.TabIndex = 0;
             this.btBBDDConect.Text = "Conectar";
             this.btBBDDConect.UseVisualStyleBackColor = true;
+            this.btBBDDConect.Click += new System.EventHandler(this.btBBDDConect_Click);
             // 
             // btBBDDDisconect
             // 
@@ -61,6 +62,7 @@
             this.btBBDDDisconect.TabIndex = 1;
             this.btBBDDDisconect.Text = "Desconectar";
             this.btBBDDDisconect.UseVisualStyleBackColor = true;
+            this.btBBDDDisconect.Click += new System.EventHandler(this.btBBDDDisconect_Click);
             // 
             // tableLayoutPanel1
             // 
