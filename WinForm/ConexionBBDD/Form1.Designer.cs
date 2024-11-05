@@ -32,6 +32,8 @@
             this.btBBDDDisconect = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lbBBDDConnectionStates = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnJobsView = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,6 +84,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(318, 100);
             this.tableLayoutPanel1.TabIndex = 3;
+            this.tableLayoutPanel1.Visible = false;
             // 
             // lbBBDDConnectionStates
             // 
@@ -97,15 +100,36 @@
             this.lbBBDDConnectionStates.Text = "Closed";
             this.lbBBDDConnectionStates.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(15, 115);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(318, 1);
+            this.panel1.TabIndex = 4;
+            this.panel1.Visible = false;
+            // 
+            // pnJobsView
+            // 
+            this.pnJobsView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnJobsView.Location = new System.Drawing.Point(15, 116);
+            this.pnJobsView.Name = "pnJobsView";
+            this.pnJobsView.Size = new System.Drawing.Size(318, 154);
+            this.pnJobsView.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(348, 285);
+            this.Controls.Add(this.pnJobsView);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(15);
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Conexsion a SQL";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -118,6 +142,8 @@
         private System.Windows.Forms.Button btBBDDDisconect;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label lbBBDDConnectionStates;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnJobsView;
     }
 }
 

@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4A3EEF93-0455-4C5D-BDD1-D7CC70E454AF}</ProjectGuid>
+    <ProjectGuid>{77C9D481-F87D-45EB-B620-54FD7755DE32}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ConexionBBDD</RootNamespace>
-    <AssemblyName>ConexionBBDD</AssemblyName>
+    <RootNamespace>IntroducionWinForm</RootNamespace>
+    <AssemblyName>IntroducionWinForm</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -46,27 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class\BBDDConnect.cs" />
-    <Compile Include="Class\Model\Job.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\CRUDJob.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\CRUDJob.Designer.cs">
-      <DependentUpon>CRUDJob.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CRUDJob.resx">
-      <DependentUpon>CRUDJob.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4A3EEF93-0455-4C5D-BDD1-D7CC70E454AF}</ProjectGuid>
+    <ProjectGuid>{D61BFC95-DAD0-4D1A-8E41-D47FEA76C42E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ConexionBBDD</RootNamespace>
-    <AssemblyName>ConexionBBDD</AssemblyName>
+    <RootNamespace>WinFormGestionHospital</RootNamespace>
+    <AssemblyName>WinFormGestionHospital</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -46,27 +46,52 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class\BBDDConnect.cs" />
-    <Compile Include="Class\Model\Job.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\CRUDJob.cs">
+    <Compile Include="Class\AdminStaff.cs" />
+    <Compile Include="Class\Appointment.cs" />
+    <Compile Include="Class\Doctor.cs" />
+    <Compile Include="Class\Hospital.cs" />
+    <Compile Include="Class\MedicalRecord.cs" />
+    <Compile Include="Class\Patient.cs" />
+    <Compile Include="Class\Person.cs" />
+    <Compile Include="Class\Program.cs" />
+    <Compile Include="Class\Tools.cs" />
+    <Compile Include="Forms\UserControlAppointment.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\CRUDJob.Designer.cs">
-      <DependentUpon>CRUDJob.cs</DependentUpon>
+    <Compile Include="Forms\UserControlAppointment.Designer.cs">
+      <DependentUpon>UserControlAppointment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UserControlMedicalRecord.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\UserControlMedicalRecord.Designer.cs">
+      <DependentUpon>UserControlMedicalRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UserControlPersons.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\UserControlPersons.Designer.cs">
+      <DependentUpon>UserControlPersons.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinFormGestionHospital.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinFormGestionHospital.Designer.cs">
+      <DependentUpon>WinFormGestionHospital.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\UserControlAppointment.resx">
+      <DependentUpon>UserControlAppointment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CRUDJob.resx">
-      <DependentUpon>CRUDJob.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\UserControlMedicalRecord.resx">
+      <DependentUpon>UserControlMedicalRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserControlPersons.resx">
+      <DependentUpon>UserControlPersons.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinFormGestionHospital.resx">
+      <DependentUpon>WinFormGestionHospital.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -76,6 +101,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -89,6 +115,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\agregar.png" />
+    <Content Include="Resources\basura.png" />
+    <Content Include="Resources\disco.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
