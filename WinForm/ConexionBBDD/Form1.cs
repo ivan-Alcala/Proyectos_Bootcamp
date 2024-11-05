@@ -61,7 +61,7 @@ namespace ConexionBBDD
 
         public void ShowFormJobs()
         {
-            CRUDJob crudJob = new CRUDJob();
+            CRUDJob crudJob = new CRUDJob(dbConnection);
             ReplacePanelContent(pnJobsView, crudJob);
         }
 

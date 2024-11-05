@@ -1,14 +1,22 @@
-﻿using System.Drawing;
+﻿using ConexionBBDD.Class;
+using ConexionBBDD.Class.Model;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ConexionBBDD.Forms
 {
     public partial class CRUDJob : UserControl
     {
-        public CRUDJob()
+        BBDDConnect bbddConnect;
+        Job _job = new Job();
+
+        public CRUDJob(BBDDConnect bbddConnect)
         {
+            this.bbddConnect = bbddConnect;
             InitializeComponent();
             InitStyleComponent();
+            //LoadJobs();
         }
 
         #region Style
@@ -83,5 +91,24 @@ namespace ConexionBBDD.Forms
             button.Controls.Add(borderBottom);
         }
         #endregion
+
+        private void LoadJobs()
+        {
+            if (bbddConnect.IsConnected())
+            {
+                List<Job> jobs = _job.GetJobs(bbddConnect.connection);
+                dtGdVwShowData.DataSource = jobs;
+            }
+            else
+            {
+                MessageBox.Show("Debe estar conectado a la base de datos para cargar los trabajos.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btShowDataJobs_Click(object sender, System.EventArgs e)
+        {
+            bbddConnect.Connect();
+            LoadJobs();
+        }
     }
 }
