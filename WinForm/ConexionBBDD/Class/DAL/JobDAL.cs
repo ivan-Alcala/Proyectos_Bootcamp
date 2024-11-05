@@ -7,8 +7,8 @@ namespace ConexionBBDD.Class.DAL
 {
     public class JobDAL
     {
-        BBDDConnect _bdConnect;
-        SqlConnection conn;
+        private readonly BBDDConnect _bdConnect;
+        private readonly SqlConnection conn;
 
         public JobDAL(BBDDConnect bdConnect)
         {
@@ -16,87 +16,118 @@ namespace ConexionBBDD.Class.DAL
             this.conn = _bdConnect.connection;
         }
 
-        // Método para añadir un nuevo Job a la base de datos
-        public bool AddJob(Job job)
+        // Método wrapper que maneja la conexión/desconexión
+        private T ExecuteWithConnection<T>(Func<T> operation)
         {
-            string query = "INSERT INTO Jobs (job_title, min_salary, max_salary) VALUES (@JobTitle, @MinSalary, @MaxSalary)";
-
             try
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    // Parámetros de la consulta
-                    cmd.Parameters.AddWithValue("@JobTitle", job.JobTitle);
-                    cmd.Parameters.AddWithValue("@MinSalary", job.MinSalary);
-                    cmd.Parameters.AddWithValue("@MaxSalary", job.MaxSalary);
+                if (!_bdConnect.IsConnected())
+                    _bdConnect.Connect();
 
-                    // Ejecutar la consulta y verificar si se afectó alguna fila
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    return rowsAffected > 0;
-                }
+                return operation();
             }
-            catch (Exception ex)
+            finally
             {
-                Console.WriteLine("Error al agregar el Job: " + ex.Message);
-                return false;
+                if (_bdConnect.IsConnected())
+                    _bdConnect.Disconnect();
             }
         }
 
-        // Método para obtener la lista de Jobs desde la base de datos
-        public List<Job> GetJobs()
+        // Sobrecarga para métodos que no devuelven valor
+        private void ExecuteWithConnection(Action operation)
         {
-            var jobs = new List<Job>();
-            string query = "SELECT * FROM Jobs";
-
-            try
+            ExecuteWithConnection<object>(() =>
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                operation();
+                return null;
+            });
+        }
+
+        public bool AddJob(Job job)
+        {
+            return ExecuteWithConnection(() =>
+            {
+                string query = "INSERT INTO Jobs (job_title, min_salary, max_salary) VALUES (@JobTitle, @MinSalary, @MaxSalary)";
+
+                try
                 {
-                    while (reader.Read())
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        var job = new Job
-                        {
-                            JobId = reader.GetInt32(0),
-                            JobTitle = reader.GetString(1),
-                            MinSalary = (float)reader.GetDecimal(2),  // Convertir de decimal a float
-                            MaxSalary = (float)reader.GetDecimal(3)   // Convertir de decimal a float
-                        };
-                        jobs.Add(job);
+                        cmd.Parameters.AddWithValue("@JobTitle", job.JobTitle);
+                        cmd.Parameters.AddWithValue("@MinSalary", job.MinSalary);
+                        cmd.Parameters.AddWithValue("@MaxSalary", job.MaxSalary);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        return rowsAffected > 0;
                     }
                 }
-            }
-            catch (Exception ex)
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error al agregar el Job: " + ex.Message);
+                    return false;
+                }
+            });
+        }
+
+        public List<Job> GetJobs()
+        {
+            return ExecuteWithConnection(() =>
             {
-                Console.WriteLine("Error al obtener los Jobs: " + ex.Message);
-            }
-            return jobs;
+                var jobs = new List<Job>();
+                string query = "SELECT * FROM Jobs";
+
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var job = new Job
+                            {
+                                JobId = reader.GetInt32(0),
+                                JobTitle = reader.GetString(1),
+                                MinSalary = (float)reader.GetDecimal(2),
+                                MaxSalary = (float)reader.GetDecimal(3)
+                            };
+                            jobs.Add(job);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error al obtener los Jobs: " + ex.Message);
+                }
+
+                return jobs;
+            });
         }
 
         public bool UpdateJob(Job job)
         {
-            string query = "UPDATE Jobs SET job_title = @JobTitle, min_salary = @MinSalary, max_salary = @MaxSalary WHERE job_id = @JobId";
-
-            try
+            return ExecuteWithConnection(() =>
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                string query = "UPDATE Jobs SET job_title = @JobTitle, min_salary = @MinSalary, max_salary = @MaxSalary WHERE job_id = @JobId";
+
+                try
                 {
-                    // Parámetros de la consulta
-                    cmd.Parameters.AddWithValue("@JobId", job.JobId);
-                    cmd.Parameters.AddWithValue("@JobTitle", job.JobTitle);
-                    cmd.Parameters.AddWithValue("@MinSalary", job.MinSalary);
-                    cmd.Parameters.AddWithValue("@MaxSalary", job.MaxSalary);
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@JobId", job.JobId);
+                        cmd.Parameters.AddWithValue("@JobTitle", job.JobTitle);
+                        cmd.Parameters.AddWithValue("@MinSalary", job.MinSalary);
+                        cmd.Parameters.AddWithValue("@MaxSalary", job.MaxSalary);
 
-                    // Ejecutar la consulta y verificar si se afectó alguna fila
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    return rowsAffected > 0;
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error al actualizar el Job: " + ex.Message);
-                return false;
-            }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error al actualizar el Job: " + ex.Message);
+                    return false;
+                }
+            });
         }
     }
 }

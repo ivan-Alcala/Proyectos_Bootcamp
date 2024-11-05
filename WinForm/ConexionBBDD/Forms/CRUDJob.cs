@@ -96,20 +96,12 @@ namespace ConexionBBDD.Forms
 
         private void LoadJobs()
         {
-            if (bbddConnect.IsConnected())
-            {
-                List<Job> jobs = _jobDAL.GetJobs();
-                dtGdVwShowData.DataSource = jobs;
-            }
-            else
-            {
-                MessageBox.Show("Debe estar conectado a la base de datos para cargar los trabajos.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            List<Job> jobs = _jobDAL.GetJobs();
+            dtGdVwShowData.DataSource = jobs;
         }
 
         private void btShowDataJobs_Click(object sender, System.EventArgs e)
         {
-            bbddConnect.Connect();
             LoadJobs();
         }
     }
