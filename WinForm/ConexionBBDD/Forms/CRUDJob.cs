@@ -16,7 +16,7 @@ namespace ConexionBBDD.Forms
             this.bbddConnect = bbddConnect;
             InitializeComponent();
             InitStyleComponent();
-            //LoadJobs();
+            LoadJobs();
         }
 
         #region Style

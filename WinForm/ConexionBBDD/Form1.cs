@@ -16,7 +16,6 @@ namespace ConexionBBDD
             dbConnection = new BBDDConnect();
             lbBBDDConnectionStates.Text = "Desconectado";
             btBBDDDisconect.Enabled = false;
-            ShowFormJobs();
         }
 
         private void btBBDDConect_Click(object sender, EventArgs e)
@@ -26,7 +25,7 @@ namespace ConexionBBDD
                 lbBBDDConnectionStates.Text = "Conectado";
                 btBBDDConect.Enabled = false;
                 btBBDDDisconect.Enabled = true;
-                AddTestJob();
+                ShowFormJobs();
             }
             else
             {
@@ -41,6 +40,8 @@ namespace ConexionBBDD
             lbBBDDConnectionStates.Text = "Desconectado";
             btBBDDConect.Enabled = true;
             btBBDDDisconect.Enabled = false;
+
+            ReplacePanelContent(pnJobsView, new UserControl());
         }
 
         private void AddTestJob()
