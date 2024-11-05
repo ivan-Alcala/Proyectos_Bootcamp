@@ -5,7 +5,7 @@ namespace ConexionBBDD.Class
 {
     public class BBDDConnect
     {
-        private SqlConnection connection;
+        public SqlConnection connection;
 
         // Constructor que configura la cadena de conexión
         public BBDDConnect()

@@ -40,10 +40,10 @@
             this.btBBDDConect.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btBBDDConect.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btBBDDConect.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btBBDDConect.Location = new System.Drawing.Point(0, 57);
+            this.btBBDDConect.Location = new System.Drawing.Point(0, 52);
             this.btBBDDConect.Margin = new System.Windows.Forms.Padding(0, 7, 7, 0);
             this.btBBDDConect.Name = "btBBDDConect";
-            this.btBBDDConect.Size = new System.Drawing.Size(153, 43);
+            this.btBBDDConect.Size = new System.Drawing.Size(152, 38);
             this.btBBDDConect.TabIndex = 0;
             this.btBBDDConect.Text = "Conectar";
             this.btBBDDConect.UseVisualStyleBackColor = true;
@@ -55,10 +55,10 @@
             this.btBBDDDisconect.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btBBDDDisconect.Enabled = false;
             this.btBBDDDisconect.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btBBDDDisconect.Location = new System.Drawing.Point(167, 57);
+            this.btBBDDDisconect.Location = new System.Drawing.Point(166, 52);
             this.btBBDDDisconect.Margin = new System.Windows.Forms.Padding(7, 7, 0, 0);
             this.btBBDDDisconect.Name = "btBBDDDisconect";
-            this.btBBDDDisconect.Size = new System.Drawing.Size(154, 43);
+            this.btBBDDDisconect.Size = new System.Drawing.Size(152, 38);
             this.btBBDDDisconect.TabIndex = 1;
             this.btBBDDDisconect.Text = "Desconectar";
             this.btBBDDDisconect.UseVisualStyleBackColor = true;
@@ -74,11 +74,13 @@
             this.tableLayoutPanel1.Controls.Add(this.btBBDDConect, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(15, 15);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(321, 100);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(318, 100);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // lbBBDDConnectionStates
@@ -90,7 +92,7 @@
             this.lbBBDDConnectionStates.Location = new System.Drawing.Point(0, 0);
             this.lbBBDDConnectionStates.Margin = new System.Windows.Forms.Padding(0, 0, 0, 7);
             this.lbBBDDConnectionStates.Name = "lbBBDDConnectionStates";
-            this.lbBBDDConnectionStates.Size = new System.Drawing.Size(321, 43);
+            this.lbBBDDConnectionStates.Size = new System.Drawing.Size(318, 38);
             this.lbBBDDConnectionStates.TabIndex = 4;
             this.lbBBDDConnectionStates.Text = "Closed";
             this.lbBBDDConnectionStates.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -99,7 +101,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(351, 212);
+            this.ClientSize = new System.Drawing.Size(348, 285);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(15);

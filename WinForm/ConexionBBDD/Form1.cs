@@ -1,4 +1,5 @@
 ﻿using ConexionBBDD.Class;
+using ConexionBBDD.Class.Model;
 using System;
 using System.Windows.Forms;
 
@@ -23,6 +24,7 @@ namespace ConexionBBDD
                 lbBBDDConnectionStates.Text = "Conectado";
                 btBBDDConect.Enabled = false;
                 btBBDDDisconect.Enabled = true;
+                AddTestJob();
             }
             else
             {
@@ -37,6 +39,22 @@ namespace ConexionBBDD
             lbBBDDConnectionStates.Text = "Desconectado";
             btBBDDConect.Enabled = true;
             btBBDDDisconect.Enabled = false;
+        }
+
+        private void AddTestJob()
+        {
+            Job newJob = new Job
+            {
+                JobTitle = "Desarrollador de Software",
+                MinSalary = 50000,
+                MaxSalary = 100000
+            };
+            bool jobAdded = newJob.AddJob(newJob, dbConnection.connection);
+
+            if (jobAdded)
+            {
+                Console.WriteLine("Añadido un Job con exito");
+            }
         }
     }
 }
