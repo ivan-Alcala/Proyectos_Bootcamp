@@ -3,6 +3,7 @@ using ConexionBBDD.Class.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ConexionBBDD.Forms
@@ -268,7 +269,6 @@ namespace ConexionBBDD.Forms
             }
         }
 
-
         private void ValidateCell(int rowIndex, int columnIndex, object value)
         {
             var cell = dtGdVwShowJobs.Rows[rowIndex].Cells[columnIndex];
@@ -327,7 +327,6 @@ namespace ConexionBBDD.Forms
         {
             if (e.RowIndex < 0) return;
 
-            btSaveJob.Enabled = true;
             DataGridViewRow currentRow = dtGdVwShowJobs.Rows[e.RowIndex];
 
             // Validar la celda que cambió
@@ -358,6 +357,29 @@ namespace ConexionBBDD.Forms
                     }
                 }
             }
+
+            // Verificar todas las filas modificadas
+            bool allModifiedRowsValid = true;
+            foreach (var kvp in modifiedRows)
+            {
+                if (kvp.Value) // Si la fila está modificada
+                {
+                    DataGridViewRow row = dtGdVwShowJobs.Rows[kvp.Key];
+                    foreach (DataGridViewCell cell in row.Cells)
+                    {
+                        if (!cellValidation.ContainsKey((kvp.Key, cell.ColumnIndex)) ||
+                            !cellValidation[(kvp.Key, cell.ColumnIndex)])
+                        {
+                            allModifiedRowsValid = false;
+                            break;
+                        }
+                    }
+                    if (!allModifiedRowsValid) break;
+                }
+            }
+
+            // Habilitar o deshabilitar el botón de guardar según la validación
+            btSaveJob.Enabled = allModifiedRowsValid && modifiedRows.Any(x => x.Value);
         }
 
         private void dtGdVwShowJobs_SelectionChanged(object sender, EventArgs e)

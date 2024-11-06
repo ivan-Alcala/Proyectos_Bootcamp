@@ -103,11 +103,6 @@ namespace ConexionBBDD.Class.DAL
             });
         }
 
-        private decimal? GetSafeDecimal(SqlDataReader reader, int index)
-        {
-            return reader.IsDBNull(index) ? (decimal?)null : reader.GetDecimal(index);
-        }
-
         public bool UpdateJob(Job job)
         {
             return ExecuteWithConnection(() =>
@@ -219,6 +214,11 @@ namespace ConexionBBDD.Class.DAL
                     return -1;
                 }
             });
+        }
+
+        private decimal? GetSafeDecimal(SqlDataReader reader, int index)
+        {
+            return reader.IsDBNull(index) ? (decimal?)null : reader.GetDecimal(index);
         }
     }
 }
