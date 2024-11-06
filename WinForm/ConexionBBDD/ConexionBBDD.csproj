@@ -49,25 +49,25 @@
     <Compile Include="Class\DBConnect.cs" />
     <Compile Include="Class\DAL\DALJob.cs" />
     <Compile Include="Class\Model\Job.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\UserControllJobs.cs">
+    <Compile Include="Forms\UserControlJobs.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\UserControllJobs.Designer.cs">
-      <DependentUpon>UserControllJobs.cs</DependentUpon>
+    <Compile Include="Forms\UserControlJobs.Designer.cs">
+      <DependentUpon>UserControlJobs.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UserControllJobs.resx">
-      <DependentUpon>UserControllJobs.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\UserControlJobs.resx">
+      <DependentUpon>UserControlJobs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

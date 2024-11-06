@@ -69,7 +69,7 @@ namespace ConexionBBDD.Class.DAL
             });
         }
 
-        public List<Job> GetJobs()
+        public List<Job> GetAllJobs()
         {
             return ExecuteWithConnection(() =>
             {
@@ -87,8 +87,8 @@ namespace ConexionBBDD.Class.DAL
                             {
                                 JobId = reader.GetInt32(0),
                                 JobTitle = reader.GetString(1),
-                                MinSalary = (float)reader.GetDecimal(2),
-                                MaxSalary = (float)reader.GetDecimal(3)
+                                MinSalary = reader.GetDecimal(2),
+                                MaxSalary = reader.GetDecimal(3)
                             };
                             jobs.Add(job);
                         }

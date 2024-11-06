@@ -1,6 +1,6 @@
 ﻿namespace ConexionBBDD
 {
-    partial class Form1
+    partial class FormMain
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -96,7 +96,7 @@
             this.lbBBDDConnectionStates.Name = "lbBBDDConnectionStates";
             this.lbBBDDConnectionStates.Size = new System.Drawing.Size(564, 38);
             this.lbBBDDConnectionStates.TabIndex = 4;
-            this.lbBBDDConnectionStates.Text = "Closed";
+            this.lbBBDDConnectionStates.Text = "Desconectado";
             this.lbBBDDConnectionStates.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1

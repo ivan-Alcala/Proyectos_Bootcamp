@@ -5,20 +5,21 @@ using System.Windows.Forms;
 
 namespace ConexionBBDD
 {
-    public partial class Form1 : Form
+    public partial class FormMain : Form
     {
         private DBConnect dbConnection;
 
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
-            dbConnection = new DBConnect();
             lbBBDDConnectionStates.Text = "Desconectado";
             btBBDDDisconect.Enabled = false;
         }
 
         private void btBBDDConect_Click(object sender, EventArgs e)
         {
+            dbConnection = new DBConnect();
+
             if (dbConnection.Connect())
             {
                 lbBBDDConnectionStates.Text = "Conectado";
@@ -45,11 +46,11 @@ namespace ConexionBBDD
 
         public void ShowFormJobs()
         {
-            UserControllJobs crudJob = new UserControllJobs(dbConnection);
+            UserControlJobs crudJob = new UserControlJobs(dbConnection);
             ReplacePanelContent(pnJobsView, crudJob);
         }
 
-        public static void ReplacePanelContent<T>(Panel panel, T userControl) where T : UserControl
+        public void ReplacePanelContent<T>(Panel panel, T userControl) where T : UserControl
         {
             panel.Controls.Clear();
             panel.Controls.Add(userControl as Control);
