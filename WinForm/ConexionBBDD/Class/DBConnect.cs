@@ -20,7 +20,7 @@ namespace ConexionBBDD.Class
         {
             try
             {
-                if (connection.State == System.Data.ConnectionState.Closed)
+                if (!IsConnected())
                 {
                     connection.Open();
                     return true; // Conexión exitosa
@@ -36,10 +36,8 @@ namespace ConexionBBDD.Class
         // Método para desconectar de la base de datos
         public void Disconnect()
         {
-            if (connection.State == System.Data.ConnectionState.Open)
-            {
+            if (IsConnected())
                 connection.Close();
-            }
         }
 
         // Método para verificar el estado de la conexión
