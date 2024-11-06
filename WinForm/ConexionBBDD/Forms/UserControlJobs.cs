@@ -1,5 +1,4 @@
-﻿using ConexionBBDD.Class;
-using ConexionBBDD.Class.DAL;
+﻿using ConexionBBDD.Class.DAL;
 using ConexionBBDD.Class.Model;
 using System;
 using System.Collections.Generic;
@@ -10,16 +9,14 @@ namespace ConexionBBDD.Forms
 {
     public partial class UserControlJobs : UserControl
     {
-        DBConnect dbConnect;
         DALJob _jobDAL;
         private Dictionary<int, bool> modifiedRows = new Dictionary<int, bool>();
         private Dictionary<int, Job> rowJobMapping = new Dictionary<int, Job>();
         private Dictionary<(int row, int column), bool> cellValidation = new Dictionary<(int row, int column), bool>();
 
-        public UserControlJobs(DBConnect bbddConnect)
+        public UserControlJobs()
         {
-            this._jobDAL = new DALJob(bbddConnect);
-            this.dbConnect = bbddConnect;
+            this._jobDAL = new DALJob();
             InitializeComponent();
             InitStyleComponent();
 
@@ -221,17 +218,10 @@ namespace ConexionBBDD.Forms
                     try
                     {
                         int idJobToRemove = _jobDAL.GetJobIdByTitle(titleToSearch);
-                        MessageBox.Show(idJobToRemove.ToString());
-                        if (_jobDAL.DeleteJobById(idJobToRemove))
-                        {
-                            MessageBox.Show($"Eliminado correctamente",
-                                      "Validación",
-                                      MessageBoxButtons.OK,
-                                      MessageBoxIcon.Information);
+                        _jobDAL.DeleteJobById(idJobToRemove);
 
-                            // Actualizar la vista
-                            ShowJobData(_jobDAL.GetAllJobs());
-                        }
+                        // Actualizar la vista
+                        ShowJobData(_jobDAL.GetAllJobs());
                     }
                     catch (Exception ex)
                     {

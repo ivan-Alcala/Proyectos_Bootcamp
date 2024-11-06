@@ -46,7 +46,7 @@ namespace ConexionBBDD
 
         public void ShowFormJobs()
         {
-            UserControlJobs crudJob = new UserControlJobs(dbConnection);
+            UserControlJobs crudJob = new UserControlJobs();
             ReplacePanelContent(pnJobsView, crudJob);
         }
 

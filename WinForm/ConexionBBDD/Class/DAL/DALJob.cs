@@ -10,9 +10,9 @@ namespace ConexionBBDD.Class.DAL
         private readonly DBConnect _bdConnect;
         private readonly SqlConnection conn;
 
-        public DALJob(DBConnect bdConnect)
+        public DALJob()
         {
-            this._bdConnect = bdConnect;
+            this._bdConnect = new DBConnect();
             this.conn = _bdConnect.connection;
         }
 
