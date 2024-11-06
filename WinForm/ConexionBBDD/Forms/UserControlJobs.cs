@@ -163,23 +163,22 @@ namespace ConexionBBDD.Forms
 
         private void UpdateJob(DataGridViewRow row, Job job)
         {
-            // Actualizar propiedades
             job.JobTitle = row.Cells["Title"].Value.ToString();
-            job.MinSalary = decimal.Parse(row.Cells["MinSalary"].Value.ToString());
-            job.MaxSalary = decimal.Parse(row.Cells["MaxSalary"].Value.ToString());
+            job.MinSalary = ParseNullableDecimal(row.Cells["MinSalary"].Value);
+            job.MaxSalary = ParseNullableDecimal(row.Cells["MaxSalary"].Value);
 
             _jobDAL.UpdateJob(job);
         }
 
         private void AddJob(DataGridViewRow row)
         {
-            var jobToAdded = new Job
+            var jobToAdd = new Job
             {
                 JobTitle = row.Cells["Title"].Value.ToString(),
-                MinSalary = decimal.Parse(row.Cells["MinSalary"].Value.ToString()),
-                MaxSalary = decimal.Parse(row.Cells["MaxSalary"].Value.ToString())
+                MinSalary = ParseNullableDecimal(row.Cells["MinSalary"].Value),
+                MaxSalary = ParseNullableDecimal(row.Cells["MaxSalary"].Value)
             };
-            _jobDAL.AddJob(jobToAdded);
+            _jobDAL.AddJob(jobToAdd);
         }
 
         private void btRemoveJob_Click(object sender, EventArgs e)
@@ -253,10 +252,14 @@ namespace ConexionBBDD.Forms
             int rowIndex;
             foreach (var job in listJobs)
             {
+                // Si MinSalary o MaxSalary son null, los reemplazamos por "-"
+                var minSalary = job.MinSalary.HasValue ? job.MinSalary.ToString() : "-";
+                var maxSalary = job.MaxSalary.HasValue ? job.MaxSalary.ToString() : "-";
+
                 rowIndex = dtGdVwShowJobs.Rows.Add(
-                  job.JobTitle,
-                  job.MinSalary,
-                  job.MaxSalary
+                    job.JobTitle,
+                    minSalary,
+                    maxSalary
                 );
 
                 // Mapear la fila con el Job
@@ -264,6 +267,7 @@ namespace ConexionBBDD.Forms
                 modifiedRows[rowIndex] = false;
             }
         }
+
 
         private void ValidateCell(int rowIndex, int columnIndex, object value)
         {
@@ -273,7 +277,7 @@ namespace ConexionBBDD.Forms
 
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()) || value.ToString() == "-")
             {
-                isValid = false;
+                isValid = columnName == "MinSalary" || columnName == "MaxSalary"; // Aceptar null o "-" solo para salarios
             }
             else
             {
@@ -281,16 +285,11 @@ namespace ConexionBBDD.Forms
                 switch (columnName)
                 {
                     case "MinSalary":
-                        isValid = double.TryParse(value.ToString(), out _);
-                        break;
                     case "MaxSalary":
-                        isValid = double.TryParse(value.ToString(), out _);
+                        isValid = decimal.TryParse(value.ToString(), out _);
                         break;
-
-                    // Para campos de texto como Name, Title, etc.
                     default:
-                        isValid = !string.IsNullOrWhiteSpace(value.ToString()) &&
-                                value.ToString() != "-";
+                        isValid = !string.IsNullOrWhiteSpace(value.ToString()) && value.ToString() != "-";
                         break;
                 }
             }
@@ -365,6 +364,18 @@ namespace ConexionBBDD.Forms
         {
             // Habilitar el botón de eliminar solo si hay una fila seleccionada
             btRemoveJob.Enabled = dtGdVwShowJobs.SelectedRows.Count > 0;
+        }
+
+        // Método auxiliar para interpretar "-" o valores vacíos como null
+        private decimal? ParseNullableDecimal(object value)
+        {
+            if (value == null || value.ToString() == "-")
+                return null;
+
+            if (decimal.TryParse(value.ToString(), out var result))
+                return result;
+
+            return null;
         }
         #endregion // END - DataGridView Jobs
     }

@@ -54,8 +54,8 @@ namespace ConexionBBDD.Class.DAL
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@JobTitle", job.JobTitle);
-                        cmd.Parameters.AddWithValue("@MinSalary", job.MinSalary);
-                        cmd.Parameters.AddWithValue("@MaxSalary", job.MaxSalary);
+                        cmd.Parameters.AddWithValue("@MinSalary", (object)job.MinSalary ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@MaxSalary", (object)job.MaxSalary ?? DBNull.Value);
 
                         int rowsAffected = cmd.ExecuteNonQuery();
                         return rowsAffected > 0;
@@ -87,8 +87,8 @@ namespace ConexionBBDD.Class.DAL
                             {
                                 JobId = reader.GetInt32(0),
                                 JobTitle = reader.GetString(1),
-                                MinSalary = reader.GetDecimal(2),
-                                MaxSalary = reader.GetDecimal(3)
+                                MinSalary = GetSafeDecimal(reader, 2),
+                                MaxSalary = GetSafeDecimal(reader, 3)
                             };
                             jobs.Add(job);
                         }
@@ -101,6 +101,11 @@ namespace ConexionBBDD.Class.DAL
 
                 return jobs;
             });
+        }
+
+        private decimal? GetSafeDecimal(SqlDataReader reader, int index)
+        {
+            return reader.IsDBNull(index) ? (decimal?)null : reader.GetDecimal(index);
         }
 
         public bool UpdateJob(Job job)
