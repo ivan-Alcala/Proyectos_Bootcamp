@@ -182,11 +182,12 @@ namespace ConexionBBDD.Forms
 
         private void AddJob(DataGridViewRow row)
         {
-            var jobToAdded = new Job(
-                row.Cells["Title"].Value.ToString(),
-                decimal.Parse(row.Cells["MinSalary"].Value.ToString()),
-                decimal.Parse(row.Cells["MaxSalary"].Value.ToString())
-            );
+            var jobToAdded = new Job
+            {
+                JobTitle = row.Cells["Title"].Value.ToString(),
+                MinSalary = decimal.Parse(row.Cells["MinSalary"].Value.ToString()),
+                MaxSalary = decimal.Parse(row.Cells["MaxSalary"].Value.ToString())
+            };
             _jobDAL.AddJob(jobToAdded);
         }
         #endregion // END - Jobs

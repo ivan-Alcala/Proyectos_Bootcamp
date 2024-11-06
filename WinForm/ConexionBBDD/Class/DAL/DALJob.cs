@@ -83,7 +83,13 @@ namespace ConexionBBDD.Class.DAL
                     {
                         while (reader.Read())
                         {
-                            Job job = new Job(reader.GetInt32(0), reader.GetString(1), reader.GetDecimal(2), reader.GetDecimal(3));
+                            var job = new Job
+                            {
+                                JobId = reader.GetInt32(0),
+                                JobTitle = reader.GetString(1),
+                                MinSalary = reader.GetDecimal(2),
+                                MaxSalary = reader.GetDecimal(3)
+                            };
                             jobs.Add(job);
                         }
                     }
