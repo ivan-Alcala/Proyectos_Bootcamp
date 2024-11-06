@@ -10,7 +10,7 @@ namespace ConexionBBDD.Forms
 {
     public partial class UserControlJobs : UserControl
     {
-        DBConnect bbddConnect;
+        DBConnect dbConnect;
         DALJob _jobDAL;
         private Dictionary<int, bool> modifiedRows = new Dictionary<int, bool>();
         private Dictionary<int, Job> rowJobMapping = new Dictionary<int, Job>();
@@ -19,7 +19,7 @@ namespace ConexionBBDD.Forms
         public UserControlJobs(DBConnect bbddConnect)
         {
             this._jobDAL = new DALJob(bbddConnect);
-            this.bbddConnect = bbddConnect;
+            this.dbConnect = bbddConnect;
             InitializeComponent();
             InitStyleComponent();
 
@@ -33,7 +33,7 @@ namespace ConexionBBDD.Forms
         {
             SelectedButtonStyle(btShowDataJobs);
 
-            // DataGridView de Persons
+            // DataGridView de Jobs
             DataGridViewCellStyle selectedRowStyle = dtGdVwShowJobs.RowsDefaultCellStyle;
             selectedRowStyle.SelectionBackColor = ColorTranslator.FromHtml("#d6e0ef");
             selectedRowStyle.SelectionForeColor = ColorTranslator.FromHtml("#282b3e");
@@ -102,12 +102,6 @@ namespace ConexionBBDD.Forms
         #endregion // END - Style
 
         #region Jobs
-        private void LoadJobs()
-        {
-            List<Job> jobs = _jobDAL.GetAllJobs();
-            dtGdVwShowJobs.DataSource = jobs;
-        }
-
         private void btShowDataJobs_Click(object sender, System.EventArgs e)
         {
             ShowJobData(_jobDAL.GetAllJobs());
@@ -150,12 +144,12 @@ namespace ConexionBBDD.Forms
                 {
                     if (rowJobMapping.ContainsKey(row.Index))
                     {
-                        // Modificar persona existente
+                        // Modificar trabajo existente
                         UpdateJob(row, rowJobMapping[row.Index]);
                     }
                     else
                     {
-                        // Agregar nueva persona
+                        // Agregar un nuevo trabajo
                         AddJob(row);
                     }
 
@@ -196,7 +190,7 @@ namespace ConexionBBDD.Forms
             {
                 if (dtGdVwShowJobs.SelectedRows.Count == 0)
                 {
-                    MessageBox.Show("Por favor, seleccione una persona para eliminar.",
+                    MessageBox.Show("Por favor, seleccione un trabajo para eliminar.",
                                   "Ninguna fila seleccionada",
                                   MessageBoxButtons.OK,
                                   MessageBoxIcon.Warning);
@@ -241,7 +235,7 @@ namespace ConexionBBDD.Forms
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error al eliminar la persona: {ex.Message}",
+                        MessageBox.Show($"Error al eliminar el trabajo: {ex.Message}",
                                       "Error",
                                       MessageBoxButtons.OK,
                                       MessageBoxIcon.Error);
