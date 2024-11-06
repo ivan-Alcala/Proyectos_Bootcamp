@@ -156,7 +156,7 @@ namespace ConexionBBDD.Forms
                     else
                     {
                         // Agregar nueva persona
-                        //AddPersonToHospital(row);
+                        AddJob(row);
                     }
 
                     // Resetear el estado de modificación y el color
@@ -180,6 +180,15 @@ namespace ConexionBBDD.Forms
             _jobDAL.UpdateJob(job);
         }
 
+        private void AddJob(DataGridViewRow row)
+        {
+            var jobToAdded = new Job(
+                row.Cells["Title"].Value.ToString(),
+                decimal.Parse(row.Cells["MinSalary"].Value.ToString()),
+                decimal.Parse(row.Cells["MaxSalary"].Value.ToString())
+            );
+            _jobDAL.AddJob(jobToAdded);
+        }
         #endregion // END - Jobs
 
         #region DataGridView Jobs
