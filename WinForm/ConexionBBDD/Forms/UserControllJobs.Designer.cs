@@ -1,6 +1,6 @@
 ﻿namespace ConexionBBDD.Forms
 {
-    partial class CRUDJob
+    partial class UserControllJobs
     {
         /// <summary> 
         /// Variable del diseñador necesaria.

@@ -5,12 +5,12 @@ using System.Data.SqlClient;
 
 namespace ConexionBBDD.Class.DAL
 {
-    public class JobDAL
+    public class DALJob
     {
-        private readonly BBDDConnect _bdConnect;
+        private readonly DBConnect _bdConnect;
         private readonly SqlConnection conn;
 
-        public JobDAL(BBDDConnect bdConnect)
+        public DALJob(DBConnect bdConnect)
         {
             this._bdConnect = bdConnect;
             this.conn = _bdConnect.connection;

@@ -3,12 +3,12 @@ using System.Data.SqlClient;
 
 namespace ConexionBBDD.Class
 {
-    public class BBDDConnect
+    public class DBConnect
     {
         public SqlConnection connection;
 
         // Constructor que configura la cadena de conexión
-        public BBDDConnect()
+        public DBConnect()
         {
             // Configuración de la cadena de conexión
             var connectionString = "Data Source=85.208.21.117,54321;Initial Catalog=IvanBDEmployee;User ID=sa;Password=Sql#123456789";

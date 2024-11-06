@@ -7,14 +7,14 @@ using System.Windows.Forms;
 
 namespace ConexionBBDD.Forms
 {
-    public partial class CRUDJob : UserControl
+    public partial class UserControllJobs : UserControl
     {
-        BBDDConnect bbddConnect;
-        JobDAL _jobDAL;
+        DBConnect bbddConnect;
+        DALJob _jobDAL;
 
-        public CRUDJob(BBDDConnect bbddConnect)
+        public UserControllJobs(DBConnect bbddConnect)
         {
-            this._jobDAL = new JobDAL(bbddConnect);
+            this._jobDAL = new DALJob(bbddConnect);
             this.bbddConnect = bbddConnect;
             InitializeComponent();
             InitStyleComponent();

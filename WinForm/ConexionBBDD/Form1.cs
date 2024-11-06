@@ -7,12 +7,12 @@ namespace ConexionBBDD
 {
     public partial class Form1 : Form
     {
-        private BBDDConnect dbConnection;
+        private DBConnect dbConnection;
 
         public Form1()
         {
             InitializeComponent();
-            dbConnection = new BBDDConnect();
+            dbConnection = new DBConnect();
             lbBBDDConnectionStates.Text = "Desconectado";
             btBBDDDisconect.Enabled = false;
         }
@@ -45,7 +45,7 @@ namespace ConexionBBDD
 
         public void ShowFormJobs()
         {
-            CRUDJob crudJob = new CRUDJob(dbConnection);
+            UserControllJobs crudJob = new UserControllJobs(dbConnection);
             ReplacePanelContent(pnJobsView, crudJob);
         }
 
