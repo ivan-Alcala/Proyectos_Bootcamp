@@ -190,6 +190,65 @@ namespace ConexionBBDD.Forms
             };
             _jobDAL.AddJob(jobToAdded);
         }
+
+        private void btRemoveJob_Click(object sender, EventArgs e)
+        {
+            {
+                if (dtGdVwShowJobs.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Por favor, seleccione una persona para eliminar.",
+                                  "Ninguna fila seleccionada",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Warning);
+                    return;
+                }
+
+                DataGridViewRow selectedRow = dtGdVwShowJobs.SelectedRows[0];
+
+                // Obtener el Titulo de la columna "Title"
+                string titleToSearch = selectedRow.Cells["Title"].Value.ToString();
+                if (string.IsNullOrEmpty(titleToSearch))
+                {
+                    MessageBox.Show("No se puede obtener el Titulo del trabajo seleccionado.",
+                                  "Error",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Error);
+                    return;
+                }
+
+                DialogResult result = MessageBox.Show(
+                    $"¿Está seguro de que desea eliminar el trabajo {titleToSearch}?",
+                    "Confirmar eliminación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        int idJobToRemove = _jobDAL.GetJobIdByTitle(titleToSearch);
+                        MessageBox.Show(idJobToRemove.ToString());
+                        if (_jobDAL.DeleteJobById(idJobToRemove))
+                        {
+                            MessageBox.Show($"Eliminado correctamente",
+                                      "Validación",
+                                      MessageBoxButtons.OK,
+                                      MessageBoxIcon.Information);
+
+                            // Actualizar la vista
+                            ShowJobData(_jobDAL.GetAllJobs());
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al eliminar la persona: {ex.Message}",
+                                      "Error",
+                                      MessageBoxButtons.OK,
+                                      MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
         #endregion // END - Jobs
 
         #region DataGridView Jobs

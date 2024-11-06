@@ -129,5 +129,91 @@ namespace ConexionBBDD.Class.DAL
                 }
             });
         }
+
+        public bool DeleteJob(Job job)
+        {
+            return ExecuteWithConnection(() =>
+            {
+                string query = "DELETE FROM Jobs WHERE job_id = @JobId";
+
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        // Parámetro para identificar el Job a eliminar
+                        cmd.Parameters.AddWithValue("@JobId", job.JobId);
+
+                        // Ejecutar la consulta y verificar si se afectó alguna fila
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error al eliminar el Job: " + ex.Message);
+                    return false;
+                }
+            });
+        }
+
+        public bool DeleteJobById(int jobId)
+        {
+            return ExecuteWithConnection(() =>
+            {
+                string query = "DELETE FROM Jobs WHERE job_id = @JobId";
+
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        // Parámetro para identificar el Job a eliminar
+                        cmd.Parameters.AddWithValue("@JobId", jobId);
+
+                        // Ejecutar la consulta y verificar si se afectó alguna fila
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error al eliminar el Job: " + ex.Message);
+                    return false;
+                }
+            });
+        }
+
+        public int GetJobIdByTitle(string jobTitle)
+        {
+            return ExecuteWithConnection(() =>
+            {
+                string query = "SELECT job_id FROM Jobs WHERE job_title = @JobTitle";
+
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        // Parámetro para buscar el título del trabajo
+                        cmd.Parameters.AddWithValue("@JobTitle", jobTitle);
+
+                        // Ejecutar la consulta y obtener el resultado
+                        object result = cmd.ExecuteScalar();
+
+                        if (result != null && int.TryParse(result.ToString(), out int jobId))
+                        {
+                            return jobId;
+                        }
+                        else
+                        {
+                            return -1; // Indica que no se encontró el Job con el título dado
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error al buscar el Job por título: " + ex.Message);
+                    return -1;
+                }
+            });
+        }
     }
 }
