@@ -45,5 +45,32 @@ namespace ConexionBBDD.Class
         {
             return connection.State == System.Data.ConnectionState.Open;
         }
+
+        // Método wrapper que maneja la conexión/desconexión
+        public T ExecuteWithConnection<T>(Func<T> operation)
+        {
+            try
+            {
+                if (!IsConnected())
+                    Connect();
+
+                return operation();
+            }
+            finally
+            {
+                if (IsConnected())
+                    Disconnect();
+            }
+        }
+
+        // Sobrecarga para métodos que no devuelven valor
+        public void ExecuteWithConnection(Action operation)
+        {
+            ExecuteWithConnection<object>(() =>
+            {
+                operation();
+                return null;
+            });
+        }
     }
 }

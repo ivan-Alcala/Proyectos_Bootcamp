@@ -16,36 +16,9 @@ namespace ConexionBBDD.Class.DAL
             this.conn = _bdConnect.connection;
         }
 
-        // Método wrapper que maneja la conexión/desconexión
-        private T ExecuteWithConnection<T>(Func<T> operation)
-        {
-            try
-            {
-                if (!_bdConnect.IsConnected())
-                    _bdConnect.Connect();
-
-                return operation();
-            }
-            finally
-            {
-                if (_bdConnect.IsConnected())
-                    _bdConnect.Disconnect();
-            }
-        }
-
-        // Sobrecarga para métodos que no devuelven valor
-        private void ExecuteWithConnection(Action operation)
-        {
-            ExecuteWithConnection<object>(() =>
-            {
-                operation();
-                return null;
-            });
-        }
-
         public bool AddJob(Job job)
         {
-            return ExecuteWithConnection(() =>
+            return _bdConnect.ExecuteWithConnection(() =>
             {
                 string query = "INSERT INTO Jobs (job_title, min_salary, max_salary) VALUES (@JobTitle, @MinSalary, @MaxSalary)";
 
@@ -71,7 +44,7 @@ namespace ConexionBBDD.Class.DAL
 
         public List<Job> GetAllJobs()
         {
-            return ExecuteWithConnection(() =>
+            return _bdConnect.ExecuteWithConnection(() =>
             {
                 var jobs = new List<Job>();
                 string query = "SELECT * FROM Jobs";
@@ -105,7 +78,7 @@ namespace ConexionBBDD.Class.DAL
 
         public bool UpdateJob(Job job)
         {
-            return ExecuteWithConnection(() =>
+            return _bdConnect.ExecuteWithConnection(() =>
             {
                 string query = "UPDATE Jobs SET job_title = @JobTitle, min_salary = @MinSalary, max_salary = @MaxSalary WHERE job_id = @JobId";
 
@@ -132,7 +105,7 @@ namespace ConexionBBDD.Class.DAL
 
         public bool DeleteJob(Job job)
         {
-            return ExecuteWithConnection(() =>
+            return _bdConnect.ExecuteWithConnection(() =>
             {
                 string query = "DELETE FROM Jobs WHERE job_id = @JobId";
 
@@ -158,7 +131,7 @@ namespace ConexionBBDD.Class.DAL
 
         public bool DeleteJobById(int jobId)
         {
-            return ExecuteWithConnection(() =>
+            return _bdConnect.ExecuteWithConnection(() =>
             {
                 string query = "DELETE FROM Jobs WHERE job_id = @JobId";
 
@@ -184,7 +157,7 @@ namespace ConexionBBDD.Class.DAL
 
         public int GetJobIdByTitle(string jobTitle)
         {
-            return ExecuteWithConnection(() =>
+            return _bdConnect.ExecuteWithConnection(() =>
             {
                 string query = "SELECT job_id FROM Jobs WHERE job_title = @JobTitle";
 
