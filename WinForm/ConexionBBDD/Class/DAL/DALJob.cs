@@ -103,32 +103,6 @@ namespace ConexionBBDD.Class.DAL
             });
         }
 
-        public bool DeleteJob(Job job)
-        {
-            return _bdConnect.ExecuteWithConnection(() =>
-            {
-                string query = "DELETE FROM Jobs WHERE job_id = @JobId";
-
-                try
-                {
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        // Parámetro para identificar el Job a eliminar
-                        cmd.Parameters.AddWithValue("@JobId", job.JobId);
-
-                        // Ejecutar la consulta y verificar si se afectó alguna fila
-                        int rowsAffected = cmd.ExecuteNonQuery();
-                        return rowsAffected > 0;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error al eliminar el Job: " + ex.Message);
-                    return false;
-                }
-            });
-        }
-
         public bool DeleteJobById(int jobId)
         {
             return _bdConnect.ExecuteWithConnection(() =>
