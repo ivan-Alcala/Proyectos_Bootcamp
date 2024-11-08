@@ -46,6 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\DAL\DALEmployee.cs" />
+    <Compile Include="Class\DAL\DALJob.cs" />
+    <Compile Include="Class\DBConnect.cs" />
+    <Compile Include="Class\Model\Country.cs" />
+    <Compile Include="Class\Model\Department.cs" />
+    <Compile Include="Class\Model\Dependent.cs" />
+    <Compile Include="Class\Model\Employee.cs" />
+    <Compile Include="Class\Model\Job.cs" />
+    <Compile Include="Class\Model\Location.cs" />
+    <Compile Include="Class\Model\Region.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +64,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -75,6 +88,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\agregar.png" />
+    <Content Include="Resources\basura.png" />
+    <Content Include="Resources\disco.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
