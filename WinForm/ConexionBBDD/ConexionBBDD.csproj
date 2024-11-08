@@ -48,7 +48,13 @@
   <ItemGroup>
     <Compile Include="Class\DBConnect.cs" />
     <Compile Include="Class\DAL\DALJob.cs" />
+    <Compile Include="Class\Model\Country.cs" />
+    <Compile Include="Class\Model\Department.cs" />
+    <Compile Include="Class\Model\Dependent.cs" />
+    <Compile Include="Class\Model\Employee.cs" />
     <Compile Include="Class\Model\Job.cs" />
+    <Compile Include="Class\Model\Location.cs" />
+    <Compile Include="Class\Model\Region.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
