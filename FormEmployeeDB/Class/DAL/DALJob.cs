@@ -88,8 +88,8 @@ namespace ConexionBBDD.Class.DAL
                     {
                         cmd.Parameters.AddWithValue("@JobId", job.JobId);
                         cmd.Parameters.AddWithValue("@JobTitle", job.JobTitle);
-                        cmd.Parameters.AddWithValue("@MinSalary", job.MinSalary);
-                        cmd.Parameters.AddWithValue("@MaxSalary", job.MaxSalary);
+                        cmd.Parameters.AddWithValue("@MinSalary", (object)job.MinSalary ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@MaxSalary", (object)job.MaxSalary ?? DBNull.Value);
 
                         int rowsAffected = cmd.ExecuteNonQuery();
                         return rowsAffected > 0;
