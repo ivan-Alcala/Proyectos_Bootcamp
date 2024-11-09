@@ -1,5 +1,4 @@
 ﻿using ConexionBBDD.Class;
-using ConexionBBDD.Forms;
 using System;
 using System.Windows.Forms;
 
@@ -25,7 +24,6 @@ namespace ConexionBBDD
                 lbBBDDConnectionStates.Text = "Conectado";
                 btBBDDConect.Enabled = false;
                 btBBDDDisconect.Enabled = true;
-                ShowFormJobs();
             }
             else
             {
@@ -40,21 +38,6 @@ namespace ConexionBBDD
             lbBBDDConnectionStates.Text = "Desconectado";
             btBBDDConect.Enabled = true;
             btBBDDDisconect.Enabled = false;
-
-            ReplacePanelContent(pnJobsView, new UserControl());
-        }
-
-        public void ShowFormJobs()
-        {
-            UserControlJobs crudJob = new UserControlJobs();
-            ReplacePanelContent(pnJobsView, crudJob);
-        }
-
-        public void ReplacePanelContent<T>(Panel panel, T userControl) where T : UserControl
-        {
-            panel.Controls.Clear();
-            panel.Controls.Add(userControl as Control);
-            userControl.Dock = DockStyle.Fill; // Para que ocupe todo el espacio del panel
         }
     }
 }

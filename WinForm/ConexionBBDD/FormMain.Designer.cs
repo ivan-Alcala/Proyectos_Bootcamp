@@ -32,8 +32,6 @@
             this.btBBDDDisconect = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lbBBDDConnectionStates = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pnJobsView = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,10 +40,10 @@
             this.btBBDDConect.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btBBDDConect.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btBBDDConect.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btBBDDConect.Location = new System.Drawing.Point(0, 52);
+            this.btBBDDConect.Location = new System.Drawing.Point(0, 58);
             this.btBBDDConect.Margin = new System.Windows.Forms.Padding(0, 7, 7, 0);
             this.btBBDDConect.Name = "btBBDDConect";
-            this.btBBDDConect.Size = new System.Drawing.Size(275, 38);
+            this.btBBDDConect.Size = new System.Drawing.Size(185, 45);
             this.btBBDDConect.TabIndex = 0;
             this.btBBDDConect.Text = "Conectar";
             this.btBBDDConect.UseVisualStyleBackColor = true;
@@ -57,10 +55,10 @@
             this.btBBDDDisconect.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btBBDDDisconect.Enabled = false;
             this.btBBDDDisconect.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btBBDDDisconect.Location = new System.Drawing.Point(289, 52);
+            this.btBBDDDisconect.Location = new System.Drawing.Point(199, 58);
             this.btBBDDDisconect.Margin = new System.Windows.Forms.Padding(7, 7, 0, 0);
             this.btBBDDDisconect.Name = "btBBDDDisconect";
-            this.btBBDDDisconect.Size = new System.Drawing.Size(275, 38);
+            this.btBBDDDisconect.Size = new System.Drawing.Size(186, 45);
             this.btBBDDDisconect.TabIndex = 1;
             this.btBBDDDisconect.Text = "Desconectar";
             this.btBBDDDisconect.UseVisualStyleBackColor = true;
@@ -82,7 +80,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(564, 100);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(385, 113);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // lbBBDDConnectionStates
@@ -94,39 +92,19 @@
             this.lbBBDDConnectionStates.Location = new System.Drawing.Point(0, 0);
             this.lbBBDDConnectionStates.Margin = new System.Windows.Forms.Padding(0, 0, 0, 7);
             this.lbBBDDConnectionStates.Name = "lbBBDDConnectionStates";
-            this.lbBBDDConnectionStates.Size = new System.Drawing.Size(564, 38);
+            this.lbBBDDConnectionStates.Size = new System.Drawing.Size(385, 44);
             this.lbBBDDConnectionStates.TabIndex = 4;
             this.lbBBDDConnectionStates.Text = "Desconectado";
             this.lbBBDDConnectionStates.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(15, 115);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(564, 1);
-            this.panel1.TabIndex = 4;
-            // 
-            // pnJobsView
-            // 
-            this.pnJobsView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnJobsView.Location = new System.Drawing.Point(15, 116);
-            this.pnJobsView.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.pnJobsView.Name = "pnJobsView";
-            this.pnJobsView.Size = new System.Drawing.Size(564, 243);
-            this.pnJobsView.TabIndex = 5;
-            // 
-            // Form1
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(594, 374);
-            this.Controls.Add(this.pnJobsView);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(415, 145);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "Form1";
+            this.Name = "FormMain";
             this.Padding = new System.Windows.Forms.Padding(15);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Conexsion a SQL";
@@ -141,8 +119,6 @@
         private System.Windows.Forms.Button btBBDDDisconect;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label lbBBDDConnectionStates;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel pnJobsView;
     }
 }
 
