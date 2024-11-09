@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btShowDataJobs = new System.Windows.Forms.Button();
+            this.btShowDataEmployee = new System.Windows.Forms.Button();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.btAdd = new System.Windows.Forms.Button();
             this.btSave = new System.Windows.Forms.Button();
             this.btRemove = new System.Windows.Forms.Button();
             this.dtGdVwShowData = new System.Windows.Forms.DataGridView();
-            this.btShowDataEmployee = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -87,6 +87,18 @@
             this.btShowDataJobs.Text = "Jobs";
             this.btShowDataJobs.UseVisualStyleBackColor = true;
             // 
+            // btShowDataEmployee
+            // 
+            this.btShowDataEmployee.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btShowDataEmployee.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btShowDataEmployee.Location = new System.Drawing.Point(84, 0);
+            this.btShowDataEmployee.Margin = new System.Windows.Forms.Padding(0);
+            this.btShowDataEmployee.Name = "btShowDataEmployee";
+            this.btShowDataEmployee.Size = new System.Drawing.Size(117, 35);
+            this.btShowDataEmployee.TabIndex = 2;
+            this.btShowDataEmployee.Text = "Employee";
+            this.btShowDataEmployee.UseVisualStyleBackColor = true;
+            // 
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Controls.Add(this.btAdd);
@@ -106,6 +118,7 @@
             this.btAdd.FlatAppearance.BorderSize = 0;
             this.btAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btAdd.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btAdd.Image = global::FormEmployeeDB.Properties.Resources.agregar;
             this.btAdd.Location = new System.Drawing.Point(110, 0);
             this.btAdd.Margin = new System.Windows.Forms.Padding(0);
             this.btAdd.Name = "btAdd";
@@ -121,6 +134,7 @@
             this.btSave.FlatAppearance.BorderSize = 0;
             this.btSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btSave.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btSave.Image = global::FormEmployeeDB.Properties.Resources.disco;
             this.btSave.Location = new System.Drawing.Point(73, 0);
             this.btSave.Margin = new System.Windows.Forms.Padding(0);
             this.btSave.Name = "btSave";
@@ -136,6 +150,7 @@
             this.btRemove.FlatAppearance.BorderSize = 0;
             this.btRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btRemove.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btRemove.Image = global::FormEmployeeDB.Properties.Resources.basura;
             this.btRemove.Location = new System.Drawing.Point(36, 0);
             this.btRemove.Margin = new System.Windows.Forms.Padding(0);
             this.btRemove.Name = "btRemove";
@@ -154,46 +169,34 @@
             this.dtGdVwShowData.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dtGdVwShowData.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dtGdVwShowData.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtGdVwShowData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtGdVwShowData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dtGdVwShowData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tableLayoutPanel1.SetColumnSpan(this.dtGdVwShowData, 2);
             this.dtGdVwShowData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtGdVwShowData.Location = new System.Drawing.Point(3, 57);
             this.dtGdVwShowData.Name = "dtGdVwShowData";
             this.dtGdVwShowData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtGdVwShowData.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtGdVwShowData.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dtGdVwShowData.RowHeadersVisible = false;
             this.dtGdVwShowData.RowHeadersWidth = 51;
             this.dtGdVwShowData.RowTemplate.Height = 24;
             this.dtGdVwShowData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtGdVwShowData.Size = new System.Drawing.Size(784, 380);
             this.dtGdVwShowData.TabIndex = 12;
-            // 
-            // btShowDataEmployee
-            // 
-            this.btShowDataEmployee.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btShowDataEmployee.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btShowDataEmployee.Location = new System.Drawing.Point(84, 0);
-            this.btShowDataEmployee.Margin = new System.Windows.Forms.Padding(0);
-            this.btShowDataEmployee.Name = "btShowDataEmployee";
-            this.btShowDataEmployee.Size = new System.Drawing.Size(117, 35);
-            this.btShowDataEmployee.TabIndex = 2;
-            this.btShowDataEmployee.Text = "Employee";
-            this.btShowDataEmployee.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
@@ -205,7 +208,6 @@
             this.Name = "FormMain";
             this.Padding = new System.Windows.Forms.Padding(5);
             this.Text = "Emploee DB";
-            this.Load += new System.EventHandler(this.FormMain_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
