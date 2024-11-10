@@ -12,17 +12,17 @@ namespace FormEmployeeDB.Class.DataGridViewManager
     {
         DALEmployee _DALEmployee;
         DataGridView dtGdVwShowEmployees;
-        Button btSaveEmployees;
+        Button btSaveEmployee;
         Button btRemoveEmployee;
         Dictionary<int, bool> modifiedRows;
         Dictionary<int, Employee> rowEmployeeMapping;
         Dictionary<(int row, int column), bool> cellValidation;
 
-        public DGVEmployee(DataGridView dtGdVwShowEmployees, Button btSaveEmployees, Button btRemoveEmployee, Dictionary<int, bool> modifiedRows, Dictionary<int, Employee> rowEmployeeMapping, Dictionary<(int row, int column), bool> cellValidation)
+        public DGVEmployee(DataGridView dtGdVwShowEmployees, Button btSaveEmployee, Button btRemoveEmployee, Dictionary<int, bool> modifiedRows, Dictionary<int, Employee> rowEmployeeMapping, Dictionary<(int row, int column), bool> cellValidation)
         {
             this._DALEmployee = new DALEmployee();
             this.dtGdVwShowEmployees = dtGdVwShowEmployees;
-            this.btSaveEmployees = btSaveEmployees;
+            this.btSaveEmployee = btSaveEmployee;
             this.btRemoveEmployee = btRemoveEmployee;
             this.modifiedRows = modifiedRows;
             this.rowEmployeeMapping = rowEmployeeMapping;
@@ -32,7 +32,7 @@ namespace FormEmployeeDB.Class.DataGridViewManager
         }
 
         #region Employees
-        public void btShowDataEmployees_Click(object sender, System.EventArgs e)
+        public void btShowDataEmployees_Click(object sender, EventArgs e)
         {
             ShowEmployeeData(_DALEmployee.GetAllEmployees());
         }
@@ -51,15 +51,13 @@ namespace FormEmployeeDB.Class.DataGridViewManager
 
             // Establecer valores predeterminados según el tipo
             SetDefaultValues(newRow, new[] {
-                "-", "-", "-"
-            });
+                "-", "-", "-", "-", DateTime.Now.ToString(), "-", "-", "-", "-" });
         }
 
         public void btSaveEmployee_Click(object sender, EventArgs e)
         {
             List<DataGridViewRow> rowsToProcess = new List<DataGridViewRow>();
 
-            // Recolectar todas las filas modificadas
             foreach (DataGridViewRow row in dtGdVwShowEmployees.Rows)
             {
                 if (modifiedRows.ContainsKey(row.Index) && modifiedRows[row.Index])
@@ -74,53 +72,39 @@ namespace FormEmployeeDB.Class.DataGridViewManager
                 {
                     if (rowEmployeeMapping.ContainsKey(row.Index))
                     {
-                        // Modificar trabajo existente
                         UpdateEmployee(row, rowEmployeeMapping[row.Index]);
                     }
                     else
                     {
-                        // Agregar un nuevo trabajo
                         AddEmployee(row);
                     }
 
-                    // Resetear el estado de modificación y el color
                     modifiedRows[row.Index] = false;
                     row.DefaultCellStyle.ForeColor = Color.Black;
                 }
             }
 
-            // Actualizar la vista
             ShowEmployeeData(_DALEmployee.GetAllEmployees());
-            btSaveEmployees.Enabled = false;
+            btSaveEmployee.Enabled = false;
         }
 
         public void btRemoveEmployee_Click(object sender, EventArgs e)
         {
+            if (dtGdVwShowEmployees.SelectedRows.Count == 0)
             {
-                if (dtGdVwShowEmployees.SelectedRows.Count == 0)
-                {
-                    MessageBox.Show("Por favor, seleccione un trabajo para eliminar.",
-                                  "Ninguna fila seleccionada",
-                                  MessageBoxButtons.OK,
-                                  MessageBoxIcon.Warning);
-                    return;
-                }
+                MessageBox.Show("Por favor, seleccione un empleado para eliminar.",
+                                "Ninguna fila seleccionada",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                return;
+            }
 
-                DataGridViewRow selectedRow = dtGdVwShowEmployees.SelectedRows[0];
+            DataGridViewRow selectedRow = dtGdVwShowEmployees.SelectedRows[0];
 
-                // Obtener el Titulo de la columna "Title"
-                string titleToSearch = selectedRow.Cells["Title"].Value.ToString();
-                if (string.IsNullOrEmpty(titleToSearch))
-                {
-                    MessageBox.Show("No se puede obtener el Titulo del trabajo seleccionado.",
-                                  "Error",
-                                  MessageBoxButtons.OK,
-                                  MessageBoxIcon.Error);
-                    return;
-                }
-
+            if (rowEmployeeMapping.TryGetValue(selectedRow.Index, out var employeeToRemove))
+            {
                 DialogResult result = MessageBox.Show(
-                    $"¿Está seguro de que desea eliminar el trabajo {titleToSearch}?",
+                    $"¿Está seguro de que desea eliminar al empleado {employeeToRemove.FirstName} {employeeToRemove.LastName}?",
                     "Confirmar eliminación",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
@@ -129,18 +113,18 @@ namespace FormEmployeeDB.Class.DataGridViewManager
                 {
                     try
                     {
-                        int idJobToRemove = _DALEmployee.GetEmployeeById(titleToSearch);
-                        _DALEmployee.DeleteJobById(idJobToRemove);
+                        // Eliminar el empleado usando su EmployeeId
+                        _DALEmployee.DeleteEmployeeById(employeeToRemove.EmployeeId);
 
                         // Actualizar la vista
                         ShowEmployeeData(_DALEmployee.GetAllEmployees());
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error al eliminar el trabajo: {ex.Message}",
-                                      "Error",
-                                      MessageBoxButtons.OK,
-                                      MessageBoxIcon.Error);
+                        MessageBox.Show($"Error al eliminar el empleado: {ex.Message}",
+                                        "Error",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error);
                     }
                 }
             }
@@ -150,18 +134,30 @@ namespace FormEmployeeDB.Class.DataGridViewManager
         {
             var employeeToAdd = new Employee
             {
-                JobTitle = row.Cells["Title"].Value.ToString(),
-                MinSalary = ParseNullableDecimal(row.Cells["MinSalary"].Value),
-                MaxSalary = ParseNullableDecimal(row.Cells["MaxSalary"].Value)
+                FirstName = row.Cells["FirstName"].Value.ToString(),
+                LastName = row.Cells["LastName"].Value.ToString(),
+                Email = row.Cells["Email"].Value.ToString(),
+                PhoneNumber = row.Cells["PhoneNumber"].Value.ToString(),
+                HireDate = DateTime.Parse(row.Cells["HireDate"].Value.ToString()),
+                JobId = int.Parse(row.Cells["JobId"].Value.ToString()),
+                Salary = decimal.Parse(row.Cells["Salary"].Value.ToString()),
+                ManagerId = ParseNullableInt(row.Cells["ManagerId"].Value),
+                DepartmentId = ParseNullableInt(row.Cells["DepartmentId"].Value)
             };
             _DALEmployee.AddEmployee(employeeToAdd);
         }
 
         private void UpdateEmployee(DataGridViewRow row, Employee employee)
         {
-            employee.JobTitle = row.Cells["Title"].Value.ToString();
-            employee.MinSalary = ParseNullableDecimal(row.Cells["MinSalary"].Value);
-            employee.MaxSalary = ParseNullableDecimal(row.Cells["MaxSalary"].Value);
+            employee.FirstName = row.Cells["FirstName"].Value.ToString();
+            employee.LastName = row.Cells["LastName"].Value.ToString();
+            employee.Email = row.Cells["Email"].Value.ToString();
+            employee.PhoneNumber = row.Cells["PhoneNumber"].Value.ToString();
+            employee.HireDate = DateTime.Parse(row.Cells["HireDate"].Value.ToString());
+            employee.JobId = int.Parse(row.Cells["JobId"].Value.ToString());
+            employee.Salary = decimal.Parse(row.Cells["Salary"].Value.ToString());
+            employee.ManagerId = ParseNullableInt(row.Cells["ManagerId"].Value);
+            employee.DepartmentId = ParseNullableInt(row.Cells["DepartmentId"].Value);
 
             _DALEmployee.UpdateEmployee(employee);
         }
@@ -171,9 +167,15 @@ namespace FormEmployeeDB.Class.DataGridViewManager
         public void ConfigureEmployeesColumns()
         {
             dtGdVwShowEmployees.Columns.Clear();
-            dtGdVwShowEmployees.Columns.Add("Title", "Titulo");
-            dtGdVwShowEmployees.Columns.Add("MinSalary", "Salario mínimo");
-            dtGdVwShowEmployees.Columns.Add("MaxSalary", "Salario máximo");
+            dtGdVwShowEmployees.Columns.Add("FirstName", "Nombre");
+            dtGdVwShowEmployees.Columns.Add("LastName", "Apellido");
+            dtGdVwShowEmployees.Columns.Add("Email", "Correo Electrónico");
+            dtGdVwShowEmployees.Columns.Add("PhoneNumber", "Teléfono");
+            dtGdVwShowEmployees.Columns.Add("HireDate", "Fecha de Contratación");
+            dtGdVwShowEmployees.Columns.Add("JobId", "ID de Trabajo");
+            dtGdVwShowEmployees.Columns.Add("Salary", "Salario");
+            dtGdVwShowEmployees.Columns.Add("ManagerId", "ID de Gerente");
+            dtGdVwShowEmployees.Columns.Add("DepartmentId", "ID de Departamento");
         }
 
         public void ShowEmployeeData(List<Employee> listEmployees)
@@ -185,17 +187,21 @@ namespace FormEmployeeDB.Class.DataGridViewManager
             int rowIndex;
             foreach (var employee in listEmployees)
             {
-                // Si MinSalary o MaxSalary son null, los reemplazamos por "-"
-                var minSalary = employee.MinSalary.HasValue ? employee.MinSalary.ToString() : "-";
-                var maxSalary = employee.MaxSalary.HasValue ? employee.MaxSalary.ToString() : "-";
+                var managerId = employee.ManagerId.HasValue ? employee.ManagerId.ToString() : "-";
+                var departmentId = employee.DepartmentId.HasValue ? employee.DepartmentId.ToString() : "-";
 
                 rowIndex = dtGdVwShowEmployees.Rows.Add(
-                    employee.JobTitle,
-                    minSalary,
-                    maxSalary
+                    employee.FirstName,
+                    employee.LastName,
+                    employee.Email,
+                    employee.PhoneNumber,
+                    employee.HireDate.ToString("yyyy-MM-dd"),
+                    employee.JobId,
+                    employee.Salary,
+                    managerId,
+                    departmentId
                 );
 
-                // Mapear la fila con el Employee
                 rowEmployeeMapping[rowIndex] = employee;
                 modifiedRows[rowIndex] = false;
             }
@@ -311,7 +317,7 @@ namespace FormEmployeeDB.Class.DataGridViewManager
             }
 
             // Habilitar o deshabilitar el botón de guardar según la validación
-            btSaveEmployees.Enabled = allModifiedRowsValid && modifiedRows.Any(x => x.Value);
+            btSaveEmployee.Enabled = allModifiedRowsValid && modifiedRows.Any(x => x.Value);
         }
 
         public void dtGdVwShowEmployees_SelectionChanged(object sender, EventArgs e)
@@ -321,14 +327,10 @@ namespace FormEmployeeDB.Class.DataGridViewManager
         }
 
         // Método auxiliar para interpretar "-" o valores vacíos como null
-        private decimal? ParseNullableDecimal(object value)
+        private int? ParseNullableInt(object value)
         {
-            if (value == null || value.ToString() == "-")
-                return null;
-
-            if (decimal.TryParse(value.ToString(), out var result))
-                return result;
-
+            if (value == null || value.ToString() == "-") return null;
+            if (int.TryParse(value.ToString(), out int result)) return result;
             return null;
         }
         #endregion // END - DataGridView Employees

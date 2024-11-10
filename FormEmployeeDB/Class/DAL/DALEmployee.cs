@@ -124,7 +124,7 @@ namespace ConexionBBDD.Class.DAL
             });
         }
 
-        public bool DeleteEmployee(int employeeId)
+        public bool DeleteEmployeeById(int employeeId)
         {
             return _bdConnect.ExecuteWithConnection(() =>
             {
