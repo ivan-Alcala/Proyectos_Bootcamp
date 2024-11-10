@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btShowDataJobs = new System.Windows.Forms.Button();
-            this.btShowDataEmployee = new System.Windows.Forms.Button();
+            this.btShowDataEmployees = new System.Windows.Forms.Button();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.btAdd = new System.Windows.Forms.Button();
             this.btSave = new System.Windows.Forms.Button();
@@ -67,7 +67,7 @@
             // 
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.flowLayoutPanel1.Controls.Add(this.btShowDataJobs);
-            this.flowLayoutPanel1.Controls.Add(this.btShowDataEmployee);
+            this.flowLayoutPanel1.Controls.Add(this.btShowDataEmployees);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 10);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -86,18 +86,20 @@
             this.btShowDataJobs.TabIndex = 1;
             this.btShowDataJobs.Text = "Jobs";
             this.btShowDataJobs.UseVisualStyleBackColor = true;
+            this.btShowDataJobs.Click += new System.EventHandler(this.btShowDataJobs_Click);
             // 
-            // btShowDataEmployee
+            // btShowDataEmployees
             // 
-            this.btShowDataEmployee.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btShowDataEmployee.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btShowDataEmployee.Location = new System.Drawing.Point(84, 0);
-            this.btShowDataEmployee.Margin = new System.Windows.Forms.Padding(0);
-            this.btShowDataEmployee.Name = "btShowDataEmployee";
-            this.btShowDataEmployee.Size = new System.Drawing.Size(117, 35);
-            this.btShowDataEmployee.TabIndex = 2;
-            this.btShowDataEmployee.Text = "Employee";
-            this.btShowDataEmployee.UseVisualStyleBackColor = true;
+            this.btShowDataEmployees.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btShowDataEmployees.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btShowDataEmployees.Location = new System.Drawing.Point(84, 0);
+            this.btShowDataEmployees.Margin = new System.Windows.Forms.Padding(0);
+            this.btShowDataEmployees.Name = "btShowDataEmployees";
+            this.btShowDataEmployees.Size = new System.Drawing.Size(117, 35);
+            this.btShowDataEmployees.TabIndex = 2;
+            this.btShowDataEmployees.Text = "Employee";
+            this.btShowDataEmployees.UseVisualStyleBackColor = true;
+            this.btShowDataEmployees.Click += new System.EventHandler(this.btShowDataEmployees_Click);
             // 
             // flowLayoutPanel2
             // 
@@ -169,28 +171,28 @@
             this.dtGdVwShowData.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dtGdVwShowData.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dtGdVwShowData.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtGdVwShowData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtGdVwShowData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dtGdVwShowData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tableLayoutPanel1.SetColumnSpan(this.dtGdVwShowData, 2);
             this.dtGdVwShowData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtGdVwShowData.Location = new System.Drawing.Point(3, 57);
             this.dtGdVwShowData.Name = "dtGdVwShowData";
             this.dtGdVwShowData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtGdVwShowData.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtGdVwShowData.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dtGdVwShowData.RowHeadersVisible = false;
             this.dtGdVwShowData.RowHeadersWidth = 51;
             this.dtGdVwShowData.RowTemplate.Height = 24;
@@ -226,7 +228,7 @@
         private System.Windows.Forms.Button btSave;
         private System.Windows.Forms.Button btRemove;
         private System.Windows.Forms.DataGridView dtGdVwShowData;
-        private System.Windows.Forms.Button btShowDataEmployee;
+        private System.Windows.Forms.Button btShowDataEmployees;
     }
 }
 

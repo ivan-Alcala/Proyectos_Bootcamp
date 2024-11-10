@@ -19,22 +19,14 @@ namespace FormEmployeeDB
             InitializeComponent();
             InitStyleComponent();
 
-            DGVJob _dGVJob = new DGVJob(dtGdVwShowData, btSave, btRemove, modifiedRows, rowJobMapping, cellValidation);
-            _dGVJob.btShowDataJobs_Click(null, EventArgs.Empty); // Simula el evento 'Click' del botón 'btShowDataJobs'
-
-            btShowDataJobs.Click += _dGVJob.btShowDataJobs_Click;
-            btAdd.Click += _dGVJob.btAddJob_Click;
-            btSave.Click += _dGVJob.btSaveJob_Click;
-            btRemove.Click += _dGVJob.btRemoveJob_Click;
-            dtGdVwShowData.CellValueChanged += _dGVJob.dtGdVwShowJobs_CellValueChanged;
-            dtGdVwShowData.SelectionChanged += _dGVJob.dtGdVwShowJobs_SelectionChanged;
+            ShowDataJobs();
         }
 
         #region Style
         private void InitStyleComponent()
         {
             // Cambia el estilo al botón seleccionado y deselecciona los otros
-            SelectButtonStyle(btShowDataJobs, btShowDataEmployee);
+            SelectButtonStyle(btShowDataJobs, btShowDataEmployees);
 
             // DataGridView de Jobs
             DataGridViewCellStyle selectedRowStyle = dtGdVwShowData.RowsDefaultCellStyle;
@@ -115,5 +107,41 @@ namespace FormEmployeeDB
             }
         }
         #endregion // END - Style
+
+        private void ShowDataJobs()
+        {
+            DGVJob _dGVJob = new DGVJob(dtGdVwShowData, btSave, btRemove, modifiedRows, rowJobMapping, cellValidation);
+            _dGVJob.btShowDataJobs_Click(null, EventArgs.Empty); // Simula el evento 'Click' del botón 'btShowDataJobs'
+
+            btShowDataJobs.Click += _dGVJob.btShowDataJobs_Click;
+            btAdd.Click += _dGVJob.btAddJob_Click;
+            btSave.Click += _dGVJob.btSaveJob_Click;
+            btRemove.Click += _dGVJob.btRemoveJob_Click;
+            dtGdVwShowData.CellValueChanged += _dGVJob.dtGdVwShowJobs_CellValueChanged;
+            dtGdVwShowData.SelectionChanged += _dGVJob.dtGdVwShowJobs_SelectionChanged;
+        }
+
+        private void ShowDataEmployees()
+        {
+            DGVEmployee _dGVJob = new DGVEmployee(dtGdVwShowData, btSave, btRemove, modifiedRows, rowEmployeeMapping, cellValidation);
+            _dGVJob.btShowDataEmployees_Click(null, EventArgs.Empty); // Simula el evento 'Click' del botón 'btShowDataEmployees'
+
+            btShowDataEmployees.Click += _dGVJob.btShowDataEmployees_Click;
+            btAdd.Click += _dGVJob.btAddEmployee_Click;
+            btSave.Click += _dGVJob.btSaveEmployee_Click;
+            btRemove.Click += _dGVJob.btRemoveEmployee_Click;
+            dtGdVwShowData.CellValueChanged += _dGVJob.dtGdVwShowEmployees_CellValueChanged;
+            dtGdVwShowData.SelectionChanged += _dGVJob.dtGdVwShowEmployees_SelectionChanged;
+        }
+
+        private void btShowDataJobs_Click(object sender, EventArgs e)
+        {
+            ShowDataJobs();
+        }
+
+        private void btShowDataEmployees_Click(object sender, EventArgs e)
+        {
+            ShowDataEmployees();
+        }
     }
 }
