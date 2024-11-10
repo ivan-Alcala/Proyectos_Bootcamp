@@ -18,15 +18,16 @@ namespace FormEmployeeDB.Class.DataGridViewManager
         Dictionary<int, Job> rowJobMapping;
         Dictionary<(int row, int column), bool> cellValidation;
 
-        public DGVJob(DataGridView dtGdVwShowJobs, Button btSaveJobs, Button btRemoveJob, Dictionary<int, bool> modifiedRows, Dictionary<int, Job> rowJobMapping, Dictionary<(int row, int column), bool> cellValidation)
+        public DGVJob(DataGridView dtGdVwShowJobs, Button btSaveJobs, Button btRemoveJob)
         {
             this._DALJob = new DALJob();
             this.dtGdVwShowJobs = dtGdVwShowJobs;
             this.btSaveJob = btSaveJobs;
             this.btRemoveJob = btRemoveJob;
-            this.modifiedRows = modifiedRows;
-            this.rowJobMapping = rowJobMapping;
-            this.cellValidation = cellValidation;
+
+            modifiedRows = new Dictionary<int, bool>();
+            rowJobMapping = new Dictionary<int, Job>();
+            cellValidation = new Dictionary<(int row, int column), bool>();
 
             ConfigureJobsColumns();
         }

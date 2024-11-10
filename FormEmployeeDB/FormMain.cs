@@ -1,7 +1,5 @@
-﻿using ConexionBBDD.Class.Model;
-using FormEmployeeDB.Class.DataGridViewManager;
+﻿using FormEmployeeDB.Class.DataGridViewManager;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,10 +7,6 @@ namespace FormEmployeeDB
 {
     public partial class FormMain : Form
     {
-        Dictionary<int, bool> modifiedRows = new Dictionary<int, bool>();
-        Dictionary<int, Job> rowJobMapping = new Dictionary<int, Job>();
-        Dictionary<int, Employee> rowEmployeeMapping = new Dictionary<int, Employee>();
-        Dictionary<(int row, int column), bool> cellValidation = new Dictionary<(int row, int column), bool>();
         DGVJob _dGVJob;
         DGVEmployee _dGVEmplyee;
 
@@ -21,8 +15,8 @@ namespace FormEmployeeDB
             InitializeComponent();
             InitStyleComponent();
 
-            _dGVJob = new DGVJob(dtGdVwShowData, btSave, btRemove, modifiedRows, rowJobMapping, cellValidation);
-            _dGVEmplyee = new DGVEmployee(dtGdVwShowData, btSave, btRemove, modifiedRows, rowEmployeeMapping, cellValidation);
+            _dGVJob = new DGVJob(dtGdVwShowData, btSave, btRemove);
+            _dGVEmplyee = new DGVEmployee(dtGdVwShowData, btSave, btRemove);
 
             ShowDataJobs();
         }
