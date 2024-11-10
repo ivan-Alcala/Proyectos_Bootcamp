@@ -1,12 +1,12 @@
-﻿using ConexionBBDD.Class.DAL;
-using ConexionBBDD.Class.Model;
+﻿using FormEmployeeDB.Class.DAL;
+using FormEmployeeDB.Class.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ConexionBBDD.Forms
+namespace FormEmployeeDB.Forms
 {
     public partial class UserControlJobs : UserControl
     {

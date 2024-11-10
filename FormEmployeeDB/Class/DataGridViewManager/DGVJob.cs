@@ -1,5 +1,5 @@
-﻿using ConexionBBDD.Class.DAL;
-using ConexionBBDD.Class.Model;
+﻿using FormEmployeeDB.Class.DAL;
+using FormEmployeeDB.Class.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

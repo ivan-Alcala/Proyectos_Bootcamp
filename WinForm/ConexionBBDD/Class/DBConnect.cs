@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 
-namespace ConexionBBDD.Class
+namespace FormEmployeeDB.Class
 {
     public class DBConnect
     {

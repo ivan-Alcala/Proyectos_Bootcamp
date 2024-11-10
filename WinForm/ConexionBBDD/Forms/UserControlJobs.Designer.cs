@@ -1,4 +1,4 @@
-﻿namespace ConexionBBDD.Forms
+﻿namespace FormEmployeeDB.Forms
 {
     partial class UserControlJobs
     {
@@ -105,7 +105,7 @@
             this.btAddJob.FlatAppearance.BorderSize = 0;
             this.btAddJob.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btAddJob.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btAddJob.Image = global::ConexionBBDD.Properties.Resources.agregar;
+            this.btAddJob.Image = global::FormEmployeeDB.Properties.Resources.agregar;
             this.btAddJob.Location = new System.Drawing.Point(87, 0);
             this.btAddJob.Margin = new System.Windows.Forms.Padding(0);
             this.btAddJob.Name = "btAddJob";
@@ -121,7 +121,7 @@
             this.btSaveJob.FlatAppearance.BorderSize = 0;
             this.btSaveJob.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btSaveJob.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btSaveJob.Image = global::ConexionBBDD.Properties.Resources.disco;
+            this.btSaveJob.Image = global::FormEmployeeDB.Properties.Resources.disco;
             this.btSaveJob.Location = new System.Drawing.Point(50, 0);
             this.btSaveJob.Margin = new System.Windows.Forms.Padding(0);
             this.btSaveJob.Name = "btSaveJob";
@@ -138,7 +138,7 @@
             this.btRemoveJob.FlatAppearance.BorderSize = 0;
             this.btRemoveJob.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btRemoveJob.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btRemoveJob.Image = global::ConexionBBDD.Properties.Resources.basura;
+            this.btRemoveJob.Image = global::FormEmployeeDB.Properties.Resources.basura;
             this.btRemoveJob.Location = new System.Drawing.Point(13, 0);
             this.btRemoveJob.Margin = new System.Windows.Forms.Padding(0);
             this.btRemoveJob.Name = "btRemoveJob";

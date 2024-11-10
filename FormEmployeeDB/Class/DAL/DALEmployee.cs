@@ -1,9 +1,9 @@
-﻿using ConexionBBDD.Class.Model;
+﻿using FormEmployeeDB.Class.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace ConexionBBDD.Class.DAL
+namespace FormEmployeeDB.Class.DAL
 {
     public class DALEmployee
     {

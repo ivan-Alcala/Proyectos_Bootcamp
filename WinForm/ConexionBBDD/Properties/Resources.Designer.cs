@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ConexionBBDD.Properties {
+namespace FormEmployeeDB.Properties {
     using System;
     
     

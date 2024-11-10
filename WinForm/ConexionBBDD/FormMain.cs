@@ -1,9 +1,9 @@
-﻿using ConexionBBDD.Class;
-using ConexionBBDD.Forms;
+﻿using FormEmployeeDB.Class;
+using FormEmployeeDB.Forms;
 using System;
 using System.Windows.Forms;
 
-namespace ConexionBBDD
+namespace FormEmployeeDB
 {
     public partial class FormMain : Form
     {

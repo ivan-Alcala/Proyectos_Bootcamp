@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConexionBBDD.Class.Model
+namespace FormEmployeeDB.Class.Model
 {
     public class Employee
     {

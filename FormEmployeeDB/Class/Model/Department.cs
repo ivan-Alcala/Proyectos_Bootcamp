@@ -1,4 +1,4 @@
-﻿namespace ConexionBBDD.Class.Model
+﻿namespace FormEmployeeDB.Class.Model
 {
     public class Department
     {

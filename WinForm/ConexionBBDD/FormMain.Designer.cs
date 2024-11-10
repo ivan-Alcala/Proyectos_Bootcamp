@@ -1,4 +1,4 @@
-﻿namespace ConexionBBDD
+﻿namespace FormEmployeeDB
 {
     partial class FormMain
     {
