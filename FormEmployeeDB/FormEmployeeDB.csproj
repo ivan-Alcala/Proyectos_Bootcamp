@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Class\DAL\DALEmployee.cs" />
     <Compile Include="Class\DAL\DALJob.cs" />
+    <Compile Include="Class\DataGridViewManager\DGVJEmployee.cs" />
     <Compile Include="Class\DataGridViewManager\DGVJob.cs" />
     <Compile Include="Class\DBConnect.cs" />
     <Compile Include="Class\Model\Country.cs" />

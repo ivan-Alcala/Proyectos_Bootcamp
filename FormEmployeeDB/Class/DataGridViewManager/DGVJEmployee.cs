@@ -8,39 +8,39 @@ using System.Windows.Forms;
 
 namespace FormEmployeeDB.Class.DataGridViewManager
 {
-    public class DGVJob
+    public class DGVEmployee
     {
-        DALJob _DALJob;
-        DataGridView dtGdVwShowJobs;
-        Button btSaveJob;
-        Button btRemoveJob;
+        DALEmployee _DALEmployee;
+        DataGridView dtGdVwShowEmployees;
+        Button btSaveEmployees;
+        Button btRemoveEmployee;
         Dictionary<int, bool> modifiedRows;
-        Dictionary<int, Job> rowJobMapping;
+        Dictionary<int, Employee> rowEmployeeMapping;
         Dictionary<(int row, int column), bool> cellValidation;
 
-        public DGVJob(DataGridView dtGdVwShowJobs, Button btSaveJobs, Button btRemoveJob, Dictionary<int, bool> modifiedRows, Dictionary<int, Job> rowJobMapping, Dictionary<(int row, int column), bool> cellValidation)
+        public DGVEmployee(DataGridView dtGdVwShowEmployees, Button btSaveEmployees, Button btRemoveEmployee, Dictionary<int, bool> modifiedRows, Dictionary<int, Employee> rowEmployeeMapping, Dictionary<(int row, int column), bool> cellValidation)
         {
-            this._DALJob = new DALJob();
-            this.dtGdVwShowJobs = dtGdVwShowJobs;
-            this.btSaveJob = btSaveJobs;
-            this.btRemoveJob = btRemoveJob;
+            this._DALEmployee = new DALEmployee();
+            this.dtGdVwShowEmployees = dtGdVwShowEmployees;
+            this.btSaveEmployees = btSaveEmployees;
+            this.btRemoveEmployee = btRemoveEmployee;
             this.modifiedRows = modifiedRows;
-            this.rowJobMapping = rowJobMapping;
+            this.rowEmployeeMapping = rowEmployeeMapping;
             this.cellValidation = cellValidation;
 
-            ConfigureJobsColumns();
+            ConfigureEmployeesColumns();
         }
 
-        #region Jobs
-        public void btShowDataJobs_Click(object sender, System.EventArgs e)
+        #region Employees
+        public void btShowDataEmployees_Click(object sender, System.EventArgs e)
         {
-            ShowJobData(_DALJob.GetAllJobs());
+            ShowEmployeeData(_DALEmployee.GetAllEmployees());
         }
 
-        public void btAddJob_Click(object sender, EventArgs e)
+        public void btAddEmployee_Click(object sender, EventArgs e)
         {
-            int rowIndex = dtGdVwShowJobs.Rows.Add();
-            DataGridViewRow newRow = dtGdVwShowJobs.Rows[rowIndex];
+            int rowIndex = dtGdVwShowEmployees.Rows.Add();
+            DataGridViewRow newRow = dtGdVwShowEmployees.Rows[rowIndex];
 
             // Inicializar la validación de todas las celdas como false
             for (int i = 0; i < newRow.Cells.Count; i++)
@@ -55,12 +55,12 @@ namespace FormEmployeeDB.Class.DataGridViewManager
             });
         }
 
-        public void btSaveJob_Click(object sender, EventArgs e)
+        public void btSaveEmployee_Click(object sender, EventArgs e)
         {
             List<DataGridViewRow> rowsToProcess = new List<DataGridViewRow>();
 
             // Recolectar todas las filas modificadas
-            foreach (DataGridViewRow row in dtGdVwShowJobs.Rows)
+            foreach (DataGridViewRow row in dtGdVwShowEmployees.Rows)
             {
                 if (modifiedRows.ContainsKey(row.Index) && modifiedRows[row.Index])
                 {
@@ -72,15 +72,15 @@ namespace FormEmployeeDB.Class.DataGridViewManager
             {
                 if (ValidateRow(row))
                 {
-                    if (rowJobMapping.ContainsKey(row.Index))
+                    if (rowEmployeeMapping.ContainsKey(row.Index))
                     {
                         // Modificar trabajo existente
-                        UpdateJob(row, rowJobMapping[row.Index]);
+                        UpdateEmployee(row, rowEmployeeMapping[row.Index]);
                     }
                     else
                     {
                         // Agregar un nuevo trabajo
-                        AddJob(row);
+                        AddEmployee(row);
                     }
 
                     // Resetear el estado de modificación y el color
@@ -90,14 +90,14 @@ namespace FormEmployeeDB.Class.DataGridViewManager
             }
 
             // Actualizar la vista
-            ShowJobData(_DALJob.GetAllJobs());
-            btSaveJob.Enabled = false;
+            ShowEmployeeData(_DALEmployee.GetAllEmployees());
+            btSaveEmployees.Enabled = false;
         }
 
-        public void btRemoveJob_Click(object sender, EventArgs e)
+        public void btRemoveEmployee_Click(object sender, EventArgs e)
         {
             {
-                if (dtGdVwShowJobs.SelectedRows.Count == 0)
+                if (dtGdVwShowEmployees.SelectedRows.Count == 0)
                 {
                     MessageBox.Show("Por favor, seleccione un trabajo para eliminar.",
                                   "Ninguna fila seleccionada",
@@ -106,7 +106,7 @@ namespace FormEmployeeDB.Class.DataGridViewManager
                     return;
                 }
 
-                DataGridViewRow selectedRow = dtGdVwShowJobs.SelectedRows[0];
+                DataGridViewRow selectedRow = dtGdVwShowEmployees.SelectedRows[0];
 
                 // Obtener el Titulo de la columna "Title"
                 string titleToSearch = selectedRow.Cells["Title"].Value.ToString();
@@ -129,11 +129,11 @@ namespace FormEmployeeDB.Class.DataGridViewManager
                 {
                     try
                     {
-                        int idJobToRemove = _DALJob.GetJobIdByTitle(titleToSearch);
-                        _DALJob.DeleteJobById(idJobToRemove);
+                        int idJobToRemove = _DALEmployee.GetEmployeeById(titleToSearch);
+                        _DALEmployee.DeleteJobById(idJobToRemove);
 
                         // Actualizar la vista
-                        ShowJobData(_DALJob.GetAllJobs());
+                        ShowEmployeeData(_DALEmployee.GetAllEmployees());
                     }
                     catch (Exception ex)
                     {
@@ -146,66 +146,66 @@ namespace FormEmployeeDB.Class.DataGridViewManager
             }
         }
 
-        private void AddJob(DataGridViewRow row)
+        private void AddEmployee(DataGridViewRow row)
         {
-            var jobToAdd = new Job
+            var employeeToAdd = new Employee
             {
                 JobTitle = row.Cells["Title"].Value.ToString(),
                 MinSalary = ParseNullableDecimal(row.Cells["MinSalary"].Value),
                 MaxSalary = ParseNullableDecimal(row.Cells["MaxSalary"].Value)
             };
-            _DALJob.AddJob(jobToAdd);
+            _DALEmployee.AddEmployee(employeeToAdd);
         }
 
-        private void UpdateJob(DataGridViewRow row, Job job)
+        private void UpdateEmployee(DataGridViewRow row, Employee employee)
         {
-            job.JobTitle = row.Cells["Title"].Value.ToString();
-            job.MinSalary = ParseNullableDecimal(row.Cells["MinSalary"].Value);
-            job.MaxSalary = ParseNullableDecimal(row.Cells["MaxSalary"].Value);
+            employee.JobTitle = row.Cells["Title"].Value.ToString();
+            employee.MinSalary = ParseNullableDecimal(row.Cells["MinSalary"].Value);
+            employee.MaxSalary = ParseNullableDecimal(row.Cells["MaxSalary"].Value);
 
-            _DALJob.UpdateJob(job);
+            _DALEmployee.UpdateEmployee(employee);
         }
-        #endregion // END - Jobs
+        #endregion // END - Employees
 
-        #region DataGridView Jobs
-        public void ConfigureJobsColumns()
+        #region DataGridView Employees
+        public void ConfigureEmployeesColumns()
         {
-            dtGdVwShowJobs.Columns.Clear();
-            dtGdVwShowJobs.Columns.Add("Title", "Titulo");
-            dtGdVwShowJobs.Columns.Add("MinSalary", "Salario mínimo");
-            dtGdVwShowJobs.Columns.Add("MaxSalary", "Salario máximo");
+            dtGdVwShowEmployees.Columns.Clear();
+            dtGdVwShowEmployees.Columns.Add("Title", "Titulo");
+            dtGdVwShowEmployees.Columns.Add("MinSalary", "Salario mínimo");
+            dtGdVwShowEmployees.Columns.Add("MaxSalary", "Salario máximo");
         }
 
-        public void ShowJobData(List<Job> listJobs)
+        public void ShowEmployeeData(List<Employee> listEmployees)
         {
-            dtGdVwShowJobs.Rows.Clear();
-            rowJobMapping.Clear();
+            dtGdVwShowEmployees.Rows.Clear();
+            rowEmployeeMapping.Clear();
             modifiedRows.Clear();
 
             int rowIndex;
-            foreach (var job in listJobs)
+            foreach (var employee in listEmployees)
             {
                 // Si MinSalary o MaxSalary son null, los reemplazamos por "-"
-                var minSalary = job.MinSalary.HasValue ? job.MinSalary.ToString() : "-";
-                var maxSalary = job.MaxSalary.HasValue ? job.MaxSalary.ToString() : "-";
+                var minSalary = employee.MinSalary.HasValue ? employee.MinSalary.ToString() : "-";
+                var maxSalary = employee.MaxSalary.HasValue ? employee.MaxSalary.ToString() : "-";
 
-                rowIndex = dtGdVwShowJobs.Rows.Add(
-                    job.JobTitle,
+                rowIndex = dtGdVwShowEmployees.Rows.Add(
+                    employee.JobTitle,
                     minSalary,
                     maxSalary
                 );
 
-                // Mapear la fila con el Job
-                rowJobMapping[rowIndex] = job;
+                // Mapear la fila con el Employee
+                rowEmployeeMapping[rowIndex] = employee;
                 modifiedRows[rowIndex] = false;
             }
         }
 
         public void ValidateCell(int rowIndex, int columnIndex, object value)
         {
-            var cell = dtGdVwShowJobs.Rows[rowIndex].Cells[columnIndex];
+            var cell = dtGdVwShowEmployees.Rows[rowIndex].Cells[columnIndex];
             bool isValid = true;
-            string columnName = dtGdVwShowJobs.Columns[columnIndex].Name;
+            string columnName = dtGdVwShowEmployees.Columns[columnIndex].Name;
 
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()) || value.ToString() == "-")
             {
@@ -255,11 +255,11 @@ namespace FormEmployeeDB.Class.DataGridViewManager
             }
         }
 
-        public void dtGdVwShowJobs_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        public void dtGdVwShowEmployees_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            DataGridViewRow currentRow = dtGdVwShowJobs.Rows[e.RowIndex];
+            DataGridViewRow currentRow = dtGdVwShowEmployees.Rows[e.RowIndex];
 
             // Validar la celda que cambió
             ValidateCell(e.RowIndex, e.ColumnIndex, currentRow.Cells[e.ColumnIndex].Value);
@@ -296,7 +296,7 @@ namespace FormEmployeeDB.Class.DataGridViewManager
             {
                 if (kvp.Value) // Si la fila está modificada
                 {
-                    DataGridViewRow row = dtGdVwShowJobs.Rows[kvp.Key];
+                    DataGridViewRow row = dtGdVwShowEmployees.Rows[kvp.Key];
                     foreach (DataGridViewCell cell in row.Cells)
                     {
                         if (!cellValidation.ContainsKey((kvp.Key, cell.ColumnIndex)) ||
@@ -311,13 +311,13 @@ namespace FormEmployeeDB.Class.DataGridViewManager
             }
 
             // Habilitar o deshabilitar el botón de guardar según la validación
-            btSaveJob.Enabled = allModifiedRowsValid && modifiedRows.Any(x => x.Value);
+            btSaveEmployees.Enabled = allModifiedRowsValid && modifiedRows.Any(x => x.Value);
         }
 
-        public void dtGdVwShowJobs_SelectionChanged(object sender, EventArgs e)
+        public void dtGdVwShowEmployees_SelectionChanged(object sender, EventArgs e)
         {
             // Habilitar el botón de eliminar solo si hay una fila seleccionada
-            btRemoveJob.Enabled = dtGdVwShowJobs.SelectedRows.Count > 0;
+            btRemoveEmployee.Enabled = dtGdVwShowEmployees.SelectedRows.Count > 0;
         }
 
         // Método auxiliar para interpretar "-" o valores vacíos como null
@@ -331,6 +331,6 @@ namespace FormEmployeeDB.Class.DataGridViewManager
 
             return null;
         }
-        #endregion // END - DataGridView Jobs
+        #endregion // END - DataGridView Employees
     }
 }
