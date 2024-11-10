@@ -21,9 +21,6 @@ namespace FormEmployeeDB
         #region Style
         private void InitStyleComponent()
         {
-            // Cambia el estilo al botón seleccionado y deselecciona los otros
-            SelectButtonStyle(btShowDataJobs, btShowDataEmployees);
-
             // DataGridView de Jobs
             DataGridViewCellStyle selectedRowStyle = dtGdVwShowData.RowsDefaultCellStyle;
             selectedRowStyle.SelectionBackColor = ColorTranslator.FromHtml("#d6e0ef");
@@ -143,6 +140,9 @@ namespace FormEmployeeDB
             btRemove.Click += _dGVJob.btRemoveJob_Click;
             dtGdVwShowData.CellValueChanged += _dGVJob.dtGdVwShowJobs_CellValueChanged;
             dtGdVwShowData.SelectionChanged += _dGVJob.dtGdVwShowJobs_SelectionChanged;
+
+            // Cambia el estilo al botón seleccionado y deselecciona los otros
+            SelectButtonStyle(btShowDataJobs, btShowDataEmployees);
         }
 
         private void ShowDataEmployees()
@@ -159,6 +159,9 @@ namespace FormEmployeeDB
             btRemove.Click += _dGVEmplyee.btRemoveEmployee_Click;
             dtGdVwShowData.CellValueChanged += _dGVEmplyee.dtGdVwShowEmployees_CellValueChanged;
             dtGdVwShowData.SelectionChanged += _dGVEmplyee.dtGdVwShowEmployees_SelectionChanged;
+
+            // Cambia el estilo al botón seleccionado y deselecciona los otros
+            SelectButtonStyle(btShowDataEmployees, btShowDataJobs);
         }
 
         private void btShowDataJobs_Click(object sender, EventArgs e)
