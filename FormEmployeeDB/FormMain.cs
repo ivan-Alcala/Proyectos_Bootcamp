@@ -15,9 +15,6 @@ namespace FormEmployeeDB
             InitializeComponent();
             InitStyleComponent();
 
-            _dGVJob = new DGVJob(dtGdVwShowData, btSave, btRemove);
-            _dGVEmplyee = new DGVEmployee(dtGdVwShowData, btSave, btRemove);
-
             ShowDataJobs();
         }
 
@@ -109,25 +106,33 @@ namespace FormEmployeeDB
 
         private void RemoveEvents()
         {
-            // Eliminar eventos realacionados con Jobs
-            btShowDataJobs.Click -= _dGVJob.btShowDataJobs_Click;
-            btAdd.Click -= _dGVJob.btAddJob_Click;
-            btSave.Click -= _dGVJob.btSaveJob_Click;
-            btRemove.Click -= _dGVJob.btRemoveJob_Click;
-            dtGdVwShowData.CellValueChanged -= _dGVJob.dtGdVwShowJobs_CellValueChanged;
-            dtGdVwShowData.SelectionChanged -= _dGVJob.dtGdVwShowJobs_SelectionChanged;
+            if (_dGVJob != null)
+            {
+                // Eliminar eventos realacionados con Jobs
+                btShowDataJobs.Click -= _dGVJob.btShowDataJobs_Click;
+                btAdd.Click -= _dGVJob.btAddJob_Click;
+                btSave.Click -= _dGVJob.btSaveJob_Click;
+                btRemove.Click -= _dGVJob.btRemoveJob_Click;
+                dtGdVwShowData.CellValueChanged -= _dGVJob.dtGdVwShowJobs_CellValueChanged;
+                dtGdVwShowData.SelectionChanged -= _dGVJob.dtGdVwShowJobs_SelectionChanged;
+            }
 
-            // Eliminar eventos realacionados con Employees
-            btShowDataEmployees.Click -= _dGVEmplyee.btShowDataEmployees_Click;
-            btAdd.Click -= _dGVEmplyee.btAddEmployee_Click;
-            btSave.Click -= _dGVEmplyee.btSaveEmployee_Click;
-            btRemove.Click -= _dGVEmplyee.btRemoveEmployee_Click;
-            dtGdVwShowData.CellValueChanged -= _dGVEmplyee.dtGdVwShowEmployees_CellValueChanged;
-            dtGdVwShowData.SelectionChanged -= _dGVEmplyee.dtGdVwShowEmployees_SelectionChanged;
+            if (_dGVEmplyee != null)
+            {
+                // Eliminar eventos realacionados con Employees
+                btShowDataEmployees.Click -= _dGVEmplyee.btShowDataEmployees_Click;
+                btAdd.Click -= _dGVEmplyee.btAddEmployee_Click;
+                btSave.Click -= _dGVEmplyee.btSaveEmployee_Click;
+                btRemove.Click -= _dGVEmplyee.btRemoveEmployee_Click;
+                dtGdVwShowData.CellValueChanged -= _dGVEmplyee.dtGdVwShowEmployees_CellValueChanged;
+                dtGdVwShowData.SelectionChanged -= _dGVEmplyee.dtGdVwShowEmployees_SelectionChanged;
+            }
         }
 
         private void ShowDataJobs()
         {
+            _dGVJob = new DGVJob(dtGdVwShowData, btSave, btRemove);
+
             RemoveEvents();
 
             _dGVJob.btShowDataJobs_Click(null, EventArgs.Empty); // Simula el evento 'Click' del botón 'btShowDataJobs'
@@ -142,6 +147,8 @@ namespace FormEmployeeDB
 
         private void ShowDataEmployees()
         {
+            _dGVEmplyee = new DGVEmployee(dtGdVwShowData, btSave, btRemove);
+
             RemoveEvents();
 
             _dGVEmplyee.btShowDataEmployees_Click(null, EventArgs.Empty); // Simula el evento 'Click' del botón 'btShowDataEmployees'
