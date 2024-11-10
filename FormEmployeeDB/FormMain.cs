@@ -13,11 +13,16 @@ namespace FormEmployeeDB
         Dictionary<int, Job> rowJobMapping = new Dictionary<int, Job>();
         Dictionary<int, Employee> rowEmployeeMapping = new Dictionary<int, Employee>();
         Dictionary<(int row, int column), bool> cellValidation = new Dictionary<(int row, int column), bool>();
+        DGVJob _dGVJob;
+        DGVEmployee _dGVEmplyee;
 
         public FormMain()
         {
             InitializeComponent();
             InitStyleComponent();
+
+            _dGVJob = new DGVJob(dtGdVwShowData, btSave, btRemove, modifiedRows, rowJobMapping, cellValidation);
+            _dGVEmplyee = new DGVEmployee(dtGdVwShowData, btSave, btRemove, modifiedRows, rowEmployeeMapping, cellValidation);
 
             ShowDataJobs();
         }
@@ -108,9 +113,29 @@ namespace FormEmployeeDB
         }
         #endregion // END - Style
 
+        private void RemoveEvents()
+        {
+            // Eliminar eventos realacionados con Jobs
+            btShowDataJobs.Click -= _dGVJob.btShowDataJobs_Click;
+            btAdd.Click -= _dGVJob.btAddJob_Click;
+            btSave.Click -= _dGVJob.btSaveJob_Click;
+            btRemove.Click -= _dGVJob.btRemoveJob_Click;
+            dtGdVwShowData.CellValueChanged -= _dGVJob.dtGdVwShowJobs_CellValueChanged;
+            dtGdVwShowData.SelectionChanged -= _dGVJob.dtGdVwShowJobs_SelectionChanged;
+
+            // Eliminar eventos realacionados con Employees
+            btShowDataEmployees.Click -= _dGVEmplyee.btShowDataEmployees_Click;
+            btAdd.Click -= _dGVEmplyee.btAddEmployee_Click;
+            btSave.Click -= _dGVEmplyee.btSaveEmployee_Click;
+            btRemove.Click -= _dGVEmplyee.btRemoveEmployee_Click;
+            dtGdVwShowData.CellValueChanged -= _dGVEmplyee.dtGdVwShowEmployees_CellValueChanged;
+            dtGdVwShowData.SelectionChanged -= _dGVEmplyee.dtGdVwShowEmployees_SelectionChanged;
+        }
+
         private void ShowDataJobs()
         {
-            DGVJob _dGVJob = new DGVJob(dtGdVwShowData, btSave, btRemove, modifiedRows, rowJobMapping, cellValidation);
+            RemoveEvents();
+
             _dGVJob.btShowDataJobs_Click(null, EventArgs.Empty); // Simula el evento 'Click' del botón 'btShowDataJobs'
 
             btShowDataJobs.Click += _dGVJob.btShowDataJobs_Click;
@@ -123,15 +148,16 @@ namespace FormEmployeeDB
 
         private void ShowDataEmployees()
         {
-            DGVEmployee _dGVJob = new DGVEmployee(dtGdVwShowData, btSave, btRemove, modifiedRows, rowEmployeeMapping, cellValidation);
-            _dGVJob.btShowDataEmployees_Click(null, EventArgs.Empty); // Simula el evento 'Click' del botón 'btShowDataEmployees'
+            RemoveEvents();
 
-            btShowDataEmployees.Click += _dGVJob.btShowDataEmployees_Click;
-            btAdd.Click += _dGVJob.btAddEmployee_Click;
-            btSave.Click += _dGVJob.btSaveEmployee_Click;
-            btRemove.Click += _dGVJob.btRemoveEmployee_Click;
-            dtGdVwShowData.CellValueChanged += _dGVJob.dtGdVwShowEmployees_CellValueChanged;
-            dtGdVwShowData.SelectionChanged += _dGVJob.dtGdVwShowEmployees_SelectionChanged;
+            _dGVEmplyee.btShowDataEmployees_Click(null, EventArgs.Empty); // Simula el evento 'Click' del botón 'btShowDataEmployees'
+
+            btShowDataEmployees.Click += _dGVEmplyee.btShowDataEmployees_Click;
+            btAdd.Click += _dGVEmplyee.btAddEmployee_Click;
+            btSave.Click += _dGVEmplyee.btSaveEmployee_Click;
+            btRemove.Click += _dGVEmplyee.btRemoveEmployee_Click;
+            dtGdVwShowData.CellValueChanged += _dGVEmplyee.dtGdVwShowEmployees_CellValueChanged;
+            dtGdVwShowData.SelectionChanged += _dGVEmplyee.dtGdVwShowEmployees_SelectionChanged;
         }
 
         private void btShowDataJobs_Click(object sender, EventArgs e)
