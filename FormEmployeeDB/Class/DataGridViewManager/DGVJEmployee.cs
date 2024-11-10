@@ -208,7 +208,7 @@ namespace FormEmployeeDB.Class.DataGridViewManager
             }
         }
 
-        public void ValidateCell(int rowIndex, int columnIndex, object value)
+        private void ValidateCell(int rowIndex, int columnIndex, object value)
         {
             var cell = dtGdVwShowEmployees.Rows[rowIndex].Cells[columnIndex];
             bool isValid = true;
@@ -216,19 +216,25 @@ namespace FormEmployeeDB.Class.DataGridViewManager
 
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()) || value.ToString() == "-")
             {
-                isValid = columnName == "MinSalary" || columnName == "MaxSalary"; // Aceptar null o "-" solo para salarios
+                isValid = columnName == "ManagerId" || columnName == "DepartmentId";
             }
             else
             {
-                // Validación específica según el tipo de columna
                 switch (columnName)
                 {
-                    case "MinSalary":
-                    case "MaxSalary":
+                    case "HireDate":
+                        isValid = DateTime.TryParse(value.ToString(), out _);
+                        break;
+                    case "JobId":
+                    case "ManagerId":
+                    case "DepartmentId":
+                        isValid = int.TryParse(value.ToString(), out _);
+                        break;
+                    case "Salary":
                         isValid = decimal.TryParse(value.ToString(), out _);
                         break;
                     default:
-                        isValid = !string.IsNullOrWhiteSpace(value.ToString()) && value.ToString() != "-";
+                        isValid = !string.IsNullOrWhiteSpace(value.ToString());
                         break;
                 }
             }
