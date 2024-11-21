@@ -71,6 +71,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{
 		Frontend\HTML\resources\UiwLinkedin.svg = Frontend\HTML\resources\UiwLinkedin.svg
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntroduccionASP.NET", "..\IntroduccionASP.NET\IntroduccionASP.NET\IntroduccionASP.NET.csproj", "{F29FFC83-F106-4558-8281-BA6127A1B463}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{EF61FE97-052C-4726-8B3D-BE2FBB7A5F00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF61FE97-052C-4726-8B3D-BE2FBB7A5F00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF61FE97-052C-4726-8B3D-BE2FBB7A5F00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F29FFC83-F106-4558-8281-BA6127A1B463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F29FFC83-F106-4558-8281-BA6127A1B463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F29FFC83-F106-4558-8281-BA6127A1B463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F29FFC83-F106-4558-8281-BA6127A1B463}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -138,6 +144,7 @@ Global
 		{EF61FE97-052C-4726-8B3D-BE2FBB7A5F00} = {BC081794-8546-42F6-8580-E6895F739C73}
 		{0CDD891C-9682-498E-B853-DA459C56D0BC} = {7C004882-D6BA-42B7-A8B2-E66B58C1D853}
 		{958A6260-C98E-44FC-956A-6AF8E92411A9} = {E01C2B93-0C05-49D4-A6B2-8BE192142E3A}
+		{F29FFC83-F106-4558-8281-BA6127A1B463} = {97E12D6F-96AA-4498-AB94-ABE0861D70C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57A8700B-04FE-4236-A1B1-E55FFCD8345B}
