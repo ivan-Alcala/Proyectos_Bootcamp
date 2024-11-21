@@ -8,8 +8,26 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WinForm", "WinForm", "{680A8819-0019-4804-92D3-F25E078A486E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HTML", "HTML", "{E01C2B93-0C05-49D4-A6B2-8BE192142E3A}"
+	ProjectSection(SolutionItems) = preProject
+		Frontend\HTML\1-index.html = Frontend\HTML\1-index.html
+		Frontend\HTML\2-index.html = Frontend\HTML\2-index.html
+		Frontend\HTML\3-index.html = Frontend\HTML\3-index.html
+		Frontend\HTML\list-1-index.html = Frontend\HTML\list-1-index.html
+		Frontend\HTML\list-2-index.html = Frontend\HTML\list-2-index.html
+		Frontend\HTML\table-index.html = Frontend\HTML\table-index.html
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Javascript", "Javascript", "{63ACF065-345E-4311-9DF1-F8F4D716EC9D}"
+	ProjectSection(SolutionItems) = preProject
+		Frontend\Javascript\E07-Calculadora de Potencia.html = Frontend\Javascript\E07-Calculadora de Potencia.html
+		Frontend\Javascript\E08-Validador de DNI.html = Frontend\Javascript\E08-Validador de DNI.html
+		Frontend\Javascript\E09.1-E09.2-Cambio de Color de Fondo.html = Frontend\Javascript\E09.1-E09.2-Cambio de Color de Fondo.html
+		Frontend\Javascript\E09.3-Cálculo de Días Vividos_V1.html = Frontend\Javascript\E09.3-Cálculo de Días Vividos_V1.html
+		Frontend\Javascript\E09.3-Cálculo de Días Vividos_V2.html = Frontend\Javascript\E09.3-Cálculo de Días Vividos_V2.html
+		Frontend\Javascript\E09.4-Menú con Imágenes.html = Frontend\Javascript\E09.4-Menú con Imágenes.html
+		Frontend\Javascript\E09.5-Múltiplos de 23.html = Frontend\Javascript\E09.5-Múltiplos de 23.html
+		Frontend\Javascript\E10-Juego del Ahorcado.html = Frontend\Javascript\E10-Juego del Ahorcado.html
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET", "ASP.NET", "{97E12D6F-96AA-4498-AB94-ABE0861D70C8}"
 EndProject
@@ -34,6 +52,24 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POO", "Console\POO\POO.csproj", "{E706EE62-6893-4AA6-907F-DBC30A38419F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake", "Console\Snake\Snake.csproj", "{EF61FE97-052C-4726-8B3D-BE2FBB7A5F00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bootstrap", "Bootstrap", "{0CDD891C-9682-498E-B853-DA459C56D0BC}"
+	ProjectSection(SolutionItems) = preProject
+		Frontend\Bootstrap\formulario_bootstrap.html = Frontend\Bootstrap\formulario_bootstrap.html
+		Frontend\Bootstrap\Form_Bootstrap.png = Frontend\Bootstrap\Form_Bootstrap.png
+		Frontend\Bootstrap\tabla_de_perro_bootstrap.html = Frontend\Bootstrap\tabla_de_perro_bootstrap.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{958A6260-C98E-44FC-956A-6AF8E92411A9}"
+	ProjectSection(SolutionItems) = preProject
+		Frontend\HTML\resources\CV_HTML.jpg = Frontend\HTML\resources\CV_HTML.jpg
+		Frontend\HTML\resources\Dracula.PNG = Frontend\HTML\resources\Dracula.PNG
+		Frontend\HTML\resources\Drácula.txt = Frontend\HTML\resources\Drácula.txt
+		Frontend\HTML\resources\MdiFacebookBox.svg = Frontend\HTML\resources\MdiFacebookBox.svg
+		Frontend\HTML\resources\MdiInstagram.svg = Frontend\HTML\resources\MdiInstagram.svg
+		Frontend\HTML\resources\profile-photo.PNG = Frontend\HTML\resources\profile-photo.PNG
+		Frontend\HTML\resources\UiwLinkedin.svg = Frontend\HTML\resources\UiwLinkedin.svg
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +136,8 @@ Global
 		{14966ED3-4215-4182-8209-A65F0BBC0452} = {BC081794-8546-42F6-8580-E6895F739C73}
 		{E706EE62-6893-4AA6-907F-DBC30A38419F} = {BC081794-8546-42F6-8580-E6895F739C73}
 		{EF61FE97-052C-4726-8B3D-BE2FBB7A5F00} = {BC081794-8546-42F6-8580-E6895F739C73}
+		{0CDD891C-9682-498E-B853-DA459C56D0BC} = {7C004882-D6BA-42B7-A8B2-E66B58C1D853}
+		{958A6260-C98E-44FC-956A-6AF8E92411A9} = {E01C2B93-0C05-49D4-A6B2-8BE192142E3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57A8700B-04FE-4236-A1B1-E55FFCD8345B}
