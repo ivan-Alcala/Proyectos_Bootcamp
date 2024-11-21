@@ -71,7 +71,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{
 		Frontend\HTML\resources\UiwLinkedin.svg = Frontend\HTML\resources\UiwLinkedin.svg
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntroduccionASP.NET", "..\IntroduccionASP.NET\IntroduccionASP.NET\IntroduccionASP.NET.csproj", "{F29FFC83-F106-4558-8281-BA6127A1B463}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntroduccionASP.NET", "Frontend\ASP.NET\IntroduccionASP.NET\IntroduccionASP.NET.csproj", "{F29FFC83-F106-4558-8281-BA6127A1B463}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
