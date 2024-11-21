@@ -73,6 +73,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntroduccionASP.NET", "Frontend\ASP.NET\IntroduccionASP.NET\IntroduccionASP.NET.csproj", "{F29FFC83-F106-4558-8281-BA6127A1B463}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP.NET_Ahorcado", "Frontend\ASP.NET\ASP.NET_Ahorcado\ASP.NET_Ahorcado.csproj", "{80A8A2D1-31D8-463A-8A74-319AEE6A040E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,10 @@ Global
 		{F29FFC83-F106-4558-8281-BA6127A1B463}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F29FFC83-F106-4558-8281-BA6127A1B463}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F29FFC83-F106-4558-8281-BA6127A1B463}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80A8A2D1-31D8-463A-8A74-319AEE6A040E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80A8A2D1-31D8-463A-8A74-319AEE6A040E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80A8A2D1-31D8-463A-8A74-319AEE6A040E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80A8A2D1-31D8-463A-8A74-319AEE6A040E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,6 +151,7 @@ Global
 		{0CDD891C-9682-498E-B853-DA459C56D0BC} = {7C004882-D6BA-42B7-A8B2-E66B58C1D853}
 		{958A6260-C98E-44FC-956A-6AF8E92411A9} = {E01C2B93-0C05-49D4-A6B2-8BE192142E3A}
 		{F29FFC83-F106-4558-8281-BA6127A1B463} = {97E12D6F-96AA-4498-AB94-ABE0861D70C8}
+		{80A8A2D1-31D8-463A-8A74-319AEE6A040E} = {97E12D6F-96AA-4498-AB94-ABE0861D70C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57A8700B-04FE-4236-A1B1-E55FFCD8345B}
