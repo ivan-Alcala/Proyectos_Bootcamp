@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambio de Color de Fondo</title>
+    <style>
+        #colorBox {
+            width: 150px;
+            height: 150px;
+            background-color: lightgray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #333;
+            border: 1px solid #888;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h2>Cambiar el Color de Fondo</h2>
+    
+    <form id="colorForm">
+        <button type="button" class="color-btn" data-color="red">Rojo</button>
+        <button type="button" class="color-btn" data-color="green">Verde</button>
+        <button type="button" class="color-btn" data-color="blue">Azul</button>
+        <button type="button" class="color-btn" data-color="yellow">Amarillo</button>
+        <button type="button" class="color-btn" data-color="purple">Morado</button>
+
+        <br><br>
+
+        <label>
+            <input type="radio" name="target" value="document" checked>
+            Cambiar color del fondo del documento
+        </label>
+        <label>
+            <input type="radio" name="target" value="box">
+            Cambiar color del fondo de la capa
+        </label>
+    </form>
+
+    <div id="colorBox">Capa de Color</div>
+</body>
+<script>
+    $(document).ready(function() {
+        $('.color-btn').on('click', function() {
+            const color = $(this).data('color');
+            const target = $('input[name="target"]:checked').val();
+
+            // Cambiar el color de fondo según la opción seleccionada
+            if (target === 'document') {
+                $('body').css('background-color', color);
+            } else if (target === 'box') {
+                $('#colorBox').css('background-color', color);
+            }
+        });
+    });
+</script>
+</html>

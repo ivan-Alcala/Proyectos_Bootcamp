@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear nueva tarea</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Crear nueva tarea</h5>
+                        <button type="button" class="btn-close" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="title" class="form-label">Título</label>
+                                    <input type="text" class="form-control" id="title" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="location" class="form-label">Ubicación</label>
+                                    <select class="form-select" id="location">
+                                        <option selected disabled value="">Elegir...</option>
+                                        <option>Ubicación 1</option>
+                                        <option>Ubicación 2</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="type" class="form-label">Tipo</label>
+                                    <select class="form-select" id="type">
+                                        <option>Incidente</option>
+                                        <option>Tarea</option>
+                                        <option>Proyecto</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="criticality" class="form-label">Criticidad</label>
+                                    <select class="form-select" id="criticality">
+                                        <option>Menor</option>
+                                        <option>Mayor</option>
+                                        <option>Crítico</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Entorno</label>
+                                    <div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="environment" id="prod">
+                                            <label class="form-check-label" for="prod">Prod</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="environment" id="preprod">
+                                            <label class="form-check-label" for="preprod">Preprod</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="environment" id="demo">
+                                            <label class="form-check-label" for="demo">Demo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="description" rows="4"></textarea>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="startDate" class="form-label">Fecha de inicio</label>
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" id="startDate">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="duration" class="form-label">Duración (en horas)</label>
+                                    <div class="input-group">
+                                        <button class="btn btn-outline-secondary" type="button" id="decreaseDuration">-</button>
+                                        <input type="number" class="form-control text-center" id="duration" value="1.00" step="0.01" min="0">
+                                        <button class="btn btn-outline-secondary" type="button" id="increaseDuration">+</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="status" class="form-label">Estado</label>
+                                    <select class="form-select" id="status">
+                                        <option>Planificado</option>
+                                        <option>En progreso</option>
+                                        <option>Completado</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="percent" class="form-label">Porcentaje completado</label>
+                                    <select class="form-select" id="percent">
+                                        <option>0 %</option>
+                                        <option>25 %</option>
+                                        <option>50 %</option>
+                                        <option>75 %</option>
+                                        <option>100 %</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="sendEmail">
+                                    <label class="form-check-label" for="sendEmail">
+                                        Marque aquí si desea enviar un correo electrónico
+                                    </label>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-secondary">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Enviar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const durationInput = document.getElementById('duration');
+            const decreaseButton = document.getElementById('decreaseDuration');
+            const increaseButton = document.getElementById('increaseDuration');
+
+            function updateDuration(change) {
+                let currentValue = parseFloat(durationInput.value);
+                let newValue = Math.max(0, currentValue + change);
+                durationInput.value = newValue.toFixed(2);
+            }
+
+            decreaseButton.addEventListener('click', function() {
+                updateDuration(-1);
+            });
+
+            increaseButton.addEventListener('click', function() {
+                updateDuration(1);
+            });
+
+            durationInput.addEventListener('change', function() {
+                let value = parseFloat(this.value);
+                if (isNaN(value) || value < 0) {
+                    this.value = '0.00';
+                } else {
+                    this.value = value.toFixed(2);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

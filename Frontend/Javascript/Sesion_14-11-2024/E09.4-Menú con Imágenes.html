@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú con Imágenes</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h2>Selecciona una opción para ver la imagen correspondiente</h2>
+
+    <label for="imageMenu">Elige una imagen:</label>
+    <select id="imageMenu">
+        <option value="https://saberpunto.com/wp-content/uploads/programacion-c-o-lenguaje-c-o-desarrollo-en-c.webp">C#</option>
+        <option value="https://cdn.sanity.io/images/3do82whm/next/a69e3ba2441d35dd1a7945e826064708f30c10a9-1000x667.jpg?w=720&h=480&fit=clip&auto=format">Javascript</option>
+        <option value="https://media.istockphoto.com/id/1158068305/es/vector/pedazo-de-mierda-marr%C3%B3n-icono-de-caca-de-dibujos-animados-ilustraci%C3%B3n-del-emblema-vectorial.jpg?s=612x612&w=0&k=20&c=Y27_q-Km78wLZ2AyCnbFoTvX9qGp3pYUyw9cxf79540=">Python</option>
+        <option value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8HA74bZAbN6-29MWfzEDunTc8nHguD7V_bQ&s">Java</option>
+    </select>
+    
+    <br><br>
+    <img id="displayImage" src="https://saberpunto.com/wp-content/uploads/programacion-c-o-lenguaje-c-o-desarrollo-en-c.webp" alt="Imagen seleccionada" width="300" style="border: 1px solid #ddd;">
+</body>
+<script>
+    $(document).ready(function() {
+        // Detectar cambios en el menú desplegable
+        $('#imageMenu').on('change', function() {
+            const selectedImage = $(this).val();
+            $('#displayImage').attr('src', selectedImage);
+        });
+    });
+</script>
+</html>

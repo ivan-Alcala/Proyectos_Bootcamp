@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Múltiplos de 23</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h2>Múltiplos de 23 menores a 1000</h2>
+    <button id="calculate">Calcular múltiplos y suma</button>
+    <div id="result"></div>
+</body>
+<script>
+    $(document).ready(function() {
+        $('#calculate').on('click', function() {
+            let multiples = [];
+            let sum = 0;
+
+            // Encontrar los múltiplos de 23 menores a 1000
+            for (let i = 23; i < 1000; i += 23) {
+                multiples.push(i);
+                sum += i;
+            }
+
+            $('#result').html(`<p>Múltiplos de 23: ${multiples.join(', ')}</p>
+                               <p>Suma de los múltiplos: ${sum}</p>`);
+        });
+    });
+</script>
+</html>

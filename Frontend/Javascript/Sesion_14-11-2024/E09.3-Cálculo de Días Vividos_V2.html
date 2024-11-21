@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Días Vividos_V2</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h2>Calcula los Días que has Vivido</h2>
+    
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" placeholder="Introduce tu nombre">
+    <br><br>
+    
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" placeholder="Introduce tu edad">
+    <br><br>
+
+    <button id="calcular">Calcular Días Vividos</button>
+    <p id="resultado"></p>
+</body>
+<script>
+    $(document).ready(function() {
+        $('#calcular').on('click', function() {
+            const nombre = $('#nombre').val();
+            const edad = parseInt($('#edad').val(), 10);
+
+            if (!isNaN(edad) && nombre) {
+                const diasVividos = edad * 365;
+                $('#resultado').text(`Hola ${nombre}, has vivido aproximadamente ${diasVividos} días.`);
+            } else {
+                $('#resultado').text("Por favor, introduce datos válidos.");
+            }
+        });
+    });
+</script>
+</html>

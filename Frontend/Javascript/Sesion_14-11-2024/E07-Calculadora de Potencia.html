@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calculadora de Potencia</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h2>Calculadora de Potencia</h2>
+    <label for="base">Base:</label>
+    <input type="number" id="base" placeholder="Introduce la base">
+    <br><br>
+    <label for="exponent">Exponente:</label>
+    <input type="number" id="exponent" placeholder="Introduce el exponente">
+    <br><br>
+    <button id="calculateBtn">Calcular</button>
+    <p id="result">Resultado: </p>
+</body>
+<script>
+    function power(base, exponent) {
+        let result = 1;
+
+        // Calculamos la potencia para exponentes positivos
+        for (let i = 0; i < Math.abs(exponent); i++) {
+            result *= base;
+        }
+
+        // Si el exponente es negativo, invertimos el resultado
+        return exponent < 0 ? 1 / result : result;
+    }
+
+    $(document).ready(function() {
+        $('#calculateBtn').on('click', function() {
+            const base = parseFloat($('#base').val());
+            const exponent = parseInt($('#exponent').val());
+            const result = power(base, exponent);
+
+            $('#result').text(`Resultado: ${result}`);
+        });
+    });
+</script>
+</html>

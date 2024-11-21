@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Validador de DNI</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h2>Validador de DNI</h2>
+    <label for="dni">Introduce tu DNI:</label>
+    <input type="text" id="dni" placeholder="Formato: 12345678Z">
+    <br><br>
+    <button id="validateBtn">Validar DNI</button>
+    <p id="result">Resultado: </p>
+</body>
+<script>
+    function validateDNI() {
+        const dni = $('#dni').val().toUpperCase();
+        const letters = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+        // Verificar que el formato del DNI es correcto (8 dígitos seguidos de 1 letra)
+        const dniRegex = /^\d{8}[A-Z]$/;
+        if (!dniRegex.test(dni)) {
+            $('#result').text("Resultado: Formato de DNI inválido");
+            return;
+        }
+
+        // Extraer número y letra del DNI
+        const dniNumber = parseInt(dni.slice(0, 8), 10);
+        const dniLetter = dni.slice(8);
+
+        // Calcular la letra correspondiente
+        const calculatedLetter = letters[dniNumber % 23];
+
+        // Comparar la letra calculada con la letra ingresada
+        if (calculatedLetter === dniLetter) {
+            $('#result').text("Resultado: DNI válido");
+        } else {
+            $('#result').text("Resultado: DNI inválido");
+        }
+    }
+
+    $(document).ready(function() {
+        $('#validateBtn').on('click', validateDNI);
+    });
+</script>
+</html>
