@@ -10,6 +10,7 @@ namespace ASP.NET_Ahorcado
     {
         private static readonly string[] words = { "JAVASCRIPT", "PROGRAMA", "COMPUTADORA", "DESARROLLO", "APLICACION" };
         private const int MaxAttempts = 7;
+        private const int GameDuration = 180; // 3 minutos
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -32,6 +33,10 @@ namespace ASP.NET_Ahorcado
             {
                 CheckLetter(eventArgument);
             }
+            else if (eventTarget == "TimeUp")
+            {
+                EndGame(false, "¡Se acabó el tiempo!");
+            }
         }
 
         private void InitGame()
@@ -40,6 +45,7 @@ namespace ASP.NET_Ahorcado
             selectedWordHiddenField.Value = selectedWord;
             remainingAttemptsHiddenField.Value = MaxAttempts.ToString();
             gameOverHiddenField.Value = "false";
+            timeLeftHiddenField.Value = GameDuration.ToString();
 
             // Limpiar las letras usadas en la sesión
             foreach (string key in Session.Keys.Cast<string>().Where(k => k.StartsWith("Letter_")).ToList())
@@ -55,6 +61,7 @@ namespace ASP.NET_Ahorcado
             messageLiteral.Text = string.Empty;
             restartBtn.Style["display"] = "none";
 
+            ClientScript.RegisterStartupScript(GetType(), "StartTimer", $"startTimer({GameDuration});", true);
             ClientScript.RegisterStartupScript(GetType(), "ResetCharacters", "resetCharacters();", true);
         }
 
@@ -159,19 +166,18 @@ namespace ASP.NET_Ahorcado
 
             if (guessedWord == selectedWord)
             {
-                messageLiteral.Text = "<div class='message-win'>¡Felicidades! Has ganado.</div>";
-                EndGame(true);
+                EndGame(true, "<div class='message-win'>¡Felicidades! Has ganado.</div>");
             }
             else if (remainingAttempts == 0)
             {
-                messageLiteral.Text = $"<div class='message-lose'>Has perdido. La palabra era: {selectedWord}</div>";
-                EndGame(false);
+                EndGame(false, $"<div class='message-lose'>Has perdido. La palabra era: {selectedWord}</div>");
             }
         }
 
-        private void EndGame(bool isWin)
+        private void EndGame(bool isWin, string message)
         {
             gameOverHiddenField.Value = "true";
+            messageLiteral.Text = message;
 
             foreach (RepeaterItem item in alphabetRepeater.Items)
             {
@@ -183,6 +189,7 @@ namespace ASP.NET_Ahorcado
             }
 
             restartBtn.Style["display"] = "inline-block";
+            ClientScript.RegisterStartupScript(GetType(), "StopTimer", "stopTimer();", true);
 
             if (isWin)
             {
@@ -201,3 +208,4 @@ namespace ASP.NET_Ahorcado
         }
     }
 }
+

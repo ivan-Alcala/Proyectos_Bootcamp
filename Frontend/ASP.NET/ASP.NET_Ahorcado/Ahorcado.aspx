@@ -119,10 +119,16 @@
             pointer-events: none;
             z-index: 2;
         }
+        #timer {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
     </style>
 
     <div id="game-container">
         <h1>Combate de Palabras</h1>
+        <div id="timer">Tiempo restante: <span id="time-left"></span></div>
         <div id="battle-scene">
             <div id="person" class="character">🧙</div>
             <div id="goblin" class="character">👺</div>
@@ -154,11 +160,40 @@
     <asp:HiddenField ID="selectedWordHiddenField" runat="server" />
     <asp:HiddenField ID="remainingAttemptsHiddenField" runat="server" />
     <asp:HiddenField ID="gameOverHiddenField" runat="server" />
+    <asp:HiddenField ID="timeLeftHiddenField" runat="server" />
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
+        let timer;
+
+        function startTimer(duration) {
+            let timeLeft = duration;
+            updateTimerDisplay(timeLeft);
+
+            timer = setInterval(function () {
+                timeLeft--;
+                updateTimerDisplay(timeLeft);
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    __doPostBack('TimeUp', '');
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay(timeLeft) {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            $('#time-left').text(minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0'));
+            $('#<%= timeLeftHiddenField.ClientID %>').val(timeLeft);
+        }
+
+        function stopTimer() {
+            clearInterval(timer);
+        }
+
         function animateAttack(attacker, target) {
             const $attacker = $(attacker);
             const $target = $(target);
@@ -262,6 +297,11 @@
         }
 
         $(document).ready(function () {
+            const initialTime = parseInt($('#<%= timeLeftHiddenField.ClientID %>').val());
+            if (initialTime > 0) {
+                startTimer(initialTime);
+            }
+
             $(document).on('click', '.letter-btn', function (e) {
                 if (!$(this).prop('disabled') && $('#<%= gameOverHiddenField.ClientID %>').val() !== 'true') {
                     __doPostBack($(this).attr('name'), $(this).text());
@@ -273,3 +313,4 @@
         });
     </script>
 </asp:Content>
+

@@ -85,5 +85,14 @@ namespace ASP.NET_Ahorcado
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField gameOverHiddenField;
+
+        /// <summary>
+        /// Control timeLeftHiddenField.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField timeLeftHiddenField;
     }
 }
