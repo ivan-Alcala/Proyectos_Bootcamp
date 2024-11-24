@@ -125,57 +125,143 @@
             font-weight: bold;
         }
         .circular-menu {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
+          position: fixed;
+          bottom: 1em;
+          right: 1em;
         }
 
-        .circular-menu .menu-button {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #007bff;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 24px;
-            transition: transform 0.3s ease-in-out;
+        .circular-menu .floating-btn {
+          display: block;
+          width: 3.5em;
+          height: 3.5em;
+          border-radius: 50%;
+          background-color: hsl(4, 98%, 60%);
+          box-shadow: 0 2px 5px 0 hsla(0, 0%, 0%, .26);  
+          color: hsl(0, 0%, 100%);
+          text-align: center;
+          line-height: 3.9;
+          cursor: pointer;
+          outline: 0;
         }
 
-        .circular-menu .menu-button:hover {
-            transform: scale(1.1);
+        .circular-menu.active .floating-btn {
+          box-shadow: inset 0 0 3px hsla(0, 0%, 0%, .3);
         }
 
-        .circular-menu .menu-items {
-            position: absolute;
-            bottom: 70px;
-            right: 0;
-            display: none;
-            transition: all 0.3s ease-out;
+        .circular-menu .floating-btn:active {
+          box-shadow: 0 4px 8px 0 hsla(0, 0%, 0%, .4);
+        }
+
+        .circular-menu .floating-btn i {
+          font-size: 1.3em;
+          transition: transform .2s;  
+        }
+
+        .circular-menu.active .floating-btn i {
+          transform: rotate(-45deg);
+        }
+
+        .circular-menu:after {
+          display: block;
+          content: ' ';
+          width: 3.5em;
+          height: 3.5em;
+          border-radius: 50%;
+          position: absolute;
+          top: 0;
+          right: 0;
+          z-index: -2;
+          background-color: hsl(4, 98%, 60%);
+          transition: all .3s ease;
+        }
+
+        .circular-menu.active:after {
+          transform: scale3d(5.5, 5.5, 1);
+          transition-timing-function: cubic-bezier(.68, 1.55, .265, 1);
+        }
+
+        .circular-menu .items-wrapper {
+          padding: 0;
+          margin: 0;
         }
 
         .circular-menu .menu-item {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #f8f9fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 10px;
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out, background-color 0.3s;
-            position: absolute;
-            right: 5px;
-            bottom: 5px;
+          position: absolute;
+          top: .2em;
+          right: .2em;
+          z-index: -1;
+          display: block;
+          text-decoration: none;
+          color: hsl(0, 0%, 100%);
+          font-size: 1em;
+          width: 3em;
+          height: 3em;
+          border-radius: 50%;
+          text-align: center;
+          line-height: 3;
+          background-color: hsla(0,0%,0%,.1);
+          transition: transform .3s ease, background .2s ease;
         }
 
         .circular-menu .menu-item:hover {
-            transform: scale(1.1);
-            background-color: #e9ecef;
+          background-color: hsla(0,0%,0%,.3);
+        }
+
+        .circular-menu.active .menu-item {
+          transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .circular-menu.active .menu-item:nth-child(1) {
+          transform: translate3d(1em,-7em,0);
+        }
+
+        .circular-menu.active .menu-item:nth-child(2) {
+          transform: translate3d(-3.5em,-6.3em,0);
+        }
+
+        .circular-menu.active .menu-item:nth-child(3) {
+          transform: translate3d(-6.5em,-3.2em,0);
+        }
+
+        .circular-menu.active .menu-item:nth-child(4) {
+          transform: translate3d(-7em,1em,0);
+        }
+
+        /**
+         * The other theme for this menu
+         */
+
+        .circular-menu.circular-menu-left {
+          right: auto; 
+          left: 1em;
+        }
+
+        .circular-menu.circular-menu-left .floating-btn {
+          background-color: hsl(217, 89%, 61%);
+        }
+
+        .circular-menu.circular-menu-left:after {
+          background-color: hsl(217, 89%, 61%);
+        }
+
+        .circular-menu.circular-menu-left.active .floating-btn i {
+          transform: rotate(90deg);
+        }
+
+        .circular-menu.circular-menu-left.active .menu-item:nth-child(1) {
+          transform: translate3d(-1em,-7em,0);
+        }
+
+        .circular-menu.circular-menu-left.active .menu-item:nth-child(2) {
+          transform: translate3d(3.5em,-6.3em,0);
+        }
+
+        .circular-menu.circular-menu-left.active .menu-item:nth-child(3) {
+          transform: translate3d(6.5em,-3.2em,0);
+        }
+
+        .circular-menu.circular-menu-left.active .menu-item:nth-child(4) {
+          transform: translate3d(7em,1em,0);
         }
 
         .modal {
@@ -243,14 +329,15 @@
             <asp:Literal ID="messageLiteral" runat="server" />
         </div>
         <asp:Button ID="restartBtn" runat="server" Text="Reiniciar Juego" CssClass="btn btn-primary" OnClick="RestartBtn_Click" style="display: none;" />
-        <div class="circular-menu">
-            <div class="menu-button">☰</div>
-            <div class="menu-items">
-                <div class="menu-item" data-action="character" title="Cambiar Personaje">👤</div>
-                <div class="menu-item" data-action="time" title="Cambiar Tiempo">⏱️</div>
-                <div class="menu-item" data-action="instructions" title="Instrucciones">❓</div>
-                <div class="menu-item" data-action="attempts" title="Cambiar Intentos">🎯</div>
-            </div>
+        
+        <div id="circularMenu1" class="circular-menu">
+            <a class="floating-btn" onclick="document.getElementById('circularMenu1').classList.toggle('active');">☰</a>
+            <menu class="items-wrapper">
+                <a data-action="character" class="menu-item" title="Cambiar Personaje">👤</a>
+                <a data-action="time" class="menu-item" title="Cambiar Tiempo">⏱️</a>
+                <a data-action="instructions" class="menu-item" title="Instrucciones">❓</a>
+                <a data-action="attempts" class="menu-item" title="Cambiar Intentos">🎯</a>
+            </menu>
         </div>
 
         <div id="characterModal" class="modal">
@@ -460,6 +547,7 @@
         }
 
         function showModal(modalId) {
+            console.log("asd");
             document.getElementById(modalId).style.display = "block";
         }
 
@@ -467,43 +555,10 @@
             document.getElementById(modalId).style.display = "none";
         }
 
-        document.querySelector('.menu-button').addEventListener('click', function() {
-            const menuItems = document.querySelector('.menu-items');
-            if (menuItems.style.display === 'block') {
-                hideMenuItems();
-            } else {
-                showMenuItems();
-            }
-        });
-
-        function showMenuItems() {
-            const menuItems = document.querySelectorAll('.menu-item');
-            document.querySelector('.menu-items').style.display = 'block';
-            menuItems.forEach((item, index) => {
-                const angle = (index * (360 / menuItems.length) - 45) * (Math.PI / 180);
-                const x = Math.cos(angle) * 80;
-                const y = Math.sin(angle) * 80;
-                item.style.transform = `translate(${x}px, ${y}px)`;
-                item.style.opacity = '1';
-            });
-        }
-
-        function hideMenuItems() {
-            const menuItems = document.querySelectorAll('.menu-item');
-            menuItems.forEach((item) => {
-                item.style.transform = 'translate(0, 0)';
-                item.style.opacity = '0';
-            });
-            setTimeout(() => {
-                document.querySelector('.menu-items').style.display = 'none';
-            }, 300);
-        }
-
         document.querySelectorAll('.menu-item').forEach(item => {
             item.addEventListener('click', function() {
                 const action = this.getAttribute('data-action');
                 showModal(action + 'Modal');
-                hideMenuItems();
             });
         });
 
