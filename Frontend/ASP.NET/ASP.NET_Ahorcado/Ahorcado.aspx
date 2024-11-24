@@ -124,6 +124,95 @@
             margin-bottom: 10px;
             font-weight: bold;
         }
+        .circular-menu {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .circular-menu .menu-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 24px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .circular-menu .menu-button:hover {
+            transform: scale(1.1);
+        }
+
+        .circular-menu .menu-items {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            display: none;
+            transition: all 0.3s ease-out;
+        }
+
+        .circular-menu .menu-item {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, background-color 0.3s;
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+        }
+
+        .circular-menu .menu-item:hover {
+            transform: scale(1.1);
+            background-color: #e9ecef;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 
     <div id="game-container">
@@ -154,6 +243,64 @@
             <asp:Literal ID="messageLiteral" runat="server" />
         </div>
         <asp:Button ID="restartBtn" runat="server" Text="Reiniciar Juego" CssClass="btn btn-primary" OnClick="RestartBtn_Click" style="display: none;" />
+        <div class="circular-menu">
+            <div class="menu-button">☰</div>
+            <div class="menu-items">
+                <div class="menu-item" data-action="character" title="Cambiar Personaje">👤</div>
+                <div class="menu-item" data-action="time" title="Cambiar Tiempo">⏱️</div>
+                <div class="menu-item" data-action="instructions" title="Instrucciones">❓</div>
+                <div class="menu-item" data-action="attempts" title="Cambiar Intentos">🎯</div>
+            </div>
+        </div>
+
+        <div id="characterModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Seleccionar Personaje</h2>
+                <div id="characterOptions">
+                    <button class="character-option" data-character="🧙">🧙</button>
+                    <button class="character-option" data-character="🦸">🦸</button>
+                    <button class="character-option" data-character="🧝">🧝</button>
+                    <button class="character-option" data-character="🧚">🧚</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="timeModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Cambiar Tiempo</h2>
+                <asp:DropDownList ID="timeDropDown" runat="server" AutoPostBack="true" OnSelectedIndexChanged="TimeDropDown_SelectedIndexChanged">
+                    <asp:ListItem Value="60">1 minuto</asp:ListItem>
+                    <asp:ListItem Value="180">3 minutos</asp:ListItem>
+                    <asp:ListItem Value="300">5 minutos</asp:ListItem>
+                    <asp:ListItem Value="-1">Infinito</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+        </div>
+
+        <div id="instructionsModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Instrucciones</h2>
+                <p>1. Adivina la palabra oculta letra por letra.</p>
+                <p>2. Cada letra incorrecta reduce tus intentos.</p>
+                <p>3. Gana adivinando la palabra antes de quedarte sin intentos o que se acabe el tiempo.</p>
+            </div>
+        </div>
+
+        <div id="attemptsModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Cambiar Intentos</h2>
+                <asp:DropDownList ID="attemptsDropDown" runat="server" AutoPostBack="true" OnSelectedIndexChanged="AttemptsDropDown_SelectedIndexChanged">
+                    <asp:ListItem Value="3">3 intentos</asp:ListItem>
+                    <asp:ListItem Value="5">5 intentos</asp:ListItem>
+                    <asp:ListItem Value="7">7 intentos</asp:ListItem>
+                    <asp:ListItem Value="10">10 intentos</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+        </div>
     </div>
     <canvas id="confetti-canvas"></canvas>
 
@@ -167,8 +314,15 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
         let timer;
+        let selectedCharacter = '🧙';
 
         function startTimer(duration) {
+            clearInterval(timer);
+            if (duration === -1) {
+                document.getElementById('time-left').textContent = 'Infinito';
+                return;
+            }
+
             let timeLeft = duration;
             updateTimerDisplay(timeLeft);
 
@@ -210,7 +364,12 @@
                     $attacker.animate({
                         left: attacker === '#person' ? originalPosition : '',
                         right: attacker === '#goblin' ? originalPosition : ''
-                    }, 500);
+                    }, 500, function() {
+                        // Restaurar el personaje seleccionado después de la animación
+                        if (attacker === '#person') {
+                            document.getElementById('person').textContent = selectedCharacter;
+                        }
+                    });
                 }, 500);
             });
         }
@@ -254,17 +413,17 @@
                 }
 
                 const particleCount = 200 * (timeLeft / duration);
-                
+
                 // Fire colors
                 const fireColors = ['#ff6600', '#ff9933', '#ffcc00', '#ff3300', '#ff0000'];
-                
+
                 // Create multiple origins for a more explosive effect
                 for (let i = 0; i < 5; i++) {
                     confetti(Object.assign({}, defaults, {
                         particleCount: particleCount / 5,
-                        origin: { 
-                            x: randomInRange(0.3, 0.7), 
-                            y: randomInRange(0.4, 0.6) 
+                        origin: {
+                            x: randomInRange(0.3, 0.7),
+                            y: randomInRange(0.4, 0.6)
                         },
                         colors: fireColors,
                         gravity: 1,
@@ -282,8 +441,12 @@
         }
 
         function resetCharacters() {
-            $('#person').text('🧙').css({ 'left': '0', 'right': '' });
-            $('#goblin').text('👺').css({ 'right': '0', 'left': '' });
+            document.getElementById('person').textContent = selectedCharacter;
+            document.getElementById('goblin').textContent = '👺';
+            document.getElementById('person').style.left = '0';
+            document.getElementById('person').style.right = '';
+            document.getElementById('goblin').style.right = '0';
+            document.getElementById('goblin').style.left = '';
         }
 
         function handleKeyPress(e) {
@@ -296,7 +459,99 @@
             }
         }
 
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        document.querySelector('.menu-button').addEventListener('click', function() {
+            const menuItems = document.querySelector('.menu-items');
+            if (menuItems.style.display === 'block') {
+                hideMenuItems();
+            } else {
+                showMenuItems();
+            }
+        });
+
+        function showMenuItems() {
+            const menuItems = document.querySelectorAll('.menu-item');
+            document.querySelector('.menu-items').style.display = 'block';
+            menuItems.forEach((item, index) => {
+                const angle = (index * (360 / menuItems.length) - 45) * (Math.PI / 180);
+                const x = Math.cos(angle) * 80;
+                const y = Math.sin(angle) * 80;
+                item.style.transform = `translate(${x}px, ${y}px)`;
+                item.style.opacity = '1';
+            });
+        }
+
+        function hideMenuItems() {
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach((item) => {
+                item.style.transform = 'translate(0, 0)';
+                item.style.opacity = '0';
+            });
+            setTimeout(() => {
+                document.querySelector('.menu-items').style.display = 'none';
+            }, 300);
+        }
+
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const action = this.getAttribute('data-action');
+                showModal(action + 'Modal');
+                hideMenuItems();
+            });
+        });
+
+        document.querySelectorAll('.close').forEach(closeBtn => {
+            closeBtn.addEventListener('click', function() {
+                closeModal(this.closest('.modal').id);
+            });
+        });
+
+        document.querySelectorAll('.character-option').forEach(option => {
+            option.addEventListener('click', function() {
+                selectedCharacter = this.getAttribute('data-character');
+                document.getElementById('person').textContent = selectedCharacter;
+                closeModal('characterModal');
+                // Guardar el personaje seleccionado en el almacenamiento local
+                localStorage.setItem('selectedCharacter', selectedCharacter);
+            });
+        });
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(event.target.id);
+            }
+        }
+
+        function updateGameDuration(duration) {
+            if (duration === -1) {
+                clearInterval(timer);
+                document.getElementById('time-left').textContent = 'Infinito';
+            } else {
+                startTimer(duration);
+            }
+        }
+
+        // Función para restaurar el personaje seleccionado
+        function restoreSelectedCharacter() {
+            const storedCharacter = localStorage.getItem('selectedCharacter');
+            if (storedCharacter) {
+                selectedCharacter = storedCharacter;
+                document.getElementById('person').textContent = selectedCharacter;
+            }
+        }
+
+        // Llamar a esta función cuando se inicie o reinicie el juego
         $(document).ready(function () {
+            restoreSelectedCharacter();
+            resetCharacters();
+
             const initialTime = parseInt($('#<%= timeLeftHiddenField.ClientID %>').val());
             if (initialTime > 0) {
                 startTimer(initialTime);

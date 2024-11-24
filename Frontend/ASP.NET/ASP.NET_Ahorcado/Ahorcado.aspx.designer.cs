@@ -60,6 +60,24 @@ namespace ASP.NET_Ahorcado
         protected global::System.Web.UI.WebControls.Button restartBtn;
 
         /// <summary>
+        /// Control timeDropDown.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList timeDropDown;
+
+        /// <summary>
+        /// Control attemptsDropDown.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList attemptsDropDown;
+
+        /// <summary>
         /// Control selectedWordHiddenField.
         /// </summary>
         /// <remarks>

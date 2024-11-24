@@ -9,8 +9,8 @@ namespace ASP.NET_Ahorcado
     public partial class _Default : Page
     {
         private static readonly string[] words = { "JAVASCRIPT", "PROGRAMA", "COMPUTADORA", "DESARROLLO", "APLICACION" };
-        private const int MaxAttempts = 7;
-        private const int GameDuration = 180; // 3 minutos
+        private const int DefaultGameDuration = 180; // 3 minutos
+        private const int DefaultMaxAttempts = 7;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,6 +21,12 @@ namespace ASP.NET_Ahorcado
             else
             {
                 RestoreGameState();
+            }
+
+            if (!IsPostBack)
+            {
+                timeDropDown.SelectedValue = Session["GameDuration"]?.ToString() ?? DefaultGameDuration.ToString();
+                attemptsDropDown.SelectedValue = Session["MaxAttempts"]?.ToString() ?? DefaultMaxAttempts.ToString();
             }
         }
 
@@ -43,9 +49,14 @@ namespace ASP.NET_Ahorcado
         {
             string selectedWord = words[new Random().Next(words.Length)];
             selectedWordHiddenField.Value = selectedWord;
-            remainingAttemptsHiddenField.Value = MaxAttempts.ToString();
+
+            int maxAttempts = Session["MaxAttempts"] != null ? (int)Session["MaxAttempts"] : DefaultMaxAttempts;
+            remainingAttemptsHiddenField.Value = maxAttempts.ToString();
+
+            int gameDuration = Session["GameDuration"] != null ? (int)Session["GameDuration"] : DefaultGameDuration;
+            timeLeftHiddenField.Value = gameDuration.ToString();
+
             gameOverHiddenField.Value = "false";
-            timeLeftHiddenField.Value = GameDuration.ToString();
 
             // Limpiar las letras usadas en la sesión
             foreach (string key in Session.Keys.Cast<string>().Where(k => k.StartsWith("Letter_")).ToList())
@@ -61,7 +72,7 @@ namespace ASP.NET_Ahorcado
             messageLiteral.Text = string.Empty;
             restartBtn.Style["display"] = "none";
 
-            ClientScript.RegisterStartupScript(GetType(), "StartTimer", $"startTimer({GameDuration});", true);
+            ClientScript.RegisterStartupScript(GetType(), "StartTimer", $"startTimer({gameDuration});", true);
             ClientScript.RegisterStartupScript(GetType(), "ResetCharacters", "resetCharacters();", true);
         }
 
@@ -82,8 +93,9 @@ namespace ASP.NET_Ahorcado
         private void UpdateHearts()
         {
             int remainingAttempts = int.Parse(remainingAttemptsHiddenField.Value);
+            int maxAttempts = Session["MaxAttempts"] != null ? (int)Session["MaxAttempts"] : DefaultMaxAttempts;
             heartsLiteral.Text = string.Join("", Enumerable.Repeat("❤️", remainingAttempts)) +
-                                 string.Join("", Enumerable.Repeat("🖤", MaxAttempts - remainingAttempts));
+                                 string.Join("", Enumerable.Repeat("🖤", maxAttempts - remainingAttempts));
         }
 
         private void CreateAlphabet()
@@ -205,6 +217,22 @@ namespace ASP.NET_Ahorcado
         {
             Session.Clear();
             InitGame();
+        }
+
+        protected void TimeDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectedDuration = int.Parse(timeDropDown.SelectedValue);
+            Session["GameDuration"] = selectedDuration;
+            timeLeftHiddenField.Value = selectedDuration.ToString();
+            ClientScript.RegisterStartupScript(GetType(), "UpdateTimer", $"updateGameDuration({selectedDuration});", true);
+        }
+
+        protected void AttemptsDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectedAttempts = int.Parse(attemptsDropDown.SelectedValue);
+            Session["MaxAttempts"] = selectedAttempts;
+            remainingAttemptsHiddenField.Value = selectedAttempts.ToString();
+            UpdateHearts();
         }
     }
 }
