@@ -452,8 +452,8 @@
                         left: attacker === '#person' ? originalPosition : '',
                         right: attacker === '#goblin' ? originalPosition : ''
                     }, 500, function() {
-                        // Restaurar el personaje seleccionado después de la animación
-                        if (attacker === '#person') {
+                        // Solo restaurar el personaje si el juego no está terminado
+                        if (attacker === '#person' && $('#<%= gameOverHiddenField.ClientID %>').val() !== 'true') {
                             document.getElementById('person').textContent = selectedCharacter;
                         }
                     });
@@ -528,8 +528,11 @@
         }
 
         function resetCharacters() {
-            document.getElementById('person').textContent = selectedCharacter;
-            document.getElementById('goblin').textContent = '👺';
+            // Solo resetear los personajes si el juego no está terminado
+            if ($('#<%= gameOverHiddenField.ClientID %>').val() !== 'true') {
+                document.getElementById('person').textContent = selectedCharacter;
+                document.getElementById('goblin').textContent = '👺';
+            }
             document.getElementById('person').style.left = '0';
             document.getElementById('person').style.right = '';
             document.getElementById('goblin').style.right = '0';

@@ -16,6 +16,16 @@ namespace ASP.NET_Ahorcado
         {
             if (!IsPostBack)
             {
+                // Solo inicializamos los valores por defecto si no existen en la sesión
+                if (Session["GameDuration"] == null)
+                {
+                    Session["GameDuration"] = DefaultGameDuration;
+                }
+                if (Session["MaxAttempts"] == null)
+                {
+                    Session["MaxAttempts"] = DefaultMaxAttempts;
+                }
+
                 InitGame();
             }
             else
@@ -23,10 +33,11 @@ namespace ASP.NET_Ahorcado
                 RestoreGameState();
             }
 
+            // Actualizamos los dropdowns para reflejar los valores actuales
             if (!IsPostBack)
             {
-                timeDropDown.SelectedValue = Session["GameDuration"]?.ToString() ?? DefaultGameDuration.ToString();
-                attemptsDropDown.SelectedValue = Session["MaxAttempts"]?.ToString() ?? DefaultMaxAttempts.ToString();
+                timeDropDown.SelectedValue = Session["GameDuration"].ToString();
+                attemptsDropDown.SelectedValue = Session["MaxAttempts"].ToString();
             }
         }
 
@@ -50,10 +61,11 @@ namespace ASP.NET_Ahorcado
             string selectedWord = words[new Random().Next(words.Length)];
             selectedWordHiddenField.Value = selectedWord;
 
-            int maxAttempts = Session["MaxAttempts"] != null ? (int)Session["MaxAttempts"] : DefaultMaxAttempts;
+            // Usar los valores de la sesión en lugar de los valores por defecto
+            int maxAttempts = (int)Session["MaxAttempts"];
             remainingAttemptsHiddenField.Value = maxAttempts.ToString();
 
-            int gameDuration = Session["GameDuration"] != null ? (int)Session["GameDuration"] : DefaultGameDuration;
+            int gameDuration = (int)Session["GameDuration"];
             timeLeftHiddenField.Value = gameDuration.ToString();
 
             gameOverHiddenField.Value = "false";
@@ -72,6 +84,7 @@ namespace ASP.NET_Ahorcado
             messageLiteral.Text = string.Empty;
             restartBtn.Style["display"] = "none";
 
+            // Registrar scripts para inicializar el juego
             ClientScript.RegisterStartupScript(GetType(), "StartTimer", $"startTimer({gameDuration});", true);
             ClientScript.RegisterStartupScript(GetType(), "ResetCharacters", "resetCharacters();", true);
         }
@@ -209,13 +222,23 @@ namespace ASP.NET_Ahorcado
             }
             else
             {
-                ClientScript.RegisterStartupScript(GetType(), "LoseAnimation", "$('#person').text('💀'); createFireExplosion();", true);
+                ClientScript.RegisterStartupScript(GetType(), "LoseAnimation", "$('#person').text('💀');", true);
+                ClientScript.RegisterStartupScript(GetType(), "FireAnimation", "createFireExplosion();", true);
             }
         }
 
         protected void RestartBtn_Click(object sender, EventArgs e)
         {
+            // Mantener solo los valores de configuración en la sesión
+            var gameDuration = Session["GameDuration"];
+            var maxAttempts = Session["MaxAttempts"];
+
             Session.Clear();
+
+            // Restaurar los valores de configuración
+            Session["GameDuration"] = gameDuration;
+            Session["MaxAttempts"] = maxAttempts;
+
             InitGame();
         }
 
