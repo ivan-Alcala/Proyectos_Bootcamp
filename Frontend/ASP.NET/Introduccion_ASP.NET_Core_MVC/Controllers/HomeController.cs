@@ -1,3 +1,4 @@
+using Introduccion_ASP.NET_Core_MVC.DAL;
 using Introduccion_ASP.NET_Core_MVC.Models;
 using Introduccion_ASP.NET_Core_MVC.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,11 @@ namespace Introduccion_ASP.NET_Core_MVC.Controllers
         public IActionResult Index()
         {
             AnimalesViewModel animalesViewModel = new AnimalesViewModel();
+            DALAnimal _DALAnimal = new DALAnimal();
+            DALTipoAnimal _DALTipoAnimal = new DALTipoAnimal();
+
+            animalesViewModel.ListAnimal = _DALAnimal.GetAll();
+            animalesViewModel.ListTipoAnimal = _DALTipoAnimal.GetAll();
             return View(animalesViewModel);
         }
 
