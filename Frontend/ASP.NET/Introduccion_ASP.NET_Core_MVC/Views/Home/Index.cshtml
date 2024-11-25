@@ -10,6 +10,11 @@
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
     <h1>Lista de Animales</h1>
+    <span>
+        <form asp-action="AddAnimal" asp-controller="Animal" style="display: inline;">
+            <button type="submit">+</button>
+        </form>
+    </span>
     <ul>
         @{
             if (Model.ListAnimal == null || Model.ListAnimal.Count <= 0) { return; }
