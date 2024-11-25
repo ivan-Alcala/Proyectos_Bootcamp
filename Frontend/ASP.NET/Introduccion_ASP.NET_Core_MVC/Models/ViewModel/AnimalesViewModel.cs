@@ -2,7 +2,7 @@
 {
     public class AnimalesViewModel
     {
-        public List<AnimalModel> ListAnimal { get; set; } = new List<AnimalModel>();
+        public List<Animal> ListAnimal { get; set; } = new List<Animal>();
         public List<TipoAnimalModel> ListTipoAnimal { get; set; } = new List<TipoAnimalModel>();
     }
 }

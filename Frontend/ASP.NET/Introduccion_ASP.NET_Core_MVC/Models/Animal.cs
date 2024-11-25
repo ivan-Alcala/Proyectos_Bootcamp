@@ -1,6 +1,6 @@
 ﻿namespace Introduccion_ASP.NET_Core_MVC.Models
 {
-    public class AnimalModel
+    public class Animal
     {
         public int IdAnimal { get; set; }
         public string NombreAnimal { get; set; }

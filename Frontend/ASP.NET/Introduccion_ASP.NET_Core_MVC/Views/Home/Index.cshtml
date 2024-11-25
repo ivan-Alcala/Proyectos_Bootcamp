@@ -16,7 +16,14 @@
 
             foreach (var animal in Model.ListAnimal)
             {
-                <li><span class="animal-id">ID: @(animal.IdAnimal) </span>@animal.NombreAnimal</li>
+                <li>
+                    <span class="animal-id">ID: @(animal.IdAnimal) </span>@animal.NombreAnimal
+                </li>
+
+                <form asp-action="AnimalDetail" asp-controller="Animal" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="@animal.IdAnimal" />
+                    <button type="submit">Ver Detalles</button>
+                </form>
             }
         }
     </ul>
@@ -28,7 +35,14 @@
 
             foreach (var animalType in Model.ListTipoAnimal)
             {
-                <li><span class="animal-id">ID: @(animalType.IdTipoAnimal) </span>@animalType.TipoDescripcion</li>
+                <li>
+                    <span class="animal-id">ID: @(animalType.IdTipoAnimal) </span>@animalType.TipoDescripcion
+                </li>
+
+                <form asp-action="AnimalTypeDetail" asp-controller="Home" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="@animalType.IdTipoAnimal" />
+                    <button type="submit">Ver Detalles</button>
+                </form>
             }
         }
     </ul>

@@ -13,9 +13,9 @@ namespace Introduccion_ASP.NET_Core_MVC.DAL
             _dbConnect = new DBConnect();
         }
 
-        public List<AnimalModel> GetAll()
+        public List<Animal> GetAll()
         {
-            var animales = new List<AnimalModel>();
+            var animales = new List<Animal>();
 
             _dbConnect.ExecuteWithConnection(() =>
             {
@@ -35,7 +35,7 @@ namespace Introduccion_ASP.NET_Core_MVC.DAL
                 {
                     while (reader.Read())
                     {
-                        animales.Add(new AnimalModel
+                        animales.Add(new Animal
                         {
                             IdAnimal = reader.GetInt32(0),
                             NombreAnimal = reader.GetString(1),
@@ -55,9 +55,9 @@ namespace Introduccion_ASP.NET_Core_MVC.DAL
             return animales;
         }
 
-        public AnimalModel GetById(int id)
+        public Animal GetById(int id)
         {
-            AnimalModel animal = null;
+            Animal animal = null;
 
             _dbConnect.ExecuteWithConnection(() =>
             {
@@ -81,7 +81,7 @@ namespace Introduccion_ASP.NET_Core_MVC.DAL
                     {
                         if (reader.Read())
                         {
-                            animal = new AnimalModel
+                            animal = new Animal
                             {
                                 IdAnimal = reader.GetInt32(0),
                                 NombreAnimal = reader.GetString(1),
@@ -102,7 +102,7 @@ namespace Introduccion_ASP.NET_Core_MVC.DAL
             return animal;
         }
 
-        public void Create(AnimalModel animal)
+        public void Create(Animal animal)
         {
             _dbConnect.ExecuteWithConnection(() =>
             {
@@ -118,7 +118,7 @@ namespace Introduccion_ASP.NET_Core_MVC.DAL
             });
         }
 
-        public void Update(AnimalModel animal)
+        public void Update(Animal animal)
         {
             _dbConnect.ExecuteWithConnection(() =>
             {
