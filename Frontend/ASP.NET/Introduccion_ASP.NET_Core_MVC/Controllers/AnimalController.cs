@@ -2,6 +2,7 @@
 using Introduccion_ASP.NET_Core_MVC.Models;
 using Introduccion_ASP.NET_Core_MVC.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace Introduccion_ASP.NET_Core_MVC.Controllers
 {
@@ -23,11 +24,12 @@ namespace Introduccion_ASP.NET_Core_MVC.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Add()
+        [HttpGet]
+        public ActionResult Save(Animal animal)
         {
             DALTipoAnimal _DALTipoAnimal = new DALTipoAnimal();
-
             AnimalesViewModel animalesViewModel = new AnimalesViewModel();
+            animalesViewModel.Animal = animal;
 
             if (animalesViewModel.ListTipoAnimal == null)
             {
@@ -39,13 +41,15 @@ namespace Introduccion_ASP.NET_Core_MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAnimal(Animal animalToAdd)
+        public IActionResult SaveAnimal(Animal animal)
         {
-            DALAnimal dALAnimalToAdd = new DALAnimal();
+            DALAnimal dalAnimal = new DALAnimal();
 
-            if (animalToAdd == null || string.IsNullOrEmpty(animalToAdd.NombreAnimal)) { return NotFound(); }
+            if (dalAnimal.GetById(animal.IdAnimal) != null)
+                dalAnimal.Update(animal); // Actualizar si ya existe
+            else
+                dalAnimal.Create(animal); // Crear si es nuevo
 
-            dALAnimalToAdd.Create(animalToAdd);
             return RedirectToAction("Index", "Home");
         }
 
@@ -55,9 +59,15 @@ namespace Introduccion_ASP.NET_Core_MVC.Controllers
             return RedirectToAction("Details", "Animal", new { id });
         }
 
-        public IActionResult ShowAddAnimal()
+        [HttpPost]
+        public IActionResult ShowSaveAnimal(string AnimalJson)
         {
-            return RedirectToAction("Add", "Animal");
+            var animal = new Animal();
+
+            if (!string.IsNullOrEmpty(AnimalJson))
+                animal = JsonSerializer.Deserialize<Animal>(AnimalJson); // Deserializar el JSON al objeto Animal
+
+            return RedirectToAction("Save", "Animal", animal);
         }
     }
 }

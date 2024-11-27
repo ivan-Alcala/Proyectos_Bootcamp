@@ -1,11 +1,17 @@
-﻿@using Introduccion_ASP.NET_Core_MVC.Models.ViewModel
+﻿@using System.Text.Json
+@using Introduccion_ASP.NET_Core_MVC.Models.ViewModel
 @model DetailAnimalViewModel
 
 @{
-    ViewData["Title"] = "Detailss";
+    ViewData["Title"] = "Details";
 }
 
 <h2>Detalles del Animal</h2>
+<form asp-action="ShowSaveAnimal" asp-controller="Animal" method="post" style="display: inline;">
+    <!-- Serializar todo el objeto como JSON -->
+    <input type="hidden" name="AnimalJson" value='@JsonSerializer.Serialize(Model.AnimalDetail)' />
+    <button type="submit">Editar</button>
+</form>
 
 <p>ID: @Model.AnimalDetail.IdAnimal</p>
 <p>Nombre: @Model.AnimalDetail.NombreAnimal</p>
