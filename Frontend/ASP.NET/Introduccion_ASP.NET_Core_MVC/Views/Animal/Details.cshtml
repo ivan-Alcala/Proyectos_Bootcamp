@@ -7,11 +7,18 @@
 }
 
 <h2>Detalles del Animal</h2>
-<form asp-action="ShowSaveAnimal" asp-controller="Animal" method="post" style="display: inline;">
-    <!-- Serializar todo el objeto como JSON -->
-    <input type="hidden" name="AnimalJson" value='@JsonSerializer.Serialize(Model.AnimalDetail)' />
-    <button type="submit">Editar</button>
-</form>
+<div class="btn-group">
+    <form asp-action="ShowSaveAnimal" asp-controller="Animal" method="post" style="display: inline;">
+        <!-- Serializar todo el objeto como JSON -->
+        <input type="hidden" name="AnimalJson" value='@JsonSerializer.Serialize(Model.AnimalDetail)' />
+        <button type="submit" class="btn btn-primary">Editar</button>
+    </form>
+
+    <form asp-action="DeleteAnimal" asp-controller="Animal" method="post" style="display: inline;">
+        <input type="hidden" name="id" value="@Model.AnimalDetail.IdAnimal" />
+        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este animal?');">Eliminar</button>
+    </form>
+</div>
 
 <p>ID: @Model.AnimalDetail.IdAnimal</p>
 <p>Nombre: @Model.AnimalDetail.NombreAnimal</p>

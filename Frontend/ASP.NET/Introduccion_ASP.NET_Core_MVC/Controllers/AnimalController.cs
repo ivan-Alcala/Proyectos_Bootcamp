@@ -54,6 +54,17 @@ namespace Introduccion_ASP.NET_Core_MVC.Controllers
         }
 
         [HttpPost]
+        public IActionResult DeleteAnimal(int id)
+        {
+            DALAnimal dalAnimal = new DALAnimal();
+
+            if (dalAnimal.GetById(id) != null)
+                dalAnimal.Delete(id);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
         public IActionResult AnimalDetail(int id)
         {
             return RedirectToAction("Details", "Animal", new { id });
