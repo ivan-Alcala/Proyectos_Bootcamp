@@ -42,12 +42,8 @@ namespace Introduccion_ASP.NET_Core_MVC.Controllers
         public IActionResult AddAnimal(Animal animalToAdd)
         {
             DALAnimal dALAnimalToAdd = new DALAnimal();
-            AnimalesViewModel animalesViewModel = new AnimalesViewModel();
 
-            if (animalesViewModel.ListTipoAnimal == null)
-            {
-                return NotFound();
-            }
+            if (animalToAdd == null || string.IsNullOrEmpty(animalToAdd.NombreAnimal)) { return NotFound(); }
 
             dALAnimalToAdd.Create(animalToAdd);
             return RedirectToAction("Index", "Home");
