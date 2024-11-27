@@ -1,4 +1,5 @@
 ﻿using Introduccion_ASP.NET_Core_MVC.DAL;
+using Introduccion_ASP.NET_Core_MVC.Models;
 using Introduccion_ASP.NET_Core_MVC.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,11 +25,32 @@ namespace Introduccion_ASP.NET_Core_MVC.Controllers
 
         public ActionResult Add()
         {
-            AnimalesViewModel animalesViewModel = new AnimalesViewModel();
             DALTipoAnimal _DALTipoAnimal = new DALTipoAnimal();
+
+            AnimalesViewModel animalesViewModel = new AnimalesViewModel();
+
+            if (animalesViewModel.ListTipoAnimal == null)
+            {
+                return NotFound();
+            }
 
             animalesViewModel.ListTipoAnimal = _DALTipoAnimal.GetAll();
             return View(animalesViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult AddAnimal(Animal animalToAdd)
+        {
+            DALAnimal dALAnimalToAdd = new DALAnimal();
+            AnimalesViewModel animalesViewModel = new AnimalesViewModel();
+
+            if (animalesViewModel.ListTipoAnimal == null)
+            {
+                return NotFound();
+            }
+
+            dALAnimalToAdd.Create(animalToAdd);
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -37,8 +59,7 @@ namespace Introduccion_ASP.NET_Core_MVC.Controllers
             return RedirectToAction("Details", "Animal", new { id });
         }
 
-        [HttpPost]
-        public IActionResult AddAnimal()
+        public IActionResult ShowAddAnimal()
         {
             return RedirectToAction("Add", "Animal");
         }

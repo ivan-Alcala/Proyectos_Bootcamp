@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Add";
+    Animal animalToAdd = new Animal();
 }
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,34 +13,32 @@
 
 <div class="container mt-5">
     <h1 class="text-center">Registrar Nuevo Animal</h1>
-    <form id="animalForm" action="/save-animal" method="post" class="mt-4">
+    <form asp-action="AddAnimal" asp-controller="Animal" method="post" class="mt-4">
         <!-- Nombre -->
         <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre del Animal</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre" required>
+            <label asp-for="@animalToAdd.NombreAnimal" class="form-label"></label>
+            <input asp-for="@animalToAdd.NombreAnimal" class="form-control" placeholder="Ingrese el nombre" required>
         </div>
         <!-- Raza -->
         <div class="mb-3">
-            <label for="raza" class="form-label">Raza</label>
-            <input type="text" class="form-control" id="raza" name="raza" placeholder="Ingrese la raza">
+            <label asp-for="@animalToAdd.Raza" class="form-label"></label>
+            <input asp-for="@animalToAdd.Raza" class="form-control" placeholder="Ingrese la raza">
         </div>
         <!-- Tipo de Animal -->
         <div class="mb-3">
-            <label for="tipoAnimal" class="form-label">Tipo de Animal</label>
-            <select class="form-select" id="tipoAnimal" name="tipoAnimal" required>
+            <label asp-for="@animalToAdd.RIdTipoAnimal" class="form-label"></label>
+            <select asp-for="@animalToAdd.RIdTipoAnimal" class="form-select" required>
                 <option value="" selected disabled>Seleccione el tipo</option>
-                @{
-                    foreach (var item in Model.ListTipoAnimal)
-                    {
-                        <option value="@item.IdTipoAnimal">@item.TipoDescripcion</option>
-                    }
+                @foreach (var item in Model.ListTipoAnimal)
+                {
+                    <option value="@item.IdTipoAnimal">@item.TipoDescripcion</option>
                 }
             </select>
         </div>
         <!-- Fecha de Nacimiento -->
         <div class="mb-3">
-            <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
-            <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento">
+            <label asp-for="@animalToAdd.FechaNacimiento" class="form-label"></label>
+            <input asp-for="@animalToAdd.FechaNacimiento" class="form-control" type="date">
         </div>
         <!-- Botones -->
         <div class="d-flex justify-content-center">
