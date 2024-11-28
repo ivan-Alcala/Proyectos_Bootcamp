@@ -1,0 +1,304 @@
+﻿@using Introduccion_ASP.NET_Core_MVC.Models.ViewModel
+@model AnimalesViewModel
+
+<div class="container-fluid">
+    <div class="edit-actions d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <button id="createRowBtn" class="btn btn-success me-2">
+                <i class="bi bi-plus"></i> Crear Animal
+            </button>
+            <button id="deleteSelectedBtn" class="btn btn-danger" disabled>
+                <i class="bi bi-trash"></i> Eliminar Seleccionados
+            </button>
+        </div>
+        <button id="saveChangesBtn" class="btn btn-primary" disabled>
+            <i class="bi bi-save"></i> Guardar Cambios
+        </button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-animals" id="animalsTable">
+            <thead class="table-dark">
+                <tr>
+                    <th>
+                        <input type="checkbox" id="selectAllCheckbox">
+                    </th>
+                    <th>Nombre</th>
+                    <th>Raza</th>
+                    <th>Tipo de Animal</th>
+                    <th>Fecha de Nacimiento</th>
+                </tr>
+            </thead>
+            <tbody id="animalsTableBody">
+                @foreach (var animal in Model.ListAnimal)
+                {
+                    <tr data-id="@animal.IdAnimal" data-original-name="@animal.NombreAnimal"
+                        data-original-breed="@animal.Raza"
+                        data-original-type="@(Model.ListTipoAnimal.FirstOrDefault(t => t.IdTipoAnimal == animal.RIdTipoAnimal)?.TipoDescripcion ?? "")"
+                        data-original-date="@(animal.FechaNacimiento?.ToString("yyyy-MM-dd") ?? "")">
+                        <td><input type="checkbox" class="row-checkbox"></td>
+                        <td contenteditable="true" class="editable-field">@animal.NombreAnimal</td>
+                        <td contenteditable="true" class="editable-field">@animal.Raza</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-secondary select-type-btn">
+                                @(Model.ListTipoAnimal.FirstOrDefault(t => t.IdTipoAnimal == animal.RIdTipoAnimal)?.TipoDescripcion ?? "")
+                            </button>
+                        </td>
+                        <td>
+                            <input type="date" value="@(animal.FechaNacimiento?.ToString("yyyy-MM-dd"))" class="form-control date-field">
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Type Selection Modal -->
+    <div class="modal fade" id="typeSelectionModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Seleccionar Tipo de Animal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <select id="animalTypeSelect" class="form-select">
+                        <!-- Options will be populated dynamically -->
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmTypeSelectionBtn">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const animalsTableBody = document.getElementById('animalsTableBody');
+            const createRowBtn = document.getElementById('createRowBtn');
+            const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+            const saveChangesBtn = document.getElementById('saveChangesBtn');
+            const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+            const typeSelectionModal = new bootstrap.Modal(document.getElementById('typeSelectionModal'));
+            const animalTypeSelect = document.getElementById('animalTypeSelect');
+            const confirmTypeSelectionBtn = document.getElementById('confirmTypeSelectionBtn');
+
+            let animalTypes = [];
+
+            // Fetch animal types
+            fetch('/AnimalManagement/GetAnimalTypes')
+                .then(response => response.json())
+                .then(types => {
+                    animalTypes = types;
+                    populateAnimalTypes();
+                });
+
+            // Populate animal types dropdown
+            function populateAnimalTypes() {
+                animalTypeSelect.innerHTML = animalTypes.map(type =>
+                    `<option value="${type.idTipoAnimal}">${type.tipoDescripcion}</option>`
+                ).join('');
+            }
+
+            // Validate a single row
+            function validateRow(row) {
+                const nameCell = row.querySelectorAll('.editable-field')[0];
+                const breedCell = row.querySelectorAll('.editable-field')[1];
+                const typeButton = row.querySelector('.select-type-btn');
+                const dateInput = row.querySelector('.date-field');
+
+                // Name is required and cannot be "-"
+                const isNameValid = nameCell.textContent.trim() && nameCell.textContent.trim() !== '-';
+                const isTypeValid = typeButton.textContent.trim() && typeButton.textContent.trim() !== '-';
+
+                // Check if the row has been modified
+                const originalName = row.dataset.originalName || '';
+                const originalBreed = row.dataset.originalBreed || '';
+                const originalType = row.dataset.originalType || '';
+                const originalDate = row.dataset.originalDate || '';
+
+                const isModified =
+                    nameCell.textContent.trim() !== originalName ||
+                    (breedCell.textContent.trim() || '') !== originalBreed ||
+                    typeButton.textContent.trim() !== originalType ||
+                    (dateInput.value || '') !== originalDate;
+
+                // Apply validation styles
+                nameCell.classList.toggle('text-danger', !isNameValid);
+                typeButton.classList.toggle('text-danger', !isTypeValid);
+
+                // Row is considered valid if name and type are present, and it's either a new row or modified
+                const isValid = isNameValid && isTypeValid && (row.dataset.id === '' || isModified);
+
+                row.classList.toggle('table-success', isValid);
+                return isValid;
+            }
+
+            // Attach event listeners to dynamic elements
+            function attachEventListeners() {
+                const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+                const selectTypeButtons = document.querySelectorAll('.select-type-btn');
+                const editableFields = document.querySelectorAll('.editable-field, .date-field');
+
+                // Checkbox listeners
+                rowCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', updateActionButtons);
+                });
+
+                // Type selection listeners
+                selectTypeButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const row = this.closest('tr');
+                        currentTypeRow = row;
+                        populateAnimalTypes();
+                        typeSelectionModal.show();
+                    });
+                });
+
+                // Editable field listeners
+                editableFields.forEach(field => {
+                    field.addEventListener('input', function() {
+                        validateRow(this.closest('tr'));
+                        updateActionButtons();
+                    });
+                });
+
+                // Select all checkbox
+                selectAllCheckbox.addEventListener('change', function() {
+                    document.querySelectorAll('.row-checkbox').forEach(cb => {
+                        cb.checked = this.checked;
+                    });
+                    updateActionButtons();
+                });
+            }
+
+            let currentTypeRow = null;
+
+            // Confirm animal type selection
+            confirmTypeSelectionBtn.addEventListener('click', function() {
+                if (currentTypeRow) {
+                    const selectedType = animalTypeSelect.value;
+                    const typeButton = currentTypeRow.querySelector('.select-type-btn');
+                    typeButton.textContent = animalTypes.find(t => t.idTipoAnimal == selectedType).tipoDescripcion;
+
+                    validateRow(currentTypeRow);
+                    updateActionButtons();
+                    typeSelectionModal.hide();
+                }
+            });
+
+            // Update action buttons state
+            function updateActionButtons() {
+                const selectedRows = document.querySelectorAll('.row-checkbox:checked');
+                const invalidRows = document.querySelectorAll('.text-danger');
+
+                // Delete button
+                deleteSelectedBtn.disabled = selectedRows.length === 0;
+
+                // Save button
+                const hasValidChanges = document.querySelectorAll('tr.table-success').length > 0;
+                saveChangesBtn.disabled = !hasValidChanges || invalidRows.length > 0;
+            }
+
+            // Create new row
+            createRowBtn.addEventListener('click', function() {
+                const newRow = `
+                    <tr data-id="">
+                        <td><input type="checkbox" class="row-checkbox"></td>
+                        <td contenteditable="true" class="editable-field">-</td>
+                        <td contenteditable="true" class="editable-field"></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-secondary select-type-btn">-</button>
+                        </td>
+                        <td>
+                            <input type="date" class="form-control date-field">
+                        </td>
+                    </tr>
+                `;
+                animalsTableBody.insertAdjacentHTML('beforeend', newRow);
+                attachEventListeners();
+            });
+
+            // Delete selected rows
+            deleteSelectedBtn.addEventListener('click', function() {
+                const selectedRows = document.querySelectorAll('.row-checkbox:checked');
+                const animalIds = [];
+
+                selectedRows.forEach(checkbox => {
+                    const row = checkbox.closest('tr');
+                    const id = row.dataset.id;
+                    if (id) {
+                        animalIds.push(parseInt(id));
+                    }
+                    row.remove();
+                });
+
+                // Send delete request to server
+                fetch('/AnimalManagement/DeleteAnimals', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(animalIds)
+                });
+
+                updateActionButtons();
+            });
+
+            // Save changes
+            saveChangesBtn.addEventListener('click', function() {
+                const rows = document.querySelectorAll('#animalsTableBody tr');
+                const animalsToSave = [];
+
+                rows.forEach(row => {
+                    const id = row.dataset.id;
+                    const nameCell = row.querySelectorAll('.editable-field')[0];
+                    const breedCell = row.querySelectorAll('.editable-field')[1];
+                    const typeButton = row.querySelector('.select-type-btn');
+                    const dateInput = row.querySelector('.date-field');
+
+                    // Only save if the row is valid
+                    if (validateRow(row)) {
+                        const typeId = animalTypes.find(t => t.tipoDescripcion === typeButton.textContent)?.idTipoAnimal;
+
+                        const animalData = {
+                            idAnimal: id ? parseInt(id) : 0,
+                            nombreAnimal: nameCell.textContent,
+                            raza: breedCell.textContent || null,
+                            rIdTipoAnimal: typeId,
+                            fechaNacimiento: dateInput.value ? new Date(dateInput.value) : null
+                        };
+
+                        animalsToSave.push(animalData);
+                    }
+                });
+
+                // Send save request to server
+                fetch('/AnimalManagement/SaveAnimals', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(animalsToSave)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        // Refresh the page to show updated data
+                        location.reload();
+                    } else {
+                        alert('Error saving animals: ' + result.error);
+                    }
+                });
+            });
+
+            // Initial render
+            attachEventListeners();
+            updateActionButtons();
+        });
+    </script>
+}

@@ -1,0 +1,29 @@
+﻿@using System.Text.Json
+@using Introduccion_ASP.NET_Core_MVC.Models.ViewModel
+@model DetailAnimalViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Detalles del Animal</h2>
+<div class="btn-group">
+    <form asp-action="ShowSaveAnimal" asp-controller="Animal" method="post" style="display: inline;">
+        <!-- Serializar todo el objeto como JSON -->
+        <input type="hidden" name="AnimalJson" value='@JsonSerializer.Serialize(Model.AnimalDetail)' />
+        <button type="submit" class="btn btn-primary">Editar</button>
+    </form>
+
+    <form asp-action="DeleteAnimal" asp-controller="Animal" method="post" style="display: inline;">
+        <input type="hidden" name="id" value="@Model.AnimalDetail.IdAnimal" />
+        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este animal?');">Eliminar</button>
+    </form>
+</div>
+
+<p>ID: @Model.AnimalDetail.IdAnimal</p>
+<p>Nombre: @Model.AnimalDetail.NombreAnimal</p>
+<p>Raza: @Model.AnimalDetail.Raza</p>
+<p>Tipo de Animal: @Model.AnimalDetail.TipoAnimal.TipoDescripcion</p>
+<p>Fecha de Nacimiento: @Model.AnimalDetail.FechaNacimiento?.ToString("d")</p>
+
+<a href="@Url.Action("Index", "Home")">Volver a la lista</a>
