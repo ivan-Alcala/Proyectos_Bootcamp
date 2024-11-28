@@ -1,4 +1,5 @@
 ﻿using ASP.NET_Core_MVC_Login.DAL;
+using ASP.NET_Core_MVC_Login.Models;
 using ASP.NET_Core_MVC_Login.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -62,7 +63,7 @@ namespace ASP.NET_Core_MVC_Login.Controllers
                 return View(model);
             }
 
-            var usuario = _userDAL.GetUsuarioLogin(model.Username, model.Password);
+            var usuario = _userDAL.GetUserLogin(model.Username, model.Password);
             if (usuario != null)
             {
                 // Set session
@@ -75,6 +76,67 @@ namespace ASP.NET_Core_MVC_Login.Controllers
             }
 
             ModelState.AddModelError("", "Invalid username or password");
+            return View(model);
+        }
+
+        // V3: Login con SignUp
+        [HttpGet]
+        public IActionResult LoginV3()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LoginV3(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var usuario = _userDAL.GetUserLogin(model.Username, model.Password);
+            if (usuario != null)
+            {
+                // Set session
+                HttpContext.Session.SetString("Username", usuario.UserName);
+                HttpContext.Session.SetString("LoginVersion", "V3");
+
+                // Redirect to welcome page
+                ViewBag.Username = usuario.UserName;
+                return View("Welcome");
+            }
+
+            ModelState.AddModelError("", "Invalid username or password");
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult SignUpV3()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SignUpV3(SignUpViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = new User
+            {
+                UserName = model.Username,
+                Pwd = model.Password,
+                Email = model.Email
+            };
+
+            if (_userDAL.CreateUser(user))
+            {
+                return RedirectToAction("LoginV3");
+            }
+
+            ModelState.AddModelError("", "Error creating user");
             return View(model);
         }
     }

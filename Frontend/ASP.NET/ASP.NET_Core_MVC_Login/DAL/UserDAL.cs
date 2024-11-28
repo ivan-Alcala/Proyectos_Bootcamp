@@ -18,8 +18,8 @@ namespace ASP.NET_Core_MVC_Login.DAL
             return username == "user" && password == "123";
         }
 
-        // V2: Database Login without Hash
-        public User GetUsuarioLogin(string username, string password)
+        // V2: Database Login con Hash
+        public User GetUserLogin(string username, string password)
         {
             User usuario = null;
             try
@@ -55,6 +55,36 @@ namespace ASP.NET_Core_MVC_Login.DAL
                 _dbConnect.Disconnect();
             }
             return usuario;
+        }
+
+        // V3: SignUp metodos
+        public bool CreateUser(User usuario)
+        {
+            try
+            {
+                _dbConnect.Connect();
+                string query = @"INSERT INTO Usuario 
+                    (UserName, Pwd, Email, FechaRegistro, Activo) 
+                    VALUES (@Username, @Password, @Email, GETDATE(), 1)";
+
+                using (SqlCommand cmd = new SqlCommand(query, _dbConnect.connection))
+                {
+                    cmd.Parameters.AddWithValue("@Username", usuario.UserName);
+                    cmd.Parameters.AddWithValue("@Password", usuario.Pwd);
+                    cmd.Parameters.AddWithValue("@Email", usuario.Email);
+
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log error
+                return false;
+            }
+            finally
+            {
+                _dbConnect.Disconnect();
+            }
         }
     }
 }
