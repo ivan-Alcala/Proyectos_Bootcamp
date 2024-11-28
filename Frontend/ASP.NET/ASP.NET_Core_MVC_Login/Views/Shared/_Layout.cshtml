@@ -25,6 +25,53 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @* Login Version Dropdowns *@
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Login Versions
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="loginDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Authentication" asp-action="LoginV1">
+                                        Login V1 (Hardcoded)
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Authentication" asp-action="LoginV2">
+                                        Login V2 (Database)
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Authentication" asp-action="LoginV3">
+                                        Login V3 (With SignUp)
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Authentication" asp-action="LoginV4">
+                                        Login V4 (Secure Salt & Hash)
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        @* SignUp Version Dropdowns *@
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="signupDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                SignUp Versions
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="signupDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Authentication" asp-action="SignUpV3">
+                                        SignUp V3
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Authentication" asp-action="SignUpV4">
+                                        SignUp V4 (Secure)
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
