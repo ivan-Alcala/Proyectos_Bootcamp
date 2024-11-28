@@ -1,12 +1,16 @@
-﻿using ASP.NET_Core_MVC_Login.Models.ViewModel;
+﻿using ASP.NET_Core_MVC_Login.DAL;
+using ASP.NET_Core_MVC_Login.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASP.NET_Core_MVC_Login.Controllers
 {
     public class AuthenticationController : Controller
     {
-        private readonly string usernameHC = "admin";
-        private readonly string passwordHC = "123";
+        private readonly UserDAL _userDAL;
+        public AuthenticationController(ILogger<AuthenticationController> logger)
+        {
+            _userDAL = new UserDAL();
+        }
 
         public IActionResult Index()
         {
@@ -28,13 +32,45 @@ namespace ASP.NET_Core_MVC_Login.Controllers
                 return View(model);
             }
 
-            if (usernameHC.Equals(model.Username) && passwordHC.Equals(model.Password))
+            if (_userDAL.ValidateUserHardcoded(model.Username, model.Password))
             {
-                // Guardos credenciales en la sesión
+                // Set session
                 HttpContext.Session.SetString("Username", model.Username);
                 HttpContext.Session.SetString("LoginVersion", "V1");
-                ViewBag.Username = model.Username;
 
+                // Redirect to welcome page
+                ViewBag.Username = model.Username;
+                return View("Welcome");
+            }
+
+            ModelState.AddModelError("", "Invalid username or password");
+            return View(model);
+        }
+
+        // V2: Database Login
+        [HttpGet]
+        public IActionResult LoginV2()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LoginV2(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var usuario = _userDAL.GetUsuarioLogin(model.Username, model.Password);
+            if (usuario != null)
+            {
+                // Set session
+                HttpContext.Session.SetString("Username", usuario.UserName);
+                HttpContext.Session.SetString("LoginVersion", "V2");
+
+                // Redirect to welcome page
+                ViewBag.Username = usuario.UserName;
                 return View("Welcome");
             }
 

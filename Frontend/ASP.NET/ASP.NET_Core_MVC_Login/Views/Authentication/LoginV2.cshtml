@@ -1,11 +1,11 @@
 ﻿@model ASP.NET_Core_MVC_Login.Models.ViewModel.LoginViewModel
 @{
-    ViewData["Title"] = "Login V1 - Hardcoded";
+    ViewData["Title"] = "Login V2 - Database";
 }
 
 <div class="container">
-    <h2>Login Version 1 (Hardcoded)</h2>
-    <form asp-action="LoginV1" asp-controller="Authentication" method="post">
+    <h2>Login Version 2 (Database)</h2>
+    <form asp-action="LoginV2" asp-controller="Authentication" method="post">
         <div class="form-group">
             <label asp-for="Username">Username</label>
             <input asp-for="Username" class="form-control" />
