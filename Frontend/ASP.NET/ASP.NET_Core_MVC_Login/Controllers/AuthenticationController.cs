@@ -1,6 +1,7 @@
 ﻿using ASP.NET_Core_MVC_Login.DAL;
 using ASP.NET_Core_MVC_Login.Models;
 using ASP.NET_Core_MVC_Login.Models.ViewModel;
+using ASP.NET_Core_MVC_Login.Tools;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASP.NET_Core_MVC_Login.Controllers
@@ -138,6 +139,98 @@ namespace ASP.NET_Core_MVC_Login.Controllers
 
             ModelState.AddModelError("", "Error creating user");
             return View(model);
+        }
+
+        // V4: Secure Login with Salt & Hash
+        [HttpGet]
+        public IActionResult LoginV4()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LoginV4(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var usuario = _userDAL.GetSecureUsuarioLogin(model.Username);
+            if (usuario != null &&
+                PasswordHelper.VerifyPasswordHash(model.Password, usuario.PasswordHash, usuario.PasswordSalt))
+            {
+                // Set session
+                HttpContext.Session.SetString("Username", usuario.UserName);
+                HttpContext.Session.SetString("LoginVersion", "V4");
+
+                // Redirect to welcome page
+                ViewBag.Username = usuario.UserName;
+                return View("Welcome");
+            }
+
+            ModelState.AddModelError("", "Invalid username or password");
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult SignUpV4()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SignUpV4(SignUpViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // Create password hash and salt
+            byte[] passwordHash, passwordSalt;
+            PasswordHelper.CreatePasswordHash(model.Password, out passwordHash, out passwordSalt);
+
+            var usuario = new User
+            {
+                UserName = model.Username,
+                Email = model.Email,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt
+            };
+
+            if (_userDAL.CreateSecureUser(usuario, passwordHash, passwordSalt))
+            {
+                // Redirect to login
+                return RedirectToAction("LoginV4");
+            }
+
+            ModelState.AddModelError("", "Error creating user");
+            return View(model);
+        }
+
+        // Logout action for all versions
+        public IActionResult Logout()
+        {
+            // Clear session
+            HttpContext.Session.Clear();
+
+            // Redirect to home page
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Welcome page
+        public IActionResult Welcome()
+        {
+            // Check if user is logged in
+            string username = HttpContext.Session.GetString("Username");
+            if (string.IsNullOrEmpty(username))
+            {
+                return RedirectToAction("LoginV1"); // Default to V1 login
+            }
+
+            ViewBag.Username = username;
+            return View();
         }
     }
 }
